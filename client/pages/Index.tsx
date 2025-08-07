@@ -72,7 +72,7 @@ export default function Index() {
               <Phone className="h-8 w-8 text-primary mb-2" />
               <CardTitle>Multiple Numbers</CardTitle>
               <CardDescription>
-                Buy and manage multiple phone numbers through Twilio. Switch between numbers seamlessly
+                Buy and manage multiple phone numbers through SignalWire. Switch between numbers seamlessly
               </CardDescription>
             </CardHeader>
           </Card>
