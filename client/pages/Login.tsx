@@ -1,31 +1,102 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Eye, EyeOff, MessageSquare } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !password) {
+      toast({
+        title: "Error",
+        description: "Please fill in all fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      toast({
+        title: "Success",
+        description: isLogin ? "Welcome back!" : "Account created successfully!",
+      });
+      
+      // Navigate to conversations page after successful login/signup
+      navigate('/conversations');
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleAuth = async () => {
+    setIsLoading(true);
+    
+    try {
+      // Simulate Google OAuth
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast({
+        title: "Success",
+        description: "Signed in with Google successfully!",
+      });
+      
+      navigate('/conversations');
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Google authentication failed. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-primary/10 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
+          <Link to="/" className="flex items-center justify-center gap-2 mb-4">
             <MessageSquare className="h-8 w-8 text-primary" />
             <span className="text-2xl font-bold">SMSFlow</span>
-          </div>
+          </Link>
           <CardTitle>{isLogin ? 'Welcome Back' : 'Create Account'}</CardTitle>
           <CardDescription>
             {isLogin ? 'Sign in to your account' : 'Sign up to get started'}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <Button variant="outline" className="w-full">
+          <Button 
+            variant="outline" 
+            className="w-full" 
+            onClick={handleGoogleAuth}
+            disabled={isLoading}
+          >
             <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
               <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
               <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -44,13 +115,16 @@ export default function Login() {
             </div>
           </div>
 
-          <div className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
             <div className="space-y-2">
@@ -60,6 +134,10 @@ export default function Login() {
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength={6}
                 />
                 <Button
                   type="button"
@@ -76,11 +154,15 @@ export default function Login() {
                 </Button>
               </div>
             </div>
-          </div>
 
-          <Button className="w-full">
-            {isLogin ? 'Sign In' : 'Create Account'}
-          </Button>
+            <Button 
+              type="submit" 
+              className="w-full" 
+              disabled={isLoading}
+            >
+              {isLoading ? 'Loading...' : (isLogin ? 'Sign In' : 'Create Account')}
+            </Button>
+          </form>
 
           <div className="text-center text-sm">
             <span className="text-muted-foreground">
@@ -90,6 +172,7 @@ export default function Login() {
               variant="link"
               className="p-0 h-auto"
               onClick={() => setIsLogin(!isLogin)}
+              disabled={isLoading}
             >
               {isLogin ? 'Sign up' : 'Sign in'}
             </Button>
