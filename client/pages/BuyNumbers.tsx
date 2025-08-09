@@ -119,9 +119,9 @@ export default function BuyNumbers() {
       // Simulate API call to SignalWire
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      let filteredNumbers = mockNumbers.filter(num => 
+      let filteredNumbers = mockNumbers.filter(num =>
         num.country === selectedCountry &&
-        (selectedState ? num.state === selectedState : true) &&
+        (selectedState && selectedState !== 'all' ? num.state === selectedState : true) &&
         (searchQuery ? num.number.includes(searchQuery) || num.city.toLowerCase().includes(searchQuery.toLowerCase()) : true)
       );
       
