@@ -39,7 +39,7 @@ export function Layout({ children }: LayoutProps) {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2">
               <MessageSquare className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold">SMSFlow</span>
+              <span className="text-xl font-bold">Connectlify</span>
             </Link>
 
             {/* Desktop Navigation */}
