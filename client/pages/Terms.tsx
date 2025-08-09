@@ -32,7 +32,7 @@ export default function Terms() {
           <CardContent className="prose max-w-none">
             <h2 className="text-2xl font-semibold mb-4">Acceptance of Terms</h2>
             <p className="mb-4">
-              By accessing and using SMSFlow, you accept and agree to be bound by the terms 
+              By accessing and using Connectlify, you accept and agree to be bound by the terms
               and provision of this agreement.
             </p>
 
