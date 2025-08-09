@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import Home from "./pages/Home";
 import Conversations from "./pages/Conversations";
 import BuyNumbers from "./pages/BuyNumbers";
 import SubAccounts from "./pages/SubAccounts";
