@@ -56,7 +56,7 @@ export default function Terms() {
 
             <h2 className="text-2xl font-semibold mb-4">Payment and Billing</h2>
             <p className="mb-4">
-              You agree to pay all fees associated with your use of SMSFlow. Wallet balances are 
+              You agree to pay all fees associated with your use of Connectlify. Wallet balances are
               non-refundable unless required by law.
             </p>
 
