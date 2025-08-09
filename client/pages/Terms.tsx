@@ -38,7 +38,7 @@ export default function Terms() {
 
             <h2 className="text-2xl font-semibold mb-4">Use License</h2>
             <p className="mb-4">
-              Permission is granted to temporarily use SMSFlow for personal and commercial 
+              Permission is granted to temporarily use Connectlify for personal and commercial
               communication purposes. This is the grant of a license, not a transfer of title.
             </p>
 
