@@ -25,24 +25,26 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/conversations" element={<Conversations />} />
-          <Route path="/buy-numbers" element={<BuyNumbers />} />
-          <Route path="/sub-accounts" element={<SubAccounts />} />
-          <Route path="/wallet" element={<Wallet />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <WalletProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/conversations" element={<Conversations />} />
+            <Route path="/buy-numbers" element={<BuyNumbers />} />
+            <Route path="/sub-accounts" element={<SubAccounts />} />
+            <Route path="/wallet" element={<Wallet />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </WalletProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
