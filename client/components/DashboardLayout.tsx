@@ -11,6 +11,7 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children, title }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { balance } = useWallet();
 
   return (
     <div className="flex h-screen bg-background">
