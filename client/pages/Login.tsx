@@ -107,7 +107,7 @@ export default function Login() {
       
       toast({
         title: "Success",
-        description: "Account created successfully! Welcome to SMSFlow!",
+        description: "Account created successfully! Welcome to Connectlify!",
       });
       
       navigate('/conversations');
@@ -151,11 +151,11 @@ export default function Login() {
         <CardHeader className="text-center">
           <Link to="/" className="flex items-center justify-center gap-2 mb-4">
             <MessageSquare className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold">SMSFlow</span>
+            <span className="text-2xl font-bold">Connectlify</span>
           </Link>
           <CardTitle>{isLogin ? 'Welcome Back' : 'Create Account'}</CardTitle>
           <CardDescription>
-            {isLogin ? 'Sign in to your account' : 'Sign up to get started with SMSFlow'}
+            {isLogin ? 'Sign in to your account' : 'Sign up to get started with Connectlify'}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
