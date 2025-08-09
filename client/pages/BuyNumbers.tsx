@@ -242,7 +242,7 @@ export default function BuyNumbers() {
                       <SelectValue placeholder="Any state" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Any State</SelectItem>
+                      <SelectItem value="all">Any State</SelectItem>
                       {usStates.map((state) => (
                         <SelectItem key={state} value={state}>
                           {state}
