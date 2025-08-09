@@ -62,7 +62,7 @@ export default function Terms() {
 
             <h2 className="text-2xl font-semibold mb-4">Limitation of Liability</h2>
             <p className="mb-4">
-              SMSFlow shall not be liable for any damages arising from the use or inability to use 
+              Connectlify shall not be liable for any damages arising from the use or inability to use
               our services, even if we have been notified of the possibility of such damages.
             </p>
 
