@@ -5,22 +5,49 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Eye, EyeOff, MessageSquare } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Login form state
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: ''
+  });
+
+  // Signup form state
+  const [signupData, setSignupData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    mobile: '',
+    recommendation: '',
+    privacyAccepted: false,
+    termsAccepted: false
+  });
+
+  const recommendations = [
+    { value: 'google-search', label: 'Google Search' },
+    { value: 'social-media', label: 'Social Media' },
+    { value: 'friend-referral', label: 'Friend Referral' },
+    { value: 'online-ad', label: 'Online Advertisement' },
+    { value: 'blog-article', label: 'Blog/Article' },
+    { value: 'other', label: 'Other' }
+  ];
+
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !password) {
+    if (!loginData.email || !loginData.password) {
       toast({
         title: "Error",
         description: "Please fill in all fields",
@@ -32,20 +59,62 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       toast({
         title: "Success",
-        description: isLogin ? "Welcome back!" : "Account created successfully!",
+        description: "Welcome back!",
       });
       
-      // Navigate to conversations page after successful login/signup
       navigate('/conversations');
     } catch (error) {
       toast({
         title: "Error",
-        description: "Something went wrong. Please try again.",
+        description: "Invalid credentials. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSignupSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!signupData.firstName || !signupData.lastName || !signupData.email || 
+        !signupData.password || !signupData.mobile || !signupData.recommendation) {
+      toast({
+        title: "Error",
+        description: "Please fill in all fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!signupData.privacyAccepted || !signupData.termsAccepted) {
+      toast({
+        title: "Error",
+        description: "Please accept Privacy Policy and Terms & Conditions",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      toast({
+        title: "Success",
+        description: "Account created successfully! Welcome to SMSFlow!",
+      });
+      
+      navigate('/conversations');
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to create account. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -57,7 +126,6 @@ export default function Login() {
     setIsLoading(true);
     
     try {
-      // Simulate Google OAuth
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       toast({
@@ -87,7 +155,7 @@ export default function Login() {
           </Link>
           <CardTitle>{isLogin ? 'Welcome Back' : 'Create Account'}</CardTitle>
           <CardDescription>
-            {isLogin ? 'Sign in to your account' : 'Sign up to get started'}
+            {isLogin ? 'Sign in to your account' : 'Sign up to get started with SMSFlow'}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -115,54 +183,207 @@ export default function Login() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <div className="relative">
+          {isLogin ? (
+            // Login Form
+            <form onSubmit={handleLoginSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
                 <Input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={loginData.email}
+                  onChange={(e) => setLoginData(prev => ({ ...prev, email: e.target.value }))}
                   required
-                  minLength={6}
                 />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
-                </Button>
               </div>
-            </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Enter your password"
+                    value={loginData.password}
+                    onChange={(e) => setLoginData(prev => ({ ...prev, password: e.target.value }))}
+                    required
+                    minLength={6}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+              </div>
 
-            <Button 
-              type="submit" 
-              className="w-full" 
-              disabled={isLoading}
-            >
-              {isLoading ? 'Loading...' : (isLogin ? 'Sign In' : 'Create Account')}
-            </Button>
-          </form>
+              <Button 
+                type="submit" 
+                className="w-full" 
+                disabled={isLoading}
+              >
+                {isLoading ? 'Signing In...' : 'Sign In'}
+              </Button>
+            </form>
+          ) : (
+            // Signup Form
+            <form onSubmit={handleSignupSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="firstName">First Name</Label>
+                  <Input
+                    id="firstName"
+                    type="text"
+                    placeholder="John"
+                    value={signupData.firstName}
+                    onChange={(e) => setSignupData(prev => ({ ...prev, firstName: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="lastName">Last Name</Label>
+                  <Input
+                    id="lastName"
+                    type="text"
+                    placeholder="Doe"
+                    value={signupData.lastName}
+                    onChange={(e) => setSignupData(prev => ({ ...prev, lastName: e.target.value }))}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="signupEmail">Email</Label>
+                <Input
+                  id="signupEmail"
+                  type="email"
+                  placeholder="john@example.com"
+                  value={signupData.email}
+                  onChange={(e) => setSignupData(prev => ({ ...prev, email: e.target.value }))}
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="mobile">Mobile Number</Label>
+                <Input
+                  id="mobile"
+                  type="tel"
+                  placeholder="+1 (555) 123-4567"
+                  value={signupData.mobile}
+                  onChange={(e) => setSignupData(prev => ({ ...prev, mobile: e.target.value }))}
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="signupPassword">Password</Label>
+                <div className="relative">
+                  <Input
+                    id="signupPassword"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Create a strong password"
+                    value={signupData.password}
+                    onChange={(e) => setSignupData(prev => ({ ...prev, password: e.target.value }))}
+                    required
+                    minLength={6}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="recommendation">How did you hear about us?</Label>
+                <Select 
+                  value={signupData.recommendation} 
+                  onValueChange={(value) => setSignupData(prev => ({ ...prev, recommendation: value }))}
+                  required
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select an option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {recommendations.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="privacy" 
+                    checked={signupData.privacyAccepted}
+                    onCheckedChange={(checked) => 
+                      setSignupData(prev => ({ ...prev, privacyAccepted: checked as boolean }))
+                    }
+                    required
+                  />
+                  <Label 
+                    htmlFor="privacy" 
+                    className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    I agree to the{' '}
+                    <Link to="/privacy" className="text-primary underline hover:no-underline">
+                      Privacy Policy
+                    </Link>
+                  </Label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="terms" 
+                    checked={signupData.termsAccepted}
+                    onCheckedChange={(checked) => 
+                      setSignupData(prev => ({ ...prev, termsAccepted: checked as boolean }))
+                    }
+                    required
+                  />
+                  <Label 
+                    htmlFor="terms" 
+                    className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    I agree to the{' '}
+                    <Link to="/terms" className="text-primary underline hover:no-underline">
+                      Terms & Conditions
+                    </Link>
+                  </Label>
+                </div>
+              </div>
+
+              <Button 
+                type="submit" 
+                className="w-full" 
+                disabled={isLoading}
+              >
+                {isLoading ? 'Creating Account...' : 'Create Account'}
+              </Button>
+            </form>
+          )}
 
           <div className="text-center text-sm">
             <span className="text-muted-foreground">
