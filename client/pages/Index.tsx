@@ -17,6 +17,29 @@ import {
 export default function Index() {
   return (
     <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="border-b border-border bg-background/95 backdrop-blur">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-2">
+              <MessageSquare className="h-6 w-6 text-primary" />
+              <span className="text-xl font-bold">Connectlify</span>
+            </Link>
+
+            {/* Login/Signup Buttons */}
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm" asChild>
+                <Link to="/login">Login</Link>
+              </Button>
+              <Button size="sm" asChild>
+                <Link to="/login">Create Account</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-primary/5 via-background to-primary/10">
         <div className="container mx-auto px-4 py-16">
@@ -25,7 +48,7 @@ export default function Index() {
               🚀 Next-Generation SMS Platform
             </Badge>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              Powerful SMS Management for Modern Teams
+              Connect. Communicate. Succeed.
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
               Send, receive, and manage SMS conversations at scale. Buy numbers, create sub-accounts, 
@@ -124,7 +147,7 @@ export default function Index() {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold mb-6">Why teams choose SMSFlow</h2>
+              <h2 className="text-3xl font-bold mb-6">Why teams choose Connectlify</h2>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary mt-0.5" />
@@ -171,7 +194,7 @@ export default function Index() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground mb-4">
-                    "SMSFlow has transformed how we handle customer communications. 
+                    "Connectlify has transformed how we handle customer communications. 
                     The multi-number system and sub-account management are game-changers."
                   </p>
                   <div className="flex items-center gap-3">
@@ -195,7 +218,7 @@ export default function Index() {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to get started?</h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join thousands of teams already using SMSFlow to manage their SMS communications
+            Join thousands of teams already using Connectlify to manage their SMS communications
           </p>
           <Button size="lg" asChild>
             <Link to="/login">
@@ -211,10 +234,10 @@ export default function Index() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center gap-2 mb-4 md:mb-0">
               <MessageSquare className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold">SMSFlow</span>
+              <span className="text-xl font-bold">Connectlify</span>
             </div>
             <p className="text-muted-foreground text-sm">
-              © 2024 SMSFlow. All rights reserved.
+              © 2024 Connectlify. All rights reserved.
             </p>
           </div>
         </div>
