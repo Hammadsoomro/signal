@@ -72,17 +72,7 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
         { id: 'responses', label: 'Responses', icon: Inbox, href: '/responses' }
       ]
     },
-    {
-      id: 'contacts',
-      label: 'Address Book',
-      icon: Users,
-      children: [
-        { id: 'contact-list', label: 'Contacts', icon: UserPlus, href: '/contacts' },
-        { id: 'groups', label: 'Groups', icon: Group, href: '/groups' },
-        { id: 'upload', label: 'Upload Contacts', icon: Upload, href: '/upload-contacts' }
-      ]
-    },
-    { id: 'templates', label: 'My Templates', icon: MessageSquare, href: '/templates' },
+    { id: 'sub-accounts', label: 'Sub-Accounts', icon: Users, href: '/sub-accounts' },
     { id: 'buy-numbers', label: 'Buy Numbers', icon: Phone, href: '/buy-numbers' },
     {
       id: 'billing',
@@ -98,7 +88,6 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
       label: 'Settings',
       icon: Settings,
       children: [
-        { id: 'sub-accounts', label: 'Sub-Accounts', icon: Users, href: '/sub-accounts' },
         { id: 'api-keys', label: 'API Keys', icon: Key, href: '/api-keys' },
         { id: 'webhooks', label: 'Webhooks', icon: Webhook, href: '/webhooks' },
         { id: 'alerts', label: 'Alerts', icon: Bell, href: '/alerts' }
@@ -119,29 +108,29 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
             onClick={() => toggleExpanded(item.id)}
             className={cn(
               "w-full flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors text-left",
-              "hover:bg-accent hover:text-accent-foreground",
+              "hover:bg-slate-700 text-white",
               level > 0 && "ml-4 pl-6"
             )}
           >
-            <item.icon className="h-4 w-4" />
+            <item.icon className="h-4 w-4 flex-shrink-0" />
             <span className="flex-1">{item.label}</span>
             {isExpanded ? (
-              <ChevronDown className="h-4 w-4" />
+              <ChevronDown className="h-4 w-4 flex-shrink-0" />
             ) : (
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4 flex-shrink-0" />
             )}
           </button>
         ) : (
           <Link
             to={item.href || '#'}
             className={cn(
-              "flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors",
-              "hover:bg-accent hover:text-accent-foreground",
-              isActive && "bg-primary text-primary-foreground hover:bg-primary/90",
+              "flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors text-white",
+              "hover:bg-slate-700",
+              isActive && "bg-blue-600 hover:bg-blue-600",
               level > 0 && "ml-4 pl-6"
             )}
           >
-            <item.icon className="h-4 w-4" />
+            <item.icon className="h-4 w-4 flex-shrink-0" />
             <span>{item.label}</span>
           </Link>
         )}
@@ -167,11 +156,11 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
       
       {/* Sidebar */}
       <div className={cn(
-        "fixed left-0 top-0 z-50 h-full w-72 bg-slate-900 text-white transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0",
+        "fixed left-0 top-0 z-50 h-screen w-72 bg-slate-900 text-white transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 flex flex-col",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         {/* Header */}
-        <div className="flex items-center justify-between p-4 bg-slate-800">
+        <div className="flex items-center justify-between p-4 bg-slate-800 flex-shrink-0">
           <Link to="/" className="flex items-center gap-2">
             <MessageSquare className="h-6 w-6 text-blue-400" />
             <span className="text-lg font-bold">Connectlify</span>
@@ -187,7 +176,7 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
         </div>
 
         {/* Wallet Balance */}
-        <div className="p-4">
+        <div className="p-4 flex-shrink-0">
           <Card className="bg-blue-600 border-blue-500">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
@@ -201,37 +190,39 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
           </Card>
         </div>
 
-        {/* Navigation */}
-        <ScrollArea className="flex-1 px-4">
-          <div className="space-y-2">
-            <div className="text-xs font-medium text-slate-400 uppercase tracking-wide px-3 py-2">
-              Navigation
+        {/* Navigation - Scrollable */}
+        <div className="flex-1 overflow-hidden">
+          <ScrollArea className="h-full px-4">
+            <div className="space-y-2 pb-4">
+              <div className="text-xs font-medium text-slate-400 uppercase tracking-wide px-3 py-2">
+                Navigation
+              </div>
+              {navigation.map(item => renderNavItem(item))}
             </div>
-            {navigation.map(item => renderNavItem(item))}
-          </div>
-          
-          <Separator className="my-4 bg-slate-700" />
-          
-          <div className="space-y-2">
-            <div className="text-xs font-medium text-slate-400 uppercase tracking-wide px-3 py-2">
-              Help
+            
+            <Separator className="my-4 bg-slate-700 mx-3" />
+            
+            <div className="space-y-2 pb-4">
+              <div className="text-xs font-medium text-slate-400 uppercase tracking-wide px-3 py-2">
+                Help
+              </div>
+              {renderNavItem({ id: 'support', label: 'Support', icon: HelpCircle, href: '/support' })}
             </div>
-            {renderNavItem({ id: 'support', label: 'Support', icon: HelpCircle, href: '/support' })}
-          </div>
 
-          <div className="mt-6 mb-4">
-            <div className="text-xs font-medium text-slate-400 uppercase tracking-wide px-3 py-2">
-              System Health
+            <div className="space-y-2 pb-6">
+              <div className="text-xs font-medium text-slate-400 uppercase tracking-wide px-3 py-2">
+                System Health
+              </div>
+              <div className="flex items-center gap-3 px-3 py-2">
+                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                <span className="text-sm text-slate-300">All Systems Operational</span>
+              </div>
             </div>
-            <div className="flex items-center gap-3 px-3 py-2">
-              <div className="w-2 h-2 rounded-full bg-green-500"></div>
-              <span className="text-sm text-slate-300">All Systems Operational</span>
-            </div>
-          </div>
-        </ScrollArea>
+          </ScrollArea>
+        </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-slate-700">
+        <div className="p-4 border-t border-slate-700 flex-shrink-0">
           <div className="flex items-center gap-2 text-slate-400 text-xs">
             <Activity className="h-4 w-4" />
             <span>Made with ❤️ for SMS</span>
@@ -252,24 +243,31 @@ export default function Home() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Bar */}
-        <header className="border-b border-border bg-background/95 backdrop-blur">
+        <header className="border-b border-border bg-background/95 backdrop-blur flex-shrink-0">
           <div className="flex items-center justify-between px-4 h-16">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="md:hidden"
-              onClick={() => setSidebarOpen(true)}
-            >
-              <Menu className="h-4 w-4" />
-            </Button>
-            
-            <h1 className="text-xl font-semibold">Dashboard</h1>
-            
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm">
-                <Bell className="h-4 w-4 mr-2" />
-                Notifications
+            <div className="flex items-center gap-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="md:hidden"
+                onClick={() => setSidebarOpen(true)}
+              >
+                <Menu className="h-4 w-4" />
               </Button>
+              <h1 className="text-xl font-semibold">Dashboard</h1>
+            </div>
+            
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Wallet className="h-4 w-4 text-primary" />
+                <span className="font-medium">$125.50</span>
+              </div>
+              <Button variant="outline" size="sm">
+                <Bell className="h-4 w-4" />
+              </Button>
+              <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                <span className="text-sm font-semibold">U</span>
+              </div>
             </div>
           </div>
         </header>
