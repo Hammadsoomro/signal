@@ -36,7 +36,7 @@ export default function BuyNumbers() {
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('US');
-  const [selectedState, setSelectedState] = useState('');
+  const [selectedState, setSelectedState] = useState('all');
   const [availableNumbers, setAvailableNumbers] = useState<AvailableNumber[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isPurchasing, setIsPurchasing] = useState(false);
