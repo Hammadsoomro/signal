@@ -66,7 +66,7 @@ export default function Login() {
         description: "Welcome back!",
       });
       
-      navigate('/conversations');
+      navigate('/home');
     } catch (error) {
       toast({
         title: "Error",
@@ -110,7 +110,7 @@ export default function Login() {
         description: "Account created successfully! Welcome to Connectlify!",
       });
       
-      navigate('/conversations');
+      navigate('/home');
     } catch (error) {
       toast({
         title: "Error",
@@ -133,7 +133,7 @@ export default function Login() {
         description: "Signed in with Google successfully!",
       });
       
-      navigate('/conversations');
+      navigate('/home');
     } catch (error) {
       toast({
         title: "Error",
