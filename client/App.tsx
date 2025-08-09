@@ -28,6 +28,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="/conversations" element={<Layout><Conversations /></Layout>} />
           <Route path="/buy-numbers" element={<Layout><BuyNumbers /></Layout>} />
           <Route path="/sub-accounts" element={<Layout><SubAccounts /></Layout>} />
