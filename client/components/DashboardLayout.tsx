@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { AppSidebar } from '@/components/AppSidebar';
+import { useWallet } from '@/contexts/WalletContext';
 import { Menu, Bell, Wallet } from 'lucide-react';
 
 interface DashboardLayoutProps {
