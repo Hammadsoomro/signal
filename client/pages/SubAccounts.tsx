@@ -237,7 +237,8 @@ export default function SubAccounts() {
     );
 
     // Deduct amount from user's wallet
-    setUserWalletBalance((prev) => prev - amount);
+    // Note: This should integrate with the actual wallet system
+    console.log(`Would deduct $${amount} from user wallet`);
 
     setTransferForm({ amount: "", subAccountId: "" });
     setIsTransferDialogOpen(false);
