@@ -120,6 +120,7 @@ export default function Conversations() {
       lastMessageTime: '2024-01-20T13:15:00Z',
       unreadCount: 0,
       isPinned: true,
+      isStarred: true,
       isArchived: false,
       messages: [
         {
@@ -146,6 +147,7 @@ export default function Conversations() {
       lastMessageTime: '2024-01-20T12:45:00Z',
       unreadCount: 1,
       isPinned: false,
+      isStarred: false,
       isArchived: false,
       messages: [
         {
