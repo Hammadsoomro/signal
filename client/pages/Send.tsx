@@ -189,15 +189,21 @@ export default function Send() {
                     <SelectValue placeholder="Select sending number" />
                   </SelectTrigger>
                   <SelectContent>
-                    {userNumbers.filter(num => num.isActive).map((num) => (
-                      <SelectItem key={num.id} value={num.number}>
-                        <div className="flex items-center gap-2">
-                          <Phone className="h-4 w-4" />
-                          <span>{num.number}</span>
-                          <Badge variant="secondary" className="text-xs">{num.label}</Badge>
-                        </div>
-                      </SelectItem>
-                    ))}
+                    {availableNumbers.length === 0 ? (
+                      <div className="p-4 text-center text-muted-foreground">
+                        No purchased numbers available
+                      </div>
+                    ) : (
+                      availableNumbers.map((num) => (
+                        <SelectItem key={num.id} value={num.number}>
+                          <div className="flex items-center gap-2">
+                            <Phone className="h-4 w-4" />
+                            <span>{num.number}</span>
+                            <Badge variant="secondary" className="text-xs">{num.label}</Badge>
+                          </div>
+                        </SelectItem>
+                      ))
+                    )}
                   </SelectContent>
                 </Select>
               </CardContent>
