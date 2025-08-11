@@ -628,6 +628,27 @@ export default function Conversations() {
 
               {/* Message Input */}
               <div className="p-4 border-t border-border">
+                {/* SMS Sending Number Selection */}
+                <div className="mb-3">
+                  <label className="text-sm font-medium text-muted-foreground mb-1 block">Send from:</label>
+                  <Select value={selectedNumber} onValueChange={setSelectedNumber}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select sending number" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {userNumbers.filter(num => num.isActive).map((num) => (
+                        <SelectItem key={num.id} value={num.number}>
+                          <div className="flex items-center gap-2">
+                            <Phone className="h-4 w-4" />
+                            <span>{num.number}</span>
+                            <Badge variant="secondary" className="text-xs">{num.label}</Badge>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 {!selectedNumber && (
                   <Alert className="mb-3">
                     <AlertCircle className="h-4 w-4" />
@@ -636,7 +657,7 @@ export default function Conversations() {
                     </AlertDescription>
                   </Alert>
                 )}
-                
+
                 <div className="flex gap-2">
                   <Input
                     placeholder="Type a message..."
