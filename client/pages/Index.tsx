@@ -41,61 +41,90 @@ export default function Index() {
       </header>
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-primary/5 via-background to-primary/10">
-        <div className="container mx-auto px-4 py-16">
+      <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="absolute inset-0 bg-grid-gray-900/[0.04] bg-[size:20px_20px]" />
+        <div className="relative container mx-auto px-4 py-20">
           <div className="text-center max-w-4xl mx-auto">
-            <Badge variant="outline" className="mb-6">
-              🚀 Next-Generation SMS Platform
+            <Badge variant="outline" className="mb-6 bg-white/80 border-blue-200">
+              <MessageSquare className="w-4 h-4 mr-2 text-blue-600" />
+              Next-Generation SMS Platform
             </Badge>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              Connect. Communicate. Succeed.
+            <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent leading-tight">
+              Connect. Communicate.
+              <br />
+              <span className="text-5xl md:text-6xl">Succeed.</span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Send, receive, and manage SMS conversations at scale. Buy numbers, create sub-accounts, 
-              and track everything with real-time messaging powered by SignalWire.
+            <p className="text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
+              Send, receive, and manage SMS conversations at scale with our enterprise-grade platform.
+              Buy numbers worldwide, create sub-accounts for your team, and track everything with real-time
+              messaging powered by SignalWire.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-4" asChild>
                 <Link to="/login">
-                  Get Started Free <ArrowRight className="ml-2 h-4 w-4" />
+                  Get Started Free <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button size="lg" variant="outline" className="text-lg px-8 py-4 border-blue-200 hover:bg-blue-50" asChild>
                 <Link to="/conversations">
+                  <MessageSquare className="mr-2 h-5 w-5" />
                   View Demo
                 </Link>
               </Button>
+            </div>
+
+            {/* Trust indicators */}
+            <div className="flex items-center justify-center gap-8 text-sm text-gray-500">
+              <div className="flex items-center gap-2">
+                <CheckCircle className="h-4 w-4 text-green-500" />
+                <span>99.9% Uptime</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Shield className="h-4 w-4 text-blue-500" />
+                <span>Enterprise Security</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Zap className="h-4 w-4 text-yellow-500" />
+                <span>Lightning Fast</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Features Section */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Everything you need for SMS management</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            From individual conversations to team management, we've got you covered
+      <div className="container mx-auto px-4 py-20 bg-white">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold mb-6 text-gray-900">Everything you need for SMS management</h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            From individual conversations to enterprise team management, we provide a complete SMS platform
+            designed for businesses of all sizes
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <MessageSquare className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>Real-time Conversations</CardTitle>
-              <CardDescription>
-                Instant SMS messaging with SignalWire integration, unread counters, and contact management
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <Card className="hover:shadow-xl transition-all duration-300 border-0 shadow-lg group">
+            <CardHeader className="pb-6">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors">
+                <MessageSquare className="h-6 w-6 text-blue-600" />
+              </div>
+              <CardTitle className="text-xl font-semibold">Real-time Conversations</CardTitle>
+              <CardDescription className="text-gray-600 leading-relaxed">
+                Instant SMS messaging with SignalWire integration, unread counters, contact management,
+                and automated sorting by latest activity
               </CardDescription>
             </CardHeader>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <Phone className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>Multiple Numbers</CardTitle>
-              <CardDescription>
-                Buy and manage multiple phone numbers through SignalWire. Switch between numbers seamlessly
+          <Card className="hover:shadow-xl transition-all duration-300 border-0 shadow-lg group">
+            <CardHeader className="pb-6">
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors">
+                <Phone className="h-6 w-6 text-green-600" />
+              </div>
+              <CardTitle className="text-xl font-semibold">Global Phone Numbers</CardTitle>
+              <CardDescription className="text-gray-600 leading-relaxed">
+                Purchase and manage phone numbers from US, Canada, UK, and Australia.
+                Switch between numbers seamlessly for different campaigns
               </CardDescription>
             </CardHeader>
           </Card>

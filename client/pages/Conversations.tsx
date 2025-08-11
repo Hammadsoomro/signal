@@ -480,90 +480,83 @@ export default function Conversations() {
           <ScrollArea className="flex-1">
             <div className="p-2">
               {sortedConversations.map((conv) => (
-                <Card 
-                  key={conv.id} 
-                  className={cn(
-                    "p-3 mb-2 cursor-pointer transition-colors",
-                    selectedConversation === conv.id 
-                      ? "bg-primary/10 border-primary" 
-                      : "hover:bg-accent/50",
-                    conv.isPinned && "border-yellow-200"
-                  )}
-                  onClick={() => selectConversation(conv.id)}
-                >
-                  <div className="flex items-center gap-3">
-                    <Avatar>
-                      <AvatarFallback>{conv.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-medium truncate">{conv.name}</h3>
-                          {conv.isPinned && <Pin className="h-3 w-3 text-yellow-500" />}
-                        </div>
-                        <span className="text-xs text-muted-foreground">
-                          {formatMessageTime(conv.lastMessageTime)}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm text-muted-foreground truncate">{conv.lastMessage}</p>
-                        {conv.unreadCount > 0 && (
-                          <Badge variant="default" className="text-xs">
-                            {conv.unreadCount}
-                          </Badge>
-                        )}
-                      </div>
-                      <p className="text-xs text-muted-foreground mt-1">{conv.contact}</p>
-                    </div>
-                    
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="opacity-0 group-hover:opacity-100"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>Conversation Options</DialogTitle>
-                          <DialogDescription>
-                            Manage this conversation with {conv.name}
-                          </DialogDescription>
-                        </DialogHeader>
-                        <div className="grid gap-2">
-                          <Button 
-                            variant="outline" 
-                            onClick={() => togglePin(conv.id)}
-                            className="justify-start"
-                          >
-                            <Pin className="mr-2 h-4 w-4" />
-                            {conv.isPinned ? 'Unpin' : 'Pin'} Conversation
-                          </Button>
-                          <Button 
-                            variant="outline" 
-                            onClick={() => archiveConversation(conv.id)}
-                            className="justify-start"
-                          >
-                            <Archive className="mr-2 h-4 w-4" />
-                            Archive Conversation
-                          </Button>
-                          <Button 
-                            variant="destructive" 
-                            onClick={() => deleteConversation(conv.id)}
-                            className="justify-start"
-                          >
-                            <Trash2 className="mr-2 h-4 w-4" />
-                            Delete Conversation
-                          </Button>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
+                <div key={conv.id} className="relative group mb-2">
+                  {/* Action buttons above contact */}
+                  <div className="flex items-center justify-end gap-1 mb-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 w-6 p-0"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleStar(conv.id);
+                      }}
+                    >
+                      <Star className={cn("h-3 w-3", conv.isStarred ? "fill-yellow-400 text-yellow-400" : "text-gray-400")} />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 w-6 p-0"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        togglePin(conv.id);
+                      }}
+                    >
+                      <PinIcon className={cn("h-3 w-3", conv.isPinned ? "text-yellow-500" : "text-gray-400")} />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 w-6 p-0 text-red-500 hover:text-red-700"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteConversation(conv.id);
+                      }}
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </Button>
                   </div>
-                </Card>
+
+                  <Card
+                    className={cn(
+                      "p-3 cursor-pointer transition-colors",
+                      selectedConversation === conv.id
+                        ? "bg-primary/10 border-primary"
+                        : "hover:bg-accent/50",
+                      conv.isPinned && "border-yellow-200",
+                      conv.isStarred && "border-yellow-100"
+                    )}
+                    onClick={() => selectConversation(conv.id)}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Avatar>
+                        <AvatarFallback>{conv.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1">
+                            <h3 className="font-medium truncate">{conv.name}</h3>
+                            {conv.isPinned && <PinIcon className="h-3 w-3 text-yellow-500" />}
+                            {conv.isStarred && <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />}
+                          </div>
+                          <span className="text-xs text-muted-foreground">
+                            {formatMessageTime(conv.lastMessageTime)}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm text-muted-foreground truncate">{conv.lastMessage}</p>
+                          {conv.unreadCount > 0 && (
+                            <Badge variant="default" className="text-xs">
+                              {conv.unreadCount}
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-1">{conv.contact}</p>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
               ))}
             </div>
           </ScrollArea>
