@@ -230,8 +230,12 @@ export default function SubAccounts() {
       return;
     }
 
+    // Get sub-account name for better description
+    const targetSubAccount = subAccounts.find(acc => acc.id === transferForm.subAccountId);
+    const accountName = targetSubAccount?.name || 'Unknown Account';
+
     // First deduct from user's wallet
-    const success = deductBalance(amount, `Transfer to sub-account: ${transferForm.subAccountId}`);
+    const success = deductBalance(amount, `Transfer to sub-account: ${accountName}`);
     if (!success) {
       return; // Stop if wallet deduction failed
     }
