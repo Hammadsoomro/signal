@@ -58,8 +58,9 @@ export default function BuyNumbers() {
     'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
   ];
 
-  // Mock available numbers data
+  // Mock available numbers data with international numbers
   const mockNumbers: AvailableNumber[] = [
+    // US Numbers
     {
       id: '1',
       number: '+1 (555) 123-9001',
@@ -109,6 +110,59 @@ export default function BuyNumbers() {
       price: 2.50,
       features: ['SMS', 'Voice', 'MMS'],
       carrier: 'SignalWire'
+    },
+    {
+      id: '6',
+      number: '+1 (555) 888-9006',
+      city: 'Seattle',
+      state: 'WA',
+      country: 'US',
+      price: 2.75,
+      features: ['SMS', 'Voice', 'MMS'],
+      carrier: 'SignalWire'
+    },
+    // Canada Numbers
+    {
+      id: '7',
+      number: '+1 (647) 123-4567',
+      city: 'Toronto',
+      state: 'ON',
+      country: 'CA',
+      price: 3.50,
+      features: ['SMS', 'Voice'],
+      carrier: 'SignalWire'
+    },
+    {
+      id: '8',
+      number: '+1 (604) 987-6543',
+      city: 'Vancouver',
+      state: 'BC',
+      country: 'CA',
+      price: 3.25,
+      features: ['SMS', 'Voice', 'MMS'],
+      carrier: 'SignalWire'
+    },
+    // UK Numbers
+    {
+      id: '9',
+      number: '+44 20 7946 0958',
+      city: 'London',
+      state: 'England',
+      country: 'GB',
+      price: 4.50,
+      features: ['SMS', 'Voice'],
+      carrier: 'SignalWire'
+    },
+    // Australia Numbers
+    {
+      id: '10',
+      number: '+61 2 9876 5432',
+      city: 'Sydney',
+      state: 'NSW',
+      country: 'AU',
+      price: 5.00,
+      features: ['SMS', 'Voice'],
+      carrier: 'SignalWire'
     }
   ];
 
@@ -124,6 +178,13 @@ export default function BuyNumbers() {
         (selectedState && selectedState !== 'all' ? num.state === selectedState : true) &&
         (searchQuery ? num.number.includes(searchQuery) || num.city.toLowerCase().includes(searchQuery.toLowerCase()) : true)
       );
+
+      // Show all available numbers if no filters applied
+      if (selectedCountry === 'all') {
+        filteredNumbers = mockNumbers.filter(num =>
+          (searchQuery ? num.number.includes(searchQuery) || num.city.toLowerCase().includes(searchQuery.toLowerCase()) : true)
+        );
+      }
       
       setAvailableNumbers(filteredNumbers);
       

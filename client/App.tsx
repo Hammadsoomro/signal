@@ -26,6 +26,7 @@ import Alerts from "./pages/Alerts";
 import Webhooks from "./pages/Webhooks";
 import ApiKeys from "./pages/ApiKeys";
 import Support from "./pages/Support";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -56,6 +57,7 @@ const App = () => (
           <Route path="/webhooks" element={<Webhooks />} />
           <Route path="/api-keys" element={<ApiKeys />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/profile" element={<Profile />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

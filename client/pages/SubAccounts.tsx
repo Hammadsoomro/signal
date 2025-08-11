@@ -157,6 +157,11 @@ export default function SubAccounts() {
 
     setSubAccounts(prev => [...prev, newSubAccount]);
 
+    // Deduct transferred amount from user's wallet
+    if (transferAmount > 0) {
+      setUserWalletBalance(prev => prev - transferAmount);
+    }
+
     // Update phone number assignment if selected
     if (createForm.assignedNumber) {
       setPhoneNumbers(prev => prev.map(num => 
@@ -224,11 +229,15 @@ export default function SubAccounts() {
       return;
     }
 
-    setSubAccounts(prev => prev.map(account => 
-      account.id === transferForm.subAccountId 
+    // Transfer funds to sub-account
+    setSubAccounts(prev => prev.map(account =>
+      account.id === transferForm.subAccountId
         ? { ...account, walletBalance: account.walletBalance + amount }
         : account
     ));
+
+    // Deduct amount from user's wallet
+    setUserWalletBalance(prev => prev - amount);
 
     setTransferForm({ amount: '', subAccountId: '' });
     setIsTransferDialogOpen(false);
