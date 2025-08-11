@@ -209,6 +209,15 @@ export default function Send() {
               </CardContent>
             </Card>
 
+            {availableNumbers.length === 0 && (
+              <Alert>
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>
+                  No purchased numbers available for sending. Please buy a phone number first.
+                </AlertDescription>
+              </Alert>
+            )}
+
             {/* Recipients */}
             <Card>
               <CardHeader>
