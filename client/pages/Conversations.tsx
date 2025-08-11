@@ -29,7 +29,9 @@ import {
   Archive,
   Pin,
   Star,
-  PinIcon
+  PinIcon,
+  UserPlus,
+  Users
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -72,6 +74,8 @@ export default function Conversations() {
   const [isConnected, setIsConnected] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [showAddContact, setShowAddContact] = useState(false);
+  const [newContact, setNewContact] = useState({ name: '', phone: '' });
 
   const userNumbers: UserNumber[] = [
     { id: '1', number: '+1 (555) 123-4567', label: 'Primary', isActive: true },
@@ -366,6 +370,39 @@ export default function Conversations() {
 
   const totalUnreadCount = conversations.reduce((sum, conv) => sum + conv.unreadCount, 0);
 
+  const addNewContact = () => {
+    if (!newContact.phone.trim()) {
+      toast({
+        title: "Error",
+        description: "Phone number is required.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const newConversation: Conversation = {
+      id: Date.now().toString(),
+      contact: newContact.phone.trim(),
+      name: newContact.name.trim() || newContact.phone.trim(),
+      lastMessage: 'No messages yet',
+      lastMessageTime: new Date().toISOString(),
+      unreadCount: 0,
+      messages: [],
+      isPinned: false,
+      isStarred: false,
+      isArchived: false
+    };
+
+    setConversations(prev => [newConversation, ...prev]);
+    setNewContact({ name: '', phone: '' });
+    setShowAddContact(false);
+
+    toast({
+      title: "Contact Added",
+      description: `${newConversation.name} has been added to your conversations.`,
+    });
+  };
+
   return (
     <DashboardLayout title="Conversations">
       <div className="h-full flex bg-background">
@@ -387,16 +424,94 @@ export default function Conversations() {
                   "w-2 h-2 rounded-full",
                   isConnected ? "bg-green-500" : "bg-red-500"
                 )} />
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setShowAddContact(true)}
+                  title="Add New Contact"
+                >
+                  <UserPlus className="h-4 w-4" />
+                </Button>
                 <Button size="sm" variant="ghost">
                   <Bell className="h-4 w-4" />
                 </Button>
               </div>
             </div>
+
+            {/* Add Contact Dialog */}
+            {showAddContact && (
+              <div className="mb-4 p-4 border border-border rounded-lg bg-muted/30">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-medium flex items-center gap-2">
+                    <Users className="h-4 w-4" />
+                    Add New Contact
+                  </h3>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => {
+                      setShowAddContact(false);
+                      setNewContact({ name: '', phone: '' });
+                    }}
+                  >
+                    ✕
+                  </Button>
+                </div>
+                <div className="space-y-3">
+                  <div>
+                    <Input
+                      placeholder="Name (optional)"
+                      value={newContact.name}
+                      onChange={(e) => setNewContact(prev => ({ ...prev, name: e.target.value }))}
+                      className="w-full"
+                    />
+                  </div>
+                  <div>
+                    <Input
+                      placeholder="Phone number (required)"
+                      value={newContact.phone}
+                      onChange={(e) => setNewContact(prev => ({ ...prev, phone: e.target.value }))}
+                      className="w-full"
+                      required
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <Button onClick={addNewContact} size="sm" className="flex-1">
+                      Add Contact
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setShowAddContact(false);
+                        setNewContact({ name: '', phone: '' });
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           
           <ScrollArea className="flex-1">
             <div className="p-2">
-              {sortedConversations.map((conv) => (
+              {sortedConversations.length === 0 ? (
+                <div className="text-center py-8">
+                  <Users className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                  <p className="text-muted-foreground mb-4">No conversations yet</p>
+                  <Button
+                    onClick={() => setShowAddContact(true)}
+                    variant="outline"
+                    size="sm"
+                  >
+                    <UserPlus className="h-4 w-4 mr-2" />
+                    Add Your First Contact
+                  </Button>
+                </div>
+              ) : (
+                sortedConversations.map((conv) => (
                 <div key={conv.id} className="relative group mb-2">
                   {/* Action buttons above contact */}
                   <div className="flex items-center justify-end gap-1 mb-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -474,7 +589,8 @@ export default function Conversations() {
                     </div>
                   </Card>
                 </div>
-              ))}
+              ))
+              )}
             </div>
           </ScrollArea>
         </div>
