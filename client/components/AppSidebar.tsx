@@ -4,10 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { 
-  MessageSquare, 
-  Phone, 
-  Users, 
+import {
+  MessageSquare,
+  Phone,
+  Users,
   Wallet,
   BarChart3,
   Settings,
@@ -23,7 +23,8 @@ import {
   DollarSign,
   Receipt,
   X,
-  Activity
+  Activity,
+  User
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -82,6 +83,7 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
       label: 'Settings',
       icon: Settings,
       children: [
+        { id: 'profile', label: 'Profile', icon: User, href: '/profile' },
         { id: 'api-keys', label: 'API Keys', icon: Key, href: '/api-keys' },
         { id: 'webhooks', label: 'Webhooks', icon: Webhook, href: '/webhooks' },
         { id: 'alerts', label: 'Alerts', icon: Bell, href: '/alerts' }

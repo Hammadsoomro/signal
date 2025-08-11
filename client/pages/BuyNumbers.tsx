@@ -44,6 +44,7 @@ export default function BuyNumbers() {
   const [walletBalance] = useState(125.50);
 
   const countries = [
+    { code: 'all', name: 'All Countries' },
     { code: 'US', name: 'United States' },
     { code: 'CA', name: 'Canada' },
     { code: 'GB', name: 'United Kingdom' },
