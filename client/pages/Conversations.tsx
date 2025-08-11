@@ -473,27 +473,6 @@ export default function Conversations() {
                 </Button>
               </div>
             </div>
-            
-            {/* SMS Sending Number Selection */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground">Send from:</label>
-              <Select value={selectedNumber} onValueChange={setSelectedNumber}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select sending number" />
-                </SelectTrigger>
-                <SelectContent>
-                  {userNumbers.filter(num => num.isActive).map((num) => (
-                    <SelectItem key={num.id} value={num.number}>
-                      <div className="flex items-center gap-2">
-                        <Phone className="h-4 w-4" />
-                        <span>{num.number}</span>
-                        <Badge variant="secondary" className="text-xs">{num.label}</Badge>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
           </div>
           
           <ScrollArea className="flex-1">

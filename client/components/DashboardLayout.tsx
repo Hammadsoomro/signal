@@ -64,22 +64,16 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuContent align="end" className="w-48">
                   <DropdownMenuItem asChild>
-                    <Link to="/profile" className="flex items-center gap-2">
+                    <Link to="/profile" className="flex items-center gap-2 cursor-pointer">
                       <User className="h-4 w-4" />
                       Profile
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/profile" className="flex items-center gap-2">
-                      <Settings className="h-4 w-4" />
-                      Account Settings
-                    </Link>
-                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/" className="flex items-center gap-2 text-red-600">
+                    <Link to="/" className="flex items-center gap-2 text-red-600 cursor-pointer">
                       <LogOut className="h-4 w-4" />
                       Logout
                     </Link>
