@@ -45,6 +45,7 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useUserNumbers } from "@/contexts/UserNumbersContext";
+import { useWallet } from "@/contexts/WalletContext";
 
 interface SubAccount {
   id: string;
