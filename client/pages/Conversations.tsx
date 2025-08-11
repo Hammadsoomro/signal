@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { signalWireClient } from '@/lib/signalwire';
 
 interface Message {
   id: string;
@@ -277,15 +278,19 @@ export default function Conversations() {
     setMessage('');
 
     try {
-      // Simulate SMS sending API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      // Use real SignalWire API to send SMS
+      const response = await signalWireClient.sendSMS(
+        selectedNumber,
+        getCurrentConversation()?.contact || '',
+        message.trim()
+      );
+
       // Update message status to sent
       setConversations(prev => prev.map(conv => {
         if (conv.id === selectedConversation) {
           return {
             ...conv,
-            messages: conv.messages.map(msg => 
+            messages: conv.messages.map(msg =>
               msg.id === tempId ? { ...msg, status: 'sent' } : msg
             )
           };
@@ -293,24 +298,27 @@ export default function Conversations() {
         return conv;
       }));
 
-      // Simulate delivery status after a delay
+      // Update delivery status based on SignalWire response
       setTimeout(() => {
         setConversations(prev => prev.map(conv => {
           if (conv.id === selectedConversation) {
             return {
               ...conv,
-              messages: conv.messages.map(msg => 
-                msg.id === tempId ? { ...msg, status: 'delivered' } : msg
+              messages: conv.messages.map(msg =>
+                msg.id === tempId ? {
+                  ...msg,
+                  status: response.status === 'queued' || response.status === 'sent' ? 'delivered' : 'failed'
+                } : msg
               )
             };
           }
           return conv;
         }));
-      }, 3000);
+      }, 2000);
 
       toast({
-        title: "Message Sent",
-        description: `SMS sent successfully to ${getCurrentConversation()?.contact}`,
+        title: "Message Sent via SignalWire",
+        description: `SMS sent successfully to ${getCurrentConversation()?.contact} (ID: ${response.sid})`,
       });
 
     } catch (error) {
