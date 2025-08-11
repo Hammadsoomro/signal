@@ -24,28 +24,17 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { useUserNumbers } from '@/contexts/UserNumbersContext';
 
-interface UserNumber {
-  id: string;
-  number: string;
-  label: string;
-  isActive: boolean;
-}
-
 export default function Send() {
   const { toast } = useToast();
   const { balance, deductBalance } = useWallet();
+  const { purchasedNumbers, getAvailableNumbers } = useUserNumbers();
+  const availableNumbers = getAvailableNumbers();
   const [selectedNumber, setSelectedNumber] = useState('');
   const [recipient, setRecipient] = useState('');
   const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [sendType, setSendType] = useState<'single' | 'bulk'>('single');
   const [bulkRecipients, setBulkRecipients] = useState('');
-
-  const userNumbers: UserNumber[] = [
-    { id: '1', number: '+1 (555) 123-4567', label: 'Primary', isActive: true },
-    { id: '2', number: '+1 (555) 234-5678', label: 'Business', isActive: true },
-    { id: '3', number: '+1 (555) 345-6789', label: 'Support', isActive: true }
-  ];
 
   const messageTemplates = [
     { id: 'welcome', text: 'Welcome to Connectlify! Thanks for joining us.' },
