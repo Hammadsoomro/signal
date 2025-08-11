@@ -8,19 +8,28 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { DashboardLayout } from '@/components/DashboardLayout';
-import { 
-  Send, 
-  Phone, 
-  MessageSquare, 
-  Bell, 
-  Trash2, 
+import {
+  Send,
+  Phone,
+  MessageSquare,
+  Bell,
+  Trash2,
   AlertCircle,
   CheckCircle,
   Loader2,
   MoreHorizontal,
   Archive,
-  Pin
+  Pin,
+  Star,
+  PinIcon
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -42,6 +51,7 @@ interface Conversation {
   unreadCount: number;
   messages: Message[];
   isPinned: boolean;
+  isStarred: boolean;
   isArchived: boolean;
 }
 
@@ -69,6 +79,7 @@ export default function Conversations() {
       lastMessageTime: '2024-01-20T14:30:00Z',
       unreadCount: 2,
       isPinned: false,
+      isStarred: false,
       isArchived: false,
       messages: [
         {
