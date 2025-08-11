@@ -19,6 +19,13 @@ import Conversations from "./pages/Conversations";
 import BuyNumbers from "./pages/BuyNumbers";
 import SubAccounts from "./pages/SubAccounts";
 import Wallet from "./pages/Wallet";
+import Scheduled from "./pages/Scheduled";
+import Responses from "./pages/Responses";
+import Transactions from "./pages/Transactions";
+import Alerts from "./pages/Alerts";
+import Webhooks from "./pages/Webhooks";
+import ApiKeys from "./pages/ApiKeys";
+import Support from "./pages/Support";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
