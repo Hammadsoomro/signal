@@ -1,21 +1,34 @@
-import { useState, useEffect, useRef } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useState, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { DashboardLayout } from '@/components/DashboardLayout';
+} from "@/components/ui/dropdown-menu";
+import { DashboardLayout } from "@/components/DashboardLayout";
 import {
   Send,
   Phone,
@@ -31,19 +44,19 @@ import {
   Star,
   PinIcon,
   UserPlus,
-  Users
-} from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { cn } from '@/lib/utils';
-import { signalWireClient } from '@/lib/signalwire';
-import { useUserNumbers } from '@/contexts/UserNumbersContext';
+  Users,
+} from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+import { signalWireClient } from "@/lib/signalwire";
+import { useUserNumbers } from "@/contexts/UserNumbersContext";
 
 interface Message {
   id: string;
   text: string;
   sent: boolean;
   timestamp: string;
-  status: 'sending' | 'sent' | 'delivered' | 'failed';
+  status: "sending" | "sent" | "delivered" | "failed";
 }
 
 interface Conversation {
@@ -59,18 +72,19 @@ interface Conversation {
   isArchived: boolean;
 }
 
-
 export default function Conversations() {
   const { toast } = useToast();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [selectedConversation, setSelectedConversation] = useState<string | null>(null);
-  const [selectedNumber, setSelectedNumber] = useState('');
-  const [message, setMessage] = useState('');
+  const [selectedConversation, setSelectedConversation] = useState<
+    string | null
+  >(null);
+  const [selectedNumber, setSelectedNumber] = useState("");
+  const [message, setMessage] = useState("");
   const [isConnected, setIsConnected] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [showAddContact, setShowAddContact] = useState(false);
-  const [newContact, setNewContact] = useState({ name: '', phone: '' });
+  const [newContact, setNewContact] = useState({ name: "", phone: "" });
 
   const { purchasedNumbers, getAvailableNumbers } = useUserNumbers();
   const availableNumbers = getAvailableNumbers();
@@ -83,11 +97,14 @@ export default function Conversations() {
         title: "SignalWire Connection Test",
         description: `✅ Connected to ${result.accountName}. Found ${result.ownedNumbers.length} owned numbers.`,
       });
-      console.log('SignalWire test result:', result);
+      console.log("SignalWire test result:", result);
     } catch (error) {
       toast({
         title: "SignalWire Connection Failed",
-        description: error instanceof Error ? error.message : "Failed to connect to SignalWire",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Failed to connect to SignalWire",
         variant: "destructive",
       });
     }
@@ -95,7 +112,7 @@ export default function Conversations() {
 
   // Request notification permission on mount
   useEffect(() => {
-    if (Notification.permission === 'default') {
+    if (Notification.permission === "default") {
       Notification.requestPermission();
     }
   }, []);
@@ -104,50 +121,59 @@ export default function Conversations() {
   useEffect(() => {
     const connectToSocket = () => {
       setIsConnected(true);
-      
+
       // Simulate incoming messages
       const messageInterval = setInterval(() => {
-        if (Math.random() > 0.7) { // 30% chance of receiving a message
-          const randomConvId = conversations[Math.floor(Math.random() * conversations.length)]?.id;
+        if (Math.random() > 0.7) {
+          // 30% chance of receiving a message
+          const randomConvId =
+            conversations[Math.floor(Math.random() * conversations.length)]?.id;
           if (randomConvId) {
             const newMessage: Message = {
               id: Date.now().toString(),
               text: `Auto message at ${new Date().toLocaleTimeString()}`,
               sent: false,
               timestamp: new Date().toISOString(),
-              status: 'delivered'
+              status: "delivered",
             };
-            
-            setConversations(prev => prev.map(conv => {
-              if (conv.id === randomConvId) {
-                return {
-                  ...conv,
-                  messages: [...conv.messages, newMessage],
-                  lastMessage: newMessage.text,
-                  lastMessageTime: newMessage.timestamp,
-                  unreadCount: conv.id === selectedConversation ? 0 : conv.unreadCount + 1
-                };
-              }
-              return conv;
-            }));
+
+            setConversations((prev) =>
+              prev.map((conv) => {
+                if (conv.id === randomConvId) {
+                  return {
+                    ...conv,
+                    messages: [...conv.messages, newMessage],
+                    lastMessage: newMessage.text,
+                    lastMessageTime: newMessage.timestamp,
+                    unreadCount:
+                      conv.id === selectedConversation
+                        ? 0
+                        : conv.unreadCount + 1,
+                  };
+                }
+                return conv;
+              }),
+            );
 
             // Show notification if not current conversation
             if (randomConvId !== selectedConversation) {
-              const senderName = conversations.find(c => c.id === randomConvId)?.name;
+              const senderName = conversations.find(
+                (c) => c.id === randomConvId,
+              )?.name;
 
               // Browser notification
-              if (Notification.permission === 'granted') {
+              if (Notification.permission === "granted") {
                 new Notification(`New SMS from ${senderName}`, {
                   body: newMessage.text,
-                  icon: '/favicon.ico',
-                  badge: '/favicon.ico'
+                  icon: "/favicon.ico",
+                  badge: "/favicon.ico",
                 });
               }
 
               // Toast notification
               toast({
                 title: "📱 New SMS Message",
-                description: `${senderName}: ${newMessage.text.substring(0, 50)}${newMessage.text.length > 50 ? '...' : ''}`,
+                description: `${senderName}: ${newMessage.text.substring(0, 50)}${newMessage.text.length > 50 ? "..." : ""}`,
               });
             }
           }
@@ -163,17 +189,29 @@ export default function Conversations() {
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [conversations, selectedConversation]);
 
   const sendMessage = async () => {
-    if (!message.trim() || !selectedNumber || !selectedConversation || isSending) return;
+    if (
+      !message.trim() ||
+      !selectedNumber ||
+      !selectedConversation ||
+      isSending
+    )
+      return;
 
     // Check wallet balance (SMS costs $0.01 per message)
     const smsPrice = 0.01;
     const deductBalance = (window as any).deductWalletBalance;
-    
-    if (deductBalance && !deductBalance(smsPrice, `SMS sent to ${getCurrentConversation()?.contact}`)) {
+
+    if (
+      deductBalance &&
+      !deductBalance(
+        smsPrice,
+        `SMS sent to ${getCurrentConversation()?.contact}`,
+      )
+    ) {
       return; // Insufficient balance, error already shown
     }
 
@@ -184,90 +222,106 @@ export default function Conversations() {
       text: message.trim(),
       sent: true,
       timestamp: new Date().toISOString(),
-      status: 'sending'
+      status: "sending",
     };
 
     // Add message to conversation immediately
-    setConversations(prev => prev.map(conv => {
-      if (conv.id === selectedConversation) {
-        return {
-          ...conv,
-          messages: [...conv.messages, newMessage],
-          lastMessage: newMessage.text,
-          lastMessageTime: newMessage.timestamp
-        };
-      }
-      return conv;
-    }));
+    setConversations((prev) =>
+      prev.map((conv) => {
+        if (conv.id === selectedConversation) {
+          return {
+            ...conv,
+            messages: [...conv.messages, newMessage],
+            lastMessage: newMessage.text,
+            lastMessageTime: newMessage.timestamp,
+          };
+        }
+        return conv;
+      }),
+    );
 
-    setMessage('');
+    setMessage("");
 
     try {
       // Use real SignalWire API to send SMS
       const response = await signalWireClient.sendSMS(
         selectedNumber,
-        getCurrentConversation()?.contact || '',
-        message.trim()
+        getCurrentConversation()?.contact || "",
+        message.trim(),
       );
 
       // Update message status to sent
-      setConversations(prev => prev.map(conv => {
-        if (conv.id === selectedConversation) {
-          return {
-            ...conv,
-            messages: conv.messages.map(msg =>
-              msg.id === tempId ? { ...msg, status: 'sent' } : msg
-            )
-          };
-        }
-        return conv;
-      }));
-
-      // Update delivery status based on SignalWire response
-      setTimeout(() => {
-        setConversations(prev => prev.map(conv => {
+      setConversations((prev) =>
+        prev.map((conv) => {
           if (conv.id === selectedConversation) {
             return {
               ...conv,
-              messages: conv.messages.map(msg =>
-                msg.id === tempId ? {
-                  ...msg,
-                  status: response.status === 'queued' || response.status === 'sent' ? 'delivered' : 'failed'
-                } : msg
-              )
+              messages: conv.messages.map((msg) =>
+                msg.id === tempId ? { ...msg, status: "sent" } : msg,
+              ),
             };
           }
           return conv;
-        }));
+        }),
+      );
+
+      // Update delivery status based on SignalWire response
+      setTimeout(() => {
+        setConversations((prev) =>
+          prev.map((conv) => {
+            if (conv.id === selectedConversation) {
+              return {
+                ...conv,
+                messages: conv.messages.map((msg) =>
+                  msg.id === tempId
+                    ? {
+                        ...msg,
+                        status:
+                          response.status === "queued" ||
+                          response.status === "sent"
+                            ? "delivered"
+                            : "failed",
+                      }
+                    : msg,
+                ),
+              };
+            }
+            return conv;
+          }),
+        );
       }, 2000);
 
       toast({
         title: "Message Sent via SignalWire",
         description: `SMS sent successfully to ${getCurrentConversation()?.contact} (ID: ${response.sid})`,
       });
-
     } catch (error) {
       // Update message status to failed
-      setConversations(prev => prev.map(conv => {
-        if (conv.id === selectedConversation) {
-          return {
-            ...conv,
-            messages: conv.messages.map(msg =>
-              msg.id === tempId ? { ...msg, status: 'failed' } : msg
-            )
-          };
-        }
-        return conv;
-      }));
+      setConversations((prev) =>
+        prev.map((conv) => {
+          if (conv.id === selectedConversation) {
+            return {
+              ...conv,
+              messages: conv.messages.map((msg) =>
+                msg.id === tempId ? { ...msg, status: "failed" } : msg,
+              ),
+            };
+          }
+          return conv;
+        }),
+      );
 
-      console.error('SMS send error details:', error);
+      console.error("SMS send error details:", error);
 
       // Show detailed error message
-      const errorMessage = error instanceof Error ? error.message : 'Failed to send SMS. Please try again.';
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to send SMS. Please try again.";
 
       toast({
         title: "Message Failed",
-        description: errorMessage.includes('HTTP error! status: 422')
+        description: errorMessage.includes("HTTP error! status: 422")
           ? "Invalid phone number format or number not verified in SignalWire account. Please check your sending number."
           : errorMessage,
         variant: "destructive",
@@ -279,15 +333,19 @@ export default function Conversations() {
 
   const selectConversation = (conversationId: string) => {
     setSelectedConversation(conversationId);
-    
+
     // Mark messages as read
-    setConversations(prev => prev.map(conv => 
-      conv.id === conversationId ? { ...conv, unreadCount: 0 } : conv
-    ));
+    setConversations((prev) =>
+      prev.map((conv) =>
+        conv.id === conversationId ? { ...conv, unreadCount: 0 } : conv,
+      ),
+    );
   };
 
   const deleteConversation = (conversationId: string) => {
-    setConversations(prev => prev.filter(conv => conv.id !== conversationId));
+    setConversations((prev) =>
+      prev.filter((conv) => conv.id !== conversationId),
+    );
     if (selectedConversation === conversationId) {
       setSelectedConversation(null);
     }
@@ -298,48 +356,62 @@ export default function Conversations() {
   };
 
   const togglePin = (conversationId: string) => {
-    setConversations(prev => prev.map(conv =>
-      conv.id === conversationId ? { ...conv, isPinned: !conv.isPinned } : conv
-    ));
+    setConversations((prev) =>
+      prev.map((conv) =>
+        conv.id === conversationId
+          ? { ...conv, isPinned: !conv.isPinned }
+          : conv,
+      ),
+    );
 
-    const conv = conversations.find(c => c.id === conversationId);
+    const conv = conversations.find((c) => c.id === conversationId);
     toast({
       title: conv?.isPinned ? "Conversation Unpinned" : "Conversation Pinned",
-      description: `${conv?.name} has been ${conv?.isPinned ? 'unpinned' : 'pinned to top'}`,
+      description: `${conv?.name} has been ${conv?.isPinned ? "unpinned" : "pinned to top"}`,
     });
   };
 
   const toggleStar = (conversationId: string) => {
-    setConversations(prev => prev.map(conv =>
-      conv.id === conversationId ? { ...conv, isStarred: !conv.isStarred } : conv
-    ));
+    setConversations((prev) =>
+      prev.map((conv) =>
+        conv.id === conversationId
+          ? { ...conv, isStarred: !conv.isStarred }
+          : conv,
+      ),
+    );
 
-    const conv = conversations.find(c => c.id === conversationId);
+    const conv = conversations.find((c) => c.id === conversationId);
     toast({
       title: conv?.isStarred ? "Removed from Starred" : "Added to Starred",
-      description: `${conv?.name} has been ${conv?.isStarred ? 'removed from starred' : 'starred'}`,
+      description: `${conv?.name} has been ${conv?.isStarred ? "removed from starred" : "starred"}`,
     });
   };
 
   const archiveConversation = (conversationId: string) => {
-    setConversations(prev => prev.map(conv =>
-      conv.id === conversationId ? { ...conv, isArchived: !conv.isArchived } : conv
-    ));
+    setConversations((prev) =>
+      prev.map((conv) =>
+        conv.id === conversationId
+          ? { ...conv, isArchived: !conv.isArchived }
+          : conv,
+      ),
+    );
   };
 
   const getCurrentConversation = () => {
-    return conversations.find(conv => conv.id === selectedConversation);
+    return conversations.find((conv) => conv.id === selectedConversation);
   };
 
   const getMessageStatus = (status: string) => {
     switch (status) {
-      case 'sending':
-        return <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />;
-      case 'sent':
+      case "sending":
+        return (
+          <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
+        );
+      case "sent":
         return <CheckCircle className="h-3 w-3 text-muted-foreground" />;
-      case 'delivered':
+      case "delivered":
         return <CheckCircle className="h-3 w-3 text-blue-500" />;
-      case 'failed':
+      case "failed":
         return <AlertCircle className="h-3 w-3 text-red-500" />;
       default:
         return null;
@@ -347,9 +419,9 @@ export default function Conversations() {
   };
 
   const formatTime = (timestamp: string) => {
-    return new Date(timestamp).toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(timestamp).toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -357,21 +429,21 @@ export default function Conversations() {
     const date = new Date(timestamp);
     const now = new Date();
     const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
-    
+
     if (diffInHours < 24) {
-      return date.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit'
+      return date.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
       });
     } else {
-      return date.toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric'
+      return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
       });
     }
   };
 
-  const activeConversations = conversations.filter(conv => !conv.isArchived);
+  const activeConversations = conversations.filter((conv) => !conv.isArchived);
   const sortedConversations = activeConversations.sort((a, b) => {
     // Pinned conversations first
     if (a.isPinned && !b.isPinned) return -1;
@@ -382,10 +454,16 @@ export default function Conversations() {
     if (!a.isStarred && b.isStarred) return 1;
 
     // Then sort by latest message time
-    return new Date(b.lastMessageTime).getTime() - new Date(a.lastMessageTime).getTime();
+    return (
+      new Date(b.lastMessageTime).getTime() -
+      new Date(a.lastMessageTime).getTime()
+    );
   });
 
-  const totalUnreadCount = conversations.reduce((sum, conv) => sum + conv.unreadCount, 0);
+  const totalUnreadCount = conversations.reduce(
+    (sum, conv) => sum + conv.unreadCount,
+    0,
+  );
 
   const addNewContact = () => {
     if (!newContact.phone.trim()) {
@@ -401,17 +479,17 @@ export default function Conversations() {
       id: Date.now().toString(),
       contact: newContact.phone.trim(),
       name: newContact.name.trim() || newContact.phone.trim(),
-      lastMessage: 'No messages yet',
+      lastMessage: "No messages yet",
       lastMessageTime: new Date().toISOString(),
       unreadCount: 0,
       messages: [],
       isPinned: false,
       isStarred: false,
-      isArchived: false
+      isArchived: false,
     };
 
-    setConversations(prev => [newConversation, ...prev]);
-    setNewContact({ name: '', phone: '' });
+    setConversations((prev) => [newConversation, ...prev]);
+    setNewContact({ name: "", phone: "" });
     setShowAddContact(false);
 
     toast({
@@ -437,10 +515,12 @@ export default function Conversations() {
                 )}
               </h2>
               <div className="flex items-center gap-2">
-                <div className={cn(
-                  "w-2 h-2 rounded-full",
-                  isConnected ? "bg-green-500" : "bg-red-500"
-                )} />
+                <div
+                  className={cn(
+                    "w-2 h-2 rounded-full",
+                    isConnected ? "bg-green-500" : "bg-red-500",
+                  )}
+                />
                 <Button
                   size="sm"
                   variant="ghost"
@@ -449,7 +529,12 @@ export default function Conversations() {
                 >
                   <UserPlus className="h-4 w-4" />
                 </Button>
-                <Button size="sm" variant="ghost" onClick={testSignalWire} title="Test SignalWire Connection">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={testSignalWire}
+                  title="Test SignalWire Connection"
+                >
                   <Phone className="h-4 w-4" />
                 </Button>
                 <Button size="sm" variant="ghost">
@@ -471,7 +556,7 @@ export default function Conversations() {
                     variant="ghost"
                     onClick={() => {
                       setShowAddContact(false);
-                      setNewContact({ name: '', phone: '' });
+                      setNewContact({ name: "", phone: "" });
                     }}
                   >
                     ✕
@@ -482,7 +567,12 @@ export default function Conversations() {
                     <Input
                       placeholder="Name (optional)"
                       value={newContact.name}
-                      onChange={(e) => setNewContact(prev => ({ ...prev, name: e.target.value }))}
+                      onChange={(e) =>
+                        setNewContact((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
                       className="w-full"
                     />
                   </div>
@@ -490,13 +580,22 @@ export default function Conversations() {
                     <Input
                       placeholder="Phone number (required)"
                       value={newContact.phone}
-                      onChange={(e) => setNewContact(prev => ({ ...prev, phone: e.target.value }))}
+                      onChange={(e) =>
+                        setNewContact((prev) => ({
+                          ...prev,
+                          phone: e.target.value,
+                        }))
+                      }
                       className="w-full"
                       required
                     />
                   </div>
                   <div className="flex gap-2">
-                    <Button onClick={addNewContact} size="sm" className="flex-1">
+                    <Button
+                      onClick={addNewContact}
+                      size="sm"
+                      className="flex-1"
+                    >
                       Add Contact
                     </Button>
                     <Button
@@ -504,7 +603,7 @@ export default function Conversations() {
                       size="sm"
                       onClick={() => {
                         setShowAddContact(false);
-                        setNewContact({ name: '', phone: '' });
+                        setNewContact({ name: "", phone: "" });
                       }}
                     >
                       Cancel
@@ -514,13 +613,15 @@ export default function Conversations() {
               </div>
             )}
           </div>
-          
+
           <ScrollArea className="flex-1">
             <div className="p-2">
               {sortedConversations.length === 0 ? (
                 <div className="text-center py-8">
                   <Users className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-muted-foreground mb-4">No conversations yet</p>
+                  <p className="text-muted-foreground mb-4">
+                    No conversations yet
+                  </p>
                   <Button
                     onClick={() => setShowAddContact(true)}
                     variant="outline"
@@ -532,84 +633,106 @@ export default function Conversations() {
                 </div>
               ) : (
                 sortedConversations.map((conv) => (
-                <div key={conv.id} className="relative group mb-2">
-                  {/* Action buttons above contact */}
-                  <div className="flex items-center justify-end gap-1 mb-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-6 w-6 p-0"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleStar(conv.id);
-                      }}
-                    >
-                      <Star className={cn("h-3 w-3", conv.isStarred ? "fill-yellow-400 text-yellow-400" : "text-gray-400")} />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-6 w-6 p-0"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        togglePin(conv.id);
-                      }}
-                    >
-                      <PinIcon className={cn("h-3 w-3", conv.isPinned ? "text-yellow-500" : "text-gray-400")} />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-6 w-6 p-0 text-red-500 hover:text-red-700"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deleteConversation(conv.id);
-                      }}
-                    >
-                      <Trash2 className="h-3 w-3" />
-                    </Button>
-                  </div>
-
-                  <Card
-                    className={cn(
-                      "p-3 cursor-pointer transition-colors",
-                      selectedConversation === conv.id
-                        ? "bg-primary/10 border-primary"
-                        : "hover:bg-accent/50",
-                      conv.isPinned && "border-yellow-200",
-                      conv.isStarred && "border-yellow-100"
-                    )}
-                    onClick={() => selectConversation(conv.id)}
-                  >
-                    <div className="flex items-center gap-3">
-                      <Avatar>
-                        <AvatarFallback>{conv.name.charAt(0)}</AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1">
-                            <h3 className="font-medium truncate">{conv.name}</h3>
-                            {conv.isPinned && <PinIcon className="h-3 w-3 text-yellow-500" />}
-                            {conv.isStarred && <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />}
-                          </div>
-                          <span className="text-xs text-muted-foreground">
-                            {formatMessageTime(conv.lastMessageTime)}
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <p className="text-sm text-muted-foreground truncate">{conv.lastMessage}</p>
-                          {conv.unreadCount > 0 && (
-                            <Badge variant="default" className="text-xs">
-                              {conv.unreadCount}
-                            </Badge>
+                  <div key={conv.id} className="relative group mb-2">
+                    {/* Action buttons above contact */}
+                    <div className="flex items-center justify-end gap-1 mb-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 w-6 p-0"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleStar(conv.id);
+                        }}
+                      >
+                        <Star
+                          className={cn(
+                            "h-3 w-3",
+                            conv.isStarred
+                              ? "fill-yellow-400 text-yellow-400"
+                              : "text-gray-400",
                           )}
-                        </div>
-                        <p className="text-xs text-muted-foreground mt-1">{conv.contact}</p>
-                      </div>
+                        />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 w-6 p-0"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          togglePin(conv.id);
+                        }}
+                      >
+                        <PinIcon
+                          className={cn(
+                            "h-3 w-3",
+                            conv.isPinned ? "text-yellow-500" : "text-gray-400",
+                          )}
+                        />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 w-6 p-0 text-red-500 hover:text-red-700"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteConversation(conv.id);
+                        }}
+                      >
+                        <Trash2 className="h-3 w-3" />
+                      </Button>
                     </div>
-                  </Card>
-                </div>
-              ))
+
+                    <Card
+                      className={cn(
+                        "p-3 cursor-pointer transition-colors",
+                        selectedConversation === conv.id
+                          ? "bg-primary/10 border-primary"
+                          : "hover:bg-accent/50",
+                        conv.isPinned && "border-yellow-200",
+                        conv.isStarred && "border-yellow-100",
+                      )}
+                      onClick={() => selectConversation(conv.id)}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Avatar>
+                          <AvatarFallback>{conv.name.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-1">
+                              <h3 className="font-medium truncate">
+                                {conv.name}
+                              </h3>
+                              {conv.isPinned && (
+                                <PinIcon className="h-3 w-3 text-yellow-500" />
+                              )}
+                              {conv.isStarred && (
+                                <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                              )}
+                            </div>
+                            <span className="text-xs text-muted-foreground">
+                              {formatMessageTime(conv.lastMessageTime)}
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <p className="text-sm text-muted-foreground truncate">
+                              {conv.lastMessage}
+                            </p>
+                            {conv.unreadCount > 0 && (
+                              <Badge variant="default" className="text-xs">
+                                {conv.unreadCount}
+                              </Badge>
+                            )}
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {conv.contact}
+                          </p>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                ))
               )}
             </div>
           </ScrollArea>
@@ -629,13 +752,15 @@ export default function Conversations() {
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <h3 className="font-medium">{getCurrentConversation()?.name}</h3>
+                      <h3 className="font-medium">
+                        {getCurrentConversation()?.name}
+                      </h3>
                       <p className="text-sm text-muted-foreground">
                         {getCurrentConversation()?.contact}
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     <Badge variant={isConnected ? "default" : "destructive"}>
                       {isConnected ? "Connected" : "Disconnected"}
@@ -658,20 +783,26 @@ export default function Conversations() {
                   {getCurrentConversation()?.messages.map((msg) => (
                     <div
                       key={msg.id}
-                      className={`flex ${msg.sent ? 'justify-end' : 'justify-start'}`}
+                      className={`flex ${msg.sent ? "justify-end" : "justify-start"}`}
                     >
                       <div
                         className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
                           msg.sent
-                            ? 'bg-primary text-primary-foreground'
-                            : 'bg-muted'
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted"
                         }`}
                       >
                         <p className="text-sm">{msg.text}</p>
-                        <div className={`flex items-center justify-between gap-2 mt-1 ${
-                          msg.sent ? 'text-primary-foreground/70' : 'text-muted-foreground'
-                        }`}>
-                          <span className="text-xs">{formatTime(msg.timestamp)}</span>
+                        <div
+                          className={`flex items-center justify-between gap-2 mt-1 ${
+                            msg.sent
+                              ? "text-primary-foreground/70"
+                              : "text-muted-foreground"
+                          }`}
+                        >
+                          <span className="text-xs">
+                            {formatTime(msg.timestamp)}
+                          </span>
                           {msg.sent && getMessageStatus(msg.status)}
                         </div>
                       </div>
@@ -685,8 +816,13 @@ export default function Conversations() {
               <div className="p-4 border-t border-border">
                 {/* SMS Sending Number Selection */}
                 <div className="mb-3">
-                  <label className="text-sm font-medium text-muted-foreground mb-1 block">Send from:</label>
-                  <Select value={selectedNumber} onValueChange={setSelectedNumber}>
+                  <label className="text-sm font-medium text-muted-foreground mb-1 block">
+                    Send from:
+                  </label>
+                  <Select
+                    value={selectedNumber}
+                    onValueChange={setSelectedNumber}
+                  >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select sending number" />
                     </SelectTrigger>
@@ -696,7 +832,9 @@ export default function Conversations() {
                           <div className="flex items-center gap-2">
                             <Phone className="h-4 w-4" />
                             <span>{num.number}</span>
-                            <Badge variant="secondary" className="text-xs">{num.label}</Badge>
+                            <Badge variant="secondary" className="text-xs">
+                              {num.label}
+                            </Badge>
                           </div>
                         </SelectItem>
                       ))}
@@ -708,16 +846,20 @@ export default function Conversations() {
                   <Alert className="mb-3">
                     <AlertCircle className="h-4 w-4" />
                     <AlertDescription>
-                      No purchased numbers available. Please buy a phone number first to send messages.
+                      No purchased numbers available. Please buy a phone number
+                      first to send messages.
                     </AlertDescription>
                   </Alert>
-                ) : !selectedNumber && (
-                  <Alert className="mb-3">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>
-                      Please select a sending number from the dropdown above to send messages.
-                    </AlertDescription>
-                  </Alert>
+                ) : (
+                  !selectedNumber && (
+                    <Alert className="mb-3">
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>
+                        Please select a sending number from the dropdown above
+                        to send messages.
+                      </AlertDescription>
+                    </Alert>
+                  )
                 )}
 
                 <div className="flex gap-2">
@@ -728,14 +870,14 @@ export default function Conversations() {
                     className="flex-1"
                     disabled={!selectedNumber || isSending}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter' && !e.shiftKey) {
+                      if (e.key === "Enter" && !e.shiftKey) {
                         e.preventDefault();
                         sendMessage();
                       }
                     }}
                   />
-                  <Button 
-                    onClick={sendMessage} 
+                  <Button
+                    onClick={sendMessage}
                     disabled={!message.trim() || !selectedNumber || isSending}
                   >
                     {isSending ? (
@@ -745,7 +887,7 @@ export default function Conversations() {
                     )}
                   </Button>
                 </div>
-                
+
                 <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground">
                   <span>SMS cost: $0.01 per message</span>
                   {selectedNumber && (
@@ -759,7 +901,9 @@ export default function Conversations() {
             <div className="flex-1 flex items-center justify-center">
               <div className="text-center">
                 <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-medium mb-2">Select a Conversation</h3>
+                <h3 className="text-lg font-medium mb-2">
+                  Select a Conversation
+                </h3>
                 <p className="text-muted-foreground">
                   Choose a conversation from the left to start messaging
                 </p>

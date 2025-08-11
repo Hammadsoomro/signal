@@ -1,18 +1,24 @@
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { 
-  MessageSquare, 
-  Phone, 
-  Users, 
-  Wallet, 
-  Shield, 
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  MessageSquare,
+  Phone,
+  Users,
+  Wallet,
+  Shield,
   Zap,
   CheckCircle,
   ArrowRight,
-  Star
-} from 'lucide-react';
+  Star,
+} from "lucide-react";
 
 export default function Index() {
   return (
@@ -49,27 +55,42 @@ export default function Index() {
         <div className="relative container mx-auto px-4 py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-left">
-              <Badge variant="outline" className="mb-6 bg-white/10 border-white/20 text-white backdrop-blur">
+              <Badge
+                variant="outline"
+                className="mb-6 bg-white/10 border-white/20 text-white backdrop-blur"
+              >
                 <MessageSquare className="w-4 h-4 mr-2 text-blue-300" />
                 Next-Generation SMS Platform
               </Badge>
               <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white leading-tight">
                 Connect. Communicate.
                 <br />
-                <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Succeed.</span>
+                <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                  Succeed.
+                </span>
               </h1>
               <p className="text-xl text-blue-100 mb-8 max-w-2xl leading-relaxed">
-                Send, receive, and manage SMS conversations at scale with our enterprise-grade platform.
-                Buy numbers worldwide, create sub-accounts for your team, and track everything with real-time
+                Send, receive, and manage SMS conversations at scale with our
+                enterprise-grade platform. Buy numbers worldwide, create
+                sub-accounts for your team, and track everything with real-time
                 messaging powered by SignalWire.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-lg px-8 py-4 shadow-xl" asChild>
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-lg px-8 py-4 shadow-xl"
+                  asChild
+                >
                   <Link to="/login">
                     Get Started Free <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg px-8 py-4 border-white/20 text-white hover:bg-white/10 backdrop-blur" asChild>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="text-lg px-8 py-4 border-white/20 text-white hover:bg-white/10 backdrop-blur"
+                  asChild
+                >
                   <Link to="/conversations">
                     <MessageSquare className="mr-2 h-5 w-5" />
                     View Demo
@@ -102,14 +123,17 @@ export default function Index() {
                     <div className="w-3 h-3 bg-red-400 rounded-full"></div>
                     <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
                     <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                    <span className="ml-2 text-gray-400 text-sm">Connectlify Dashboard</span>
+                    <span className="ml-2 text-gray-400 text-sm">
+                      Connectlify Dashboard
+                    </span>
                   </div>
                   <div className="space-y-3">
                     <div className="bg-blue-600 text-white p-3 rounded-lg text-sm">
                       📱 New SMS from +1 (555) 123-4567
                     </div>
                     <div className="bg-gray-700 text-gray-300 p-3 rounded-lg text-sm">
-                      "Thanks for the quick response! When can we schedule a call?"
+                      "Thanks for the quick response! When can we schedule a
+                      call?"
                     </div>
                     <div className="flex items-center gap-2 text-green-400 text-sm">
                       <CheckCircle className="w-4 h-4" />
@@ -158,15 +182,21 @@ export default function Index() {
               <div className="text-gray-600">Messages Sent</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-purple-600 mb-2">50K+</div>
+              <div className="text-4xl font-bold text-purple-600 mb-2">
+                50K+
+              </div>
               <div className="text-gray-600">Active Users</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-green-600 mb-2">99.9%</div>
+              <div className="text-4xl font-bold text-green-600 mb-2">
+                99.9%
+              </div>
               <div className="text-gray-600">Uptime SLA</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-orange-600 mb-2">24/7</div>
+              <div className="text-4xl font-bold text-orange-600 mb-2">
+                24/7
+              </div>
               <div className="text-gray-600">Support</div>
             </div>
           </div>
@@ -176,10 +206,12 @@ export default function Index() {
       {/* Features Section */}
       <div className="container mx-auto px-4 py-20 bg-gray-50">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-6 text-gray-900">Everything you need for SMS management</h2>
+          <h2 className="text-4xl font-bold mb-6 text-gray-900">
+            Everything you need for SMS management
+          </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            From individual conversations to enterprise team management, we provide a complete SMS platform
-            designed for businesses of all sizes
+            From individual conversations to enterprise team management, we
+            provide a complete SMS platform designed for businesses of all sizes
           </p>
         </div>
 
@@ -189,10 +221,13 @@ export default function Index() {
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors">
                 <MessageSquare className="h-6 w-6 text-blue-600" />
               </div>
-              <CardTitle className="text-xl font-semibold">Real-time Conversations</CardTitle>
+              <CardTitle className="text-xl font-semibold">
+                Real-time Conversations
+              </CardTitle>
               <CardDescription className="text-gray-600 leading-relaxed">
-                Instant SMS messaging with SignalWire integration, unread counters, contact management,
-                and automated sorting by latest activity
+                Instant SMS messaging with SignalWire integration, unread
+                counters, contact management, and automated sorting by latest
+                activity
               </CardDescription>
             </CardHeader>
           </Card>
@@ -202,10 +237,13 @@ export default function Index() {
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors">
                 <Phone className="h-6 w-6 text-green-600" />
               </div>
-              <CardTitle className="text-xl font-semibold">Global Phone Numbers</CardTitle>
+              <CardTitle className="text-xl font-semibold">
+                Global Phone Numbers
+              </CardTitle>
               <CardDescription className="text-gray-600 leading-relaxed">
-                Purchase and manage phone numbers from US, Canada, UK, and Australia.
-                Switch between numbers seamlessly for different campaigns
+                Purchase and manage phone numbers from US, Canada, UK, and
+                Australia. Switch between numbers seamlessly for different
+                campaigns
               </CardDescription>
             </CardHeader>
           </Card>
@@ -215,10 +253,13 @@ export default function Index() {
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-200 transition-colors">
                 <Users className="h-6 w-6 text-purple-600" />
               </div>
-              <CardTitle className="text-xl font-semibold">Team Management</CardTitle>
+              <CardTitle className="text-xl font-semibold">
+                Team Management
+              </CardTitle>
               <CardDescription className="text-gray-600 leading-relaxed">
-                Create up to 3 sub-accounts with individual wallets, number assignments, and granular
-                permissions for seamless team collaboration
+                Create up to 3 sub-accounts with individual wallets, number
+                assignments, and granular permissions for seamless team
+                collaboration
               </CardDescription>
             </CardHeader>
           </Card>
@@ -228,10 +269,12 @@ export default function Index() {
               <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-yellow-200 transition-colors">
                 <Wallet className="h-6 w-6 text-yellow-600" />
               </div>
-              <CardTitle className="text-xl font-semibold">Smart Wallet System</CardTitle>
+              <CardTitle className="text-xl font-semibold">
+                Smart Wallet System
+              </CardTitle>
               <CardDescription className="text-gray-600 leading-relaxed">
-                Secure wallet with Safepay integration, real-time balance tracking, automatic deductions,
-                and detailed transaction history
+                Secure wallet with Safepay integration, real-time balance
+                tracking, automatic deductions, and detailed transaction history
               </CardDescription>
             </CardHeader>
           </Card>
@@ -241,10 +284,12 @@ export default function Index() {
               <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-200 transition-colors">
                 <Shield className="h-6 w-6 text-red-600" />
               </div>
-              <CardTitle className="text-xl font-semibold">Enterprise Security</CardTitle>
+              <CardTitle className="text-xl font-semibold">
+                Enterprise Security
+              </CardTitle>
               <CardDescription className="text-gray-600 leading-relaxed">
-                Advanced security with API key management, webhook endpoints, 2FA, IP whitelisting,
-                and comprehensive audit trails
+                Advanced security with API key management, webhook endpoints,
+                2FA, IP whitelisting, and comprehensive audit trails
               </CardDescription>
             </CardHeader>
           </Card>
@@ -254,10 +299,13 @@ export default function Index() {
               <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-indigo-200 transition-colors">
                 <Zap className="h-6 w-6 text-indigo-600" />
               </div>
-              <CardTitle className="text-xl font-semibold">Lightning Fast Delivery</CardTitle>
+              <CardTitle className="text-xl font-semibold">
+                Lightning Fast Delivery
+              </CardTitle>
               <CardDescription className="text-gray-600 leading-relaxed">
-                High-performance messaging infrastructure with real-time delivery status,
-                instant notifications, and 99.9% uptime guarantee
+                High-performance messaging infrastructure with real-time
+                delivery status, instant notifications, and 99.9% uptime
+                guarantee
               </CardDescription>
             </CardHeader>
           </Card>
@@ -268,8 +316,12 @@ export default function Index() {
       <div className="bg-gradient-to-r from-blue-50 to-purple-50 py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6 text-gray-900">Trusted by businesses worldwide</h2>
-            <p className="text-xl text-gray-600">See what our customers are saying about Connectlify</p>
+            <h2 className="text-4xl font-bold mb-6 text-gray-900">
+              Trusted by businesses worldwide
+            </h2>
+            <p className="text-xl text-gray-600">
+              See what our customers are saying about Connectlify
+            </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -278,13 +330,18 @@ export default function Index() {
                 <div className="flex items-center gap-2 mb-4">
                   <div className="flex">
                     {[1, 2, 3, 4, 5].map((i) => (
-                      <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
+                      <Star
+                        key={i}
+                        className="h-4 w-4 text-yellow-400 fill-current"
+                      />
                     ))}
                   </div>
                   <span className="text-sm font-medium text-gray-600">5.0</span>
                 </div>
                 <p className="text-gray-700 mb-6 leading-relaxed">
-                  "Connectlify revolutionized our customer support. The real-time messaging and team management features are exactly what we needed."
+                  "Connectlify revolutionized our customer support. The
+                  real-time messaging and team management features are exactly
+                  what we needed."
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
@@ -303,13 +360,17 @@ export default function Index() {
                 <div className="flex items-center gap-2 mb-4">
                   <div className="flex">
                     {[1, 2, 3, 4, 5].map((i) => (
-                      <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
+                      <Star
+                        key={i}
+                        className="h-4 w-4 text-yellow-400 fill-current"
+                      />
                     ))}
                   </div>
                   <span className="text-sm font-medium text-gray-600">5.0</span>
                 </div>
                 <p className="text-gray-700 mb-6 leading-relaxed">
-                  "The multi-number management and sub-account features saved us countless hours. Best SMS platform we've used!"
+                  "The multi-number management and sub-account features saved us
+                  countless hours. Best SMS platform we've used!"
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center">
@@ -317,7 +378,9 @@ export default function Index() {
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">David Kim</p>
-                    <p className="text-sm text-gray-600">Marketing Director, Growth Co</p>
+                    <p className="text-sm text-gray-600">
+                      Marketing Director, Growth Co
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -328,13 +391,17 @@ export default function Index() {
                 <div className="flex items-center gap-2 mb-4">
                   <div className="flex">
                     {[1, 2, 3, 4, 5].map((i) => (
-                      <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
+                      <Star
+                        key={i}
+                        className="h-4 w-4 text-yellow-400 fill-current"
+                      />
                     ))}
                   </div>
                   <span className="text-sm font-medium text-gray-600">5.0</span>
                 </div>
                 <p className="text-gray-700 mb-6 leading-relaxed">
-                  "Enterprise-grade security with an intuitive interface. Connectlify delivers on every promise."
+                  "Enterprise-grade security with an intuitive interface.
+                  Connectlify delivers on every promise."
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
@@ -342,7 +409,9 @@ export default function Index() {
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">Emily Johnson</p>
-                    <p className="text-sm text-gray-600">CTO, Enterprise Solutions</p>
+                    <p className="text-sm text-gray-600">
+                      CTO, Enterprise Solutions
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -354,21 +423,31 @@ export default function Index() {
       {/* CTA Section */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 py-20">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-white mb-6">Ready to transform your communication?</h2>
+          <h2 className="text-4xl font-bold text-white mb-6">
+            Ready to transform your communication?
+          </h2>
           <p className="text-xl text-blue-100 mb-10 max-w-3xl mx-auto">
-            Join thousands of businesses already using Connectlify to streamline their SMS communication.
-            Start your free trial today and experience the difference.
+            Join thousands of businesses already using Connectlify to streamline
+            their SMS communication. Start your free trial today and experience
+            the difference.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-4 shadow-xl" asChild>
+            <Button
+              size="lg"
+              className="bg-white text-blue-600 hover:bg-gray-100 text-lg px-8 py-4 shadow-xl"
+              asChild
+            >
               <Link to="/login">
                 Start Free Trial <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="text-white border-white/30 hover:bg-white/10 text-lg px-8 py-4" asChild>
-              <Link to="/support">
-                Contact Sales
-              </Link>
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-white border-white/30 hover:bg-white/10 text-lg px-8 py-4"
+              asChild
+            >
+              <Link to="/support">Contact Sales</Link>
             </Button>
           </div>
         </div>
@@ -381,47 +460,135 @@ export default function Index() {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <MessageSquare className="h-6 w-6 text-blue-400" />
-                <span className="text-xl font-bold text-white">Connectlify</span>
+                <span className="text-xl font-bold text-white">
+                  Connectlify
+                </span>
               </div>
               <p className="text-gray-400 mb-4">
-                The ultimate SMS platform for modern businesses. Connect, communicate, and succeed.
+                The ultimate SMS platform for modern businesses. Connect,
+                communicate, and succeed.
               </p>
             </div>
 
             <div>
               <h3 className="font-semibold text-white mb-4">Product</h3>
               <ul className="space-y-2 text-sm">
-                <li><Link to="/features" className="hover:text-white transition-colors">Features</Link></li>
-                <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-                <li><Link to="/integrations" className="hover:text-white transition-colors">Integrations</Link></li>
-                <li><Link to="/api" className="hover:text-white transition-colors">API</Link></li>
+                <li>
+                  <Link
+                    to="/features"
+                    className="hover:text-white transition-colors"
+                  >
+                    Features
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/pricing"
+                    className="hover:text-white transition-colors"
+                  >
+                    Pricing
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/integrations"
+                    className="hover:text-white transition-colors"
+                  >
+                    Integrations
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/api"
+                    className="hover:text-white transition-colors"
+                  >
+                    API
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
               <h3 className="font-semibold text-white mb-4">Support</h3>
               <ul className="space-y-2 text-sm">
-                <li><Link to="/support" className="hover:text-white transition-colors">Help Center</Link></li>
-                <li><Link to="/docs" className="hover:text-white transition-colors">Documentation</Link></li>
-                <li><Link to="/status" className="hover:text-white transition-colors">Status</Link></li>
-                <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+                <li>
+                  <Link
+                    to="/support"
+                    className="hover:text-white transition-colors"
+                  >
+                    Help Center
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/docs"
+                    className="hover:text-white transition-colors"
+                  >
+                    Documentation
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/status"
+                    className="hover:text-white transition-colors"
+                  >
+                    Status
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/contact"
+                    className="hover:text-white transition-colors"
+                  >
+                    Contact
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
               <h3 className="font-semibold text-white mb-4">Company</h3>
               <ul className="space-y-2 text-sm">
-                <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
-                <li><Link to="/careers" className="hover:text-white transition-colors">Careers</Link></li>
-                <li><Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link></li>
-                <li><Link to="/terms" className="hover:text-white transition-colors">Terms</Link></li>
+                <li>
+                  <Link
+                    to="/about"
+                    className="hover:text-white transition-colors"
+                  >
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/careers"
+                    className="hover:text-white transition-colors"
+                  >
+                    Careers
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/privacy"
+                    className="hover:text-white transition-colors"
+                  >
+                    Privacy
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/terms"
+                    className="hover:text-white transition-colors"
+                  >
+                    Terms
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
 
           <div className="border-t border-gray-800 mt-12 pt-8 text-center">
             <p className="text-gray-400">
-              © 2024 Connectlify. All rights reserved. Built with ❤️ for modern businesses.
+              © 2024 Connectlify. All rights reserved. Built with ❤️ for modern
+              businesses.
             </p>
           </div>
         </div>

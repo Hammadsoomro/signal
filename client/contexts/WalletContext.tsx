@@ -1,13 +1,19 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useToast } from '@/hooks/use-toast';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface Transaction {
   id: string;
-  type: 'credit' | 'debit';
+  type: "credit" | "debit";
   amount: number;
   description: string;
   date: string;
-  status: 'completed' | 'pending' | 'failed';
+  status: "completed" | "pending" | "failed";
   reference?: string;
 }
 
@@ -22,25 +28,25 @@ interface WalletContextType {
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
 export function WalletProvider({ children }: { children: ReactNode }) {
-  const [balance, setBalance] = useState(125.50);
+  const [balance, setBalance] = useState(125.5);
   const [transactions, setTransactions] = useState<Transaction[]>([
     {
-      id: '1',
-      type: 'credit',
-      amount: 100.00,
-      description: 'Wallet top-up via Safepay',
-      date: '2024-01-20T10:30:00Z',
-      status: 'completed',
-      reference: 'SP_12345678'
+      id: "1",
+      type: "credit",
+      amount: 100.0,
+      description: "Wallet top-up via Safepay",
+      date: "2024-01-20T10:30:00Z",
+      status: "completed",
+      reference: "SP_12345678",
     },
     {
-      id: '2',
-      type: 'debit',
-      amount: 2.50,
-      description: 'SMS sent to +1 (555) 123-4567',
-      date: '2024-01-20T09:15:00Z',
-      status: 'completed'
-    }
+      id: "2",
+      type: "debit",
+      amount: 2.5,
+      description: "SMS sent to +1 (555) 123-4567",
+      date: "2024-01-20T09:15:00Z",
+      status: "completed",
+    },
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -57,32 +63,36 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
     const newTransaction: Transaction = {
       id: Date.now().toString(),
-      type: 'debit',
+      type: "debit",
       amount: amount,
       description: description,
       date: new Date().toISOString(),
-      status: 'completed'
+      status: "completed",
     };
 
-    setTransactions(prev => [newTransaction, ...prev]);
-    setBalance(prev => prev - amount);
-    
+    setTransactions((prev) => [newTransaction, ...prev]);
+    setBalance((prev) => prev - amount);
+
     return true;
   };
 
-  const addBalance = (amount: number, description: string, reference?: string) => {
+  const addBalance = (
+    amount: number,
+    description: string,
+    reference?: string,
+  ) => {
     const newTransaction: Transaction = {
       id: Date.now().toString(),
-      type: 'credit',
+      type: "credit",
       amount: amount,
       description: description,
       date: new Date().toISOString(),
-      status: 'completed',
-      reference: reference
+      status: "completed",
+      reference: reference,
     };
 
-    setTransactions(prev => [newTransaction, ...prev]);
-    setBalance(prev => prev + amount);
+    setTransactions((prev) => [newTransaction, ...prev]);
+    setBalance((prev) => prev + amount);
   };
 
   // Expose functions globally for backward compatibility
@@ -90,7 +100,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     (window as any).deductWalletBalance = deductBalance;
     (window as any).addWalletBalance = addBalance;
     (window as any).getWalletBalance = () => balance;
-    
+
     return () => {
       delete (window as any).deductWalletBalance;
       delete (window as any).addWalletBalance;
@@ -99,13 +109,15 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   }, [balance]);
 
   return (
-    <WalletContext.Provider value={{
-      balance,
-      transactions,
-      deductBalance,
-      addBalance,
-      isLoading
-    }}>
+    <WalletContext.Provider
+      value={{
+        balance,
+        transactions,
+        deductBalance,
+        addBalance,
+        isLoading,
+      }}
+    >
       {children}
     </WalletContext.Provider>
   );
@@ -114,7 +126,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 export function useWallet() {
   const context = useContext(WalletContext);
   if (context === undefined) {
-    throw new Error('useWallet must be used within a WalletProvider');
+    throw new Error("useWallet must be used within a WalletProvider");
   }
   return context;
 }

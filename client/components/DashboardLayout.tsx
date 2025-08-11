@@ -1,17 +1,25 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { AppSidebar } from '@/components/AppSidebar';
-import { useWallet } from '@/contexts/WalletContext';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { AppSidebar } from "@/components/AppSidebar";
+import { useWallet } from "@/contexts/WalletContext";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Menu, Bell, Wallet, User, Settings, LogOut, ChevronDown } from 'lucide-react';
+} from "@/components/ui/dropdown-menu";
+import {
+  Menu,
+  Bell,
+  Wallet,
+  User,
+  Settings,
+  LogOut,
+  ChevronDown,
+} from "lucide-react";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -25,7 +33,7 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
   return (
     <div className="flex h-screen bg-background">
       <AppSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      
+
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Bar */}
@@ -42,7 +50,7 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
               </Button>
               <h1 className="text-xl font-semibold">{title}</h1>
             </div>
-            
+
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <Wallet className="h-4 w-4 text-primary" />
@@ -54,26 +62,37 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center gap-2 px-2">
+                  <Button
+                    variant="ghost"
+                    className="flex items-center gap-2 px-2"
+                  >
                     <Avatar className="h-8 w-8">
                       <AvatarFallback className="bg-primary/10 text-primary">
                         JC
                       </AvatarFallback>
                     </Avatar>
-                    <span className="hidden md:block text-sm font-medium">Jaxon Cooper</span>
+                    <span className="hidden md:block text-sm font-medium">
+                      Jaxon Cooper
+                    </span>
                     <ChevronDown className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
                   <DropdownMenuItem asChild>
-                    <Link to="/profile" className="flex items-center gap-2 cursor-pointer">
+                    <Link
+                      to="/profile"
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
                       <User className="h-4 w-4" />
                       Profile
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/" className="flex items-center gap-2 text-red-600 cursor-pointer">
+                    <Link
+                      to="/"
+                      className="flex items-center gap-2 text-red-600 cursor-pointer"
+                    >
                       <LogOut className="h-4 w-4" />
                       Logout
                     </Link>
@@ -85,9 +104,7 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-auto">
-          {children}
-        </main>
+        <main className="flex-1 overflow-auto">{children}</main>
       </div>
     </div>
   );

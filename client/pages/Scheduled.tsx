@@ -2,7 +2,17 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, Users, MessageSquare, Play, Pause, Trash2, Edit3, Eye } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  Users,
+  MessageSquare,
+  Play,
+  Pause,
+  Trash2,
+  Edit3,
+  Eye,
+} from "lucide-react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import {
   Dialog,
@@ -27,81 +37,97 @@ interface ScheduledMessage {
   message: string;
   recipients: number;
   scheduledTime: string;
-  status: 'pending' | 'paused' | 'sent' | 'failed';
+  status: "pending" | "paused" | "sent" | "failed";
   created: string;
   sender: string;
 }
 
 const mockScheduledMessages: ScheduledMessage[] = [
   {
-    id: '1',
-    message: 'Reminder: Your appointment is scheduled for tomorrow at 2 PM. Please arrive 15 minutes early.',
+    id: "1",
+    message:
+      "Reminder: Your appointment is scheduled for tomorrow at 2 PM. Please arrive 15 minutes early.",
     recipients: 125,
-    scheduledTime: '2024-01-15 14:00',
-    status: 'pending',
-    created: '2024-01-14 10:30',
-    sender: '+1234567890'
+    scheduledTime: "2024-01-15 14:00",
+    status: "pending",
+    created: "2024-01-14 10:30",
+    sender: "+1234567890",
   },
   {
-    id: '2',
-    message: 'Flash Sale Alert! 50% off all products today only. Use code FLASH50 at checkout.',
+    id: "2",
+    message:
+      "Flash Sale Alert! 50% off all products today only. Use code FLASH50 at checkout.",
     recipients: 1250,
-    scheduledTime: '2024-01-16 09:00',
-    status: 'pending',
-    created: '2024-01-14 15:45',
-    sender: '+1234567891'
+    scheduledTime: "2024-01-16 09:00",
+    status: "pending",
+    created: "2024-01-14 15:45",
+    sender: "+1234567891",
   },
   {
-    id: '3',
-    message: 'Thank you for your purchase! Your order has been processed and will ship within 24 hours.',
+    id: "3",
+    message:
+      "Thank you for your purchase! Your order has been processed and will ship within 24 hours.",
     recipients: 87,
-    scheduledTime: '2024-01-14 12:00',
-    status: 'sent',
-    created: '2024-01-14 08:30',
-    sender: '+1234567892'
+    scheduledTime: "2024-01-14 12:00",
+    status: "sent",
+    created: "2024-01-14 08:30",
+    sender: "+1234567892",
   },
   {
-    id: '4',
-    message: 'Weekly newsletter: This week in technology and innovation.',
+    id: "4",
+    message: "Weekly newsletter: This week in technology and innovation.",
     recipients: 500,
-    scheduledTime: '2024-01-17 10:00',
-    status: 'paused',
-    created: '2024-01-14 16:20',
-    sender: '+1234567893'
-  }
+    scheduledTime: "2024-01-17 10:00",
+    status: "paused",
+    created: "2024-01-14 16:20",
+    sender: "+1234567893",
+  },
 ];
 
 export default function Scheduled() {
-  const [messages, setMessages] = useState<ScheduledMessage[]>(mockScheduledMessages);
-  const [selectedMessage, setSelectedMessage] = useState<ScheduledMessage | null>(null);
+  const [messages, setMessages] = useState<ScheduledMessage[]>(
+    mockScheduledMessages,
+  );
+  const [selectedMessage, setSelectedMessage] =
+    useState<ScheduledMessage | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'bg-blue-100 text-blue-800';
-      case 'paused': return 'bg-yellow-100 text-yellow-800';
-      case 'sent': return 'bg-green-100 text-green-800';
-      case 'failed': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case "pending":
+        return "bg-blue-100 text-blue-800";
+      case "paused":
+        return "bg-yellow-100 text-yellow-800";
+      case "sent":
+        return "bg-green-100 text-green-800";
+      case "failed":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
   const handleStatusToggle = (id: string) => {
-    setMessages(prev => prev.map(msg => 
-      msg.id === id 
-        ? { ...msg, status: msg.status === 'pending' ? 'paused' : 'pending' as any }
-        : msg
-    ));
+    setMessages((prev) =>
+      prev.map((msg) =>
+        msg.id === id
+          ? {
+              ...msg,
+              status: msg.status === "pending" ? "paused" : ("pending" as any),
+            }
+          : msg,
+      ),
+    );
   };
 
   const handleDelete = (id: string) => {
-    setMessages(prev => prev.filter(msg => msg.id !== id));
+    setMessages((prev) => prev.filter((msg) => msg.id !== id));
     setDeleteId(null);
   };
 
-  const pendingCount = messages.filter(m => m.status === 'pending').length;
-  const pausedCount = messages.filter(m => m.status === 'paused').length;
-  const sentCount = messages.filter(m => m.status === 'sent').length;
+  const pendingCount = messages.filter((m) => m.status === "pending").length;
+  const pausedCount = messages.filter((m) => m.status === "paused").length;
+  const sentCount = messages.filter((m) => m.status === "sent").length;
   const totalRecipients = messages.reduce((sum, m) => sum + m.recipients, 0);
 
   return (
@@ -169,7 +195,9 @@ export default function Scheduled() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Total Recipients</p>
-                  <p className="text-xl font-bold">{totalRecipients.toLocaleString()}</p>
+                  <p className="text-xl font-bold">
+                    {totalRecipients.toLocaleString()}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -188,7 +216,8 @@ export default function Scheduled() {
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <Badge className={getStatusColor(message.status)}>
-                          {message.status.charAt(0).toUpperCase() + message.status.slice(1)}
+                          {message.status.charAt(0).toUpperCase() +
+                            message.status.slice(1)}
                         </Badge>
                         <span className="text-sm text-gray-600">
                           From: {message.sender}
@@ -201,8 +230,13 @@ export default function Scheduled() {
                         {message.message}
                       </p>
                       <div className="flex items-center gap-4 text-sm text-gray-600">
-                        <span>Scheduled: {new Date(message.scheduledTime).toLocaleString()}</span>
-                        <span>Created: {new Date(message.created).toLocaleString()}</span>
+                        <span>
+                          Scheduled:{" "}
+                          {new Date(message.scheduledTime).toLocaleString()}
+                        </span>
+                        <span>
+                          Created: {new Date(message.created).toLocaleString()}
+                        </span>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 ml-4">
@@ -213,28 +247,25 @@ export default function Scheduled() {
                       >
                         <Eye className="w-4 h-4" />
                       </Button>
-                      
-                      {message.status !== 'sent' && (
+
+                      {message.status !== "sent" && (
                         <>
                           <Button
                             variant="outline"
                             size="sm"
                             onClick={() => handleStatusToggle(message.id)}
                           >
-                            {message.status === 'pending' ? (
+                            {message.status === "pending" ? (
                               <Pause className="w-4 h-4" />
                             ) : (
                               <Play className="w-4 h-4" />
                             )}
                           </Button>
-                          
-                          <Button
-                            variant="outline"
-                            size="sm"
-                          >
+
+                          <Button variant="outline" size="sm">
                             <Edit3 className="w-4 h-4" />
                           </Button>
-                          
+
                           <Button
                             variant="outline"
                             size="sm"
@@ -252,7 +283,10 @@ export default function Scheduled() {
           </CardContent>
         </Card>
 
-        <Dialog open={!!selectedMessage} onOpenChange={() => setSelectedMessage(null)}>
+        <Dialog
+          open={!!selectedMessage}
+          onOpenChange={() => setSelectedMessage(null)}
+        >
           <DialogContent className="max-w-2xl">
             <DialogHeader>
               <DialogTitle>Message Details</DialogTitle>
@@ -260,42 +294,63 @@ export default function Scheduled() {
                 Scheduled message information and content
               </DialogDescription>
             </DialogHeader>
-            
+
             {selectedMessage && (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-medium text-gray-600">Status</label>
+                    <label className="text-sm font-medium text-gray-600">
+                      Status
+                    </label>
                     <div className="mt-1">
                       <Badge className={getStatusColor(selectedMessage.status)}>
-                        {selectedMessage.status.charAt(0).toUpperCase() + selectedMessage.status.slice(1)}
+                        {selectedMessage.status.charAt(0).toUpperCase() +
+                          selectedMessage.status.slice(1)}
                       </Badge>
                     </div>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-600">Recipients</label>
-                    <p className="mt-1 text-lg font-semibold">{selectedMessage.recipients}</p>
+                    <label className="text-sm font-medium text-gray-600">
+                      Recipients
+                    </label>
+                    <p className="mt-1 text-lg font-semibold">
+                      {selectedMessage.recipients}
+                    </p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-600">Sender Number</label>
+                    <label className="text-sm font-medium text-gray-600">
+                      Sender Number
+                    </label>
                     <p className="mt-1">{selectedMessage.sender}</p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-600">Scheduled Time</label>
-                    <p className="mt-1">{new Date(selectedMessage.scheduledTime).toLocaleString()}</p>
+                    <label className="text-sm font-medium text-gray-600">
+                      Scheduled Time
+                    </label>
+                    <p className="mt-1">
+                      {new Date(selectedMessage.scheduledTime).toLocaleString()}
+                    </p>
                   </div>
                 </div>
-                
+
                 <div>
-                  <label className="text-sm font-medium text-gray-600">Message Content</label>
+                  <label className="text-sm font-medium text-gray-600">
+                    Message Content
+                  </label>
                   <div className="mt-1 p-3 border rounded-lg bg-gray-50">
-                    <p className="whitespace-pre-wrap">{selectedMessage.message}</p>
+                    <p className="whitespace-pre-wrap">
+                      {selectedMessage.message}
+                    </p>
                   </div>
                 </div>
-                
+
                 <div>
-                  <label className="text-sm font-medium text-gray-600">Created</label>
-                  <p className="mt-1">{new Date(selectedMessage.created).toLocaleString()}</p>
+                  <label className="text-sm font-medium text-gray-600">
+                    Created
+                  </label>
+                  <p className="mt-1">
+                    {new Date(selectedMessage.created).toLocaleString()}
+                  </p>
                 </div>
               </div>
             )}
@@ -307,7 +362,8 @@ export default function Scheduled() {
             <AlertDialogHeader>
               <AlertDialogTitle>Delete Scheduled Message?</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. The scheduled message will be permanently deleted.
+                This action cannot be undone. The scheduled message will be
+                permanently deleted.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

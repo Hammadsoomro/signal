@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import {
   MessageSquare,
   Phone,
@@ -24,9 +24,9 @@ import {
   Receipt,
   X,
   Activity,
-  User
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
+  User,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -43,53 +43,86 @@ interface NavItem {
 
 export function AppSidebar({ isOpen, onClose }: SidebarProps) {
   const location = useLocation();
-  const [expandedItems, setExpandedItems] = useState<string[]>(['messaging']);
+  const [expandedItems, setExpandedItems] = useState<string[]>(["messaging"]);
 
   const toggleExpanded = (id: string) => {
-    setExpandedItems(prev => 
-      prev.includes(id) 
-        ? prev.filter(item => item !== id)
-        : [...prev, id]
+    setExpandedItems((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     );
   };
 
   const navigation: NavItem[] = [
-    { id: 'dashboard', label: 'Dashboard', icon: BarChart3, href: '/home' },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3, href: '/analytics' },
+    { id: "dashboard", label: "Dashboard", icon: BarChart3, href: "/home" },
     {
-      id: 'messaging',
-      label: 'Messaging',
+      id: "analytics",
+      label: "Analytics",
+      icon: BarChart3,
+      href: "/analytics",
+    },
+    {
+      id: "messaging",
+      label: "Messaging",
       icon: MessageSquare,
       children: [
-        { id: 'conversations', label: 'Conversations', icon: MessageSquare, href: '/conversations' },
-        { id: 'send', label: 'Send SMS', icon: Send, href: '/send' },
-        { id: 'scheduled', label: 'Scheduled', icon: Calendar, href: '/scheduled' },
-        { id: 'responses', label: 'Responses', icon: Inbox, href: '/responses' }
-      ]
+        {
+          id: "conversations",
+          label: "Conversations",
+          icon: MessageSquare,
+          href: "/conversations",
+        },
+        { id: "send", label: "Send SMS", icon: Send, href: "/send" },
+        {
+          id: "scheduled",
+          label: "Scheduled",
+          icon: Calendar,
+          href: "/scheduled",
+        },
+        {
+          id: "responses",
+          label: "Responses",
+          icon: Inbox,
+          href: "/responses",
+        },
+      ],
     },
-    { id: 'sub-accounts', label: 'Sub-Accounts', icon: Users, href: '/sub-accounts' },
-    { id: 'buy-numbers', label: 'Buy Numbers', icon: Phone, href: '/buy-numbers' },
     {
-      id: 'billing',
-      label: 'Billing',
+      id: "sub-accounts",
+      label: "Sub-Accounts",
+      icon: Users,
+      href: "/sub-accounts",
+    },
+    {
+      id: "buy-numbers",
+      label: "Buy Numbers",
+      icon: Phone,
+      href: "/buy-numbers",
+    },
+    {
+      id: "billing",
+      label: "Billing",
       icon: DollarSign,
       children: [
-        { id: 'wallet', label: 'Wallet', icon: Wallet, href: '/wallet' },
-        { id: 'transactions', label: 'Transactions', icon: Receipt, href: '/transactions' }
-      ]
+        { id: "wallet", label: "Wallet", icon: Wallet, href: "/wallet" },
+        {
+          id: "transactions",
+          label: "Transactions",
+          icon: Receipt,
+          href: "/transactions",
+        },
+      ],
     },
     {
-      id: 'settings',
-      label: 'Settings',
+      id: "settings",
+      label: "Settings",
       icon: Settings,
       children: [
-        { id: 'profile', label: 'Profile', icon: User, href: '/profile' },
-        { id: 'api-keys', label: 'API Keys', icon: Key, href: '/api-keys' },
-        { id: 'webhooks', label: 'Webhooks', icon: Webhook, href: '/webhooks' },
-        { id: 'alerts', label: 'Alerts', icon: Bell, href: '/alerts' }
-      ]
+        { id: "profile", label: "Profile", icon: User, href: "/profile" },
+        { id: "api-keys", label: "API Keys", icon: Key, href: "/api-keys" },
+        { id: "webhooks", label: "Webhooks", icon: Webhook, href: "/webhooks" },
+        { id: "alerts", label: "Alerts", icon: Bell, href: "/alerts" },
+      ],
     },
-    { id: 'support', label: 'Support', icon: HelpCircle, href: '/support' }
+    { id: "support", label: "Support", icon: HelpCircle, href: "/support" },
   ];
 
   const renderNavItem = (item: NavItem, level = 0) => {
@@ -105,7 +138,7 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
             className={cn(
               "w-full flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors text-left",
               "hover:bg-blue-800/50 text-white",
-              level > 0 && "ml-4 pl-6"
+              level > 0 && "ml-4 pl-6",
             )}
           >
             <item.icon className="h-4 w-4 flex-shrink-0" />
@@ -118,22 +151,23 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
           </button>
         ) : (
           <Link
-            to={item.href || '#'}
+            to={item.href || "#"}
             className={cn(
               "flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors text-white",
               "hover:bg-blue-800/50",
-              isActive && "bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 shadow-lg",
-              level > 0 && "ml-4 pl-6"
+              isActive &&
+                "bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 shadow-lg",
+              level > 0 && "ml-4 pl-6",
             )}
           >
             <item.icon className="h-4 w-4 flex-shrink-0" />
             <span>{item.label}</span>
           </Link>
         )}
-        
+
         {hasChildren && isExpanded && (
           <div className="mt-1 space-y-1">
-            {item.children!.map(child => renderNavItem(child, level + 1))}
+            {item.children!.map((child) => renderNavItem(child, level + 1))}
           </div>
         )}
       </div>
@@ -144,17 +178,19 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
     <>
       {/* Mobile Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 z-40 md:hidden"
           onClick={onClose}
         />
       )}
-      
+
       {/* Sidebar */}
-      <div className={cn(
-        "fixed left-0 top-0 z-50 h-screen w-72 bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900 text-white transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 flex flex-col border-r border-blue-800/50",
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      )}>
+      <div
+        className={cn(
+          "fixed left-0 top-0 z-50 h-screen w-72 bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900 text-white transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 flex flex-col border-r border-blue-800/50",
+          isOpen ? "translate-x-0" : "-translate-x-full",
+        )}
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-4 bg-blue-800/30 backdrop-blur flex-shrink-0 border-b border-blue-700/50">
           <Link to="/" className="flex items-center gap-2">
@@ -180,7 +216,9 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
                   <Wallet className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-white/90 text-xs font-medium uppercase tracking-wide">Current Balance</p>
+                  <p className="text-white/90 text-xs font-medium uppercase tracking-wide">
+                    Current Balance
+                  </p>
                   <p className="text-white text-xl font-bold">$125.50</p>
                 </div>
               </div>
@@ -195,16 +233,21 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
               <div className="text-xs font-medium text-blue-300 uppercase tracking-wide px-3 py-2">
                 Navigation
               </div>
-              {navigation.map(item => renderNavItem(item))}
+              {navigation.map((item) => renderNavItem(item))}
             </div>
 
             <Separator className="my-4 bg-blue-700/50 mx-3" />
-            
+
             <div className="space-y-2 pb-4">
               <div className="text-xs font-medium text-slate-400 uppercase tracking-wide px-3 py-2">
                 Help
               </div>
-              {renderNavItem({ id: 'support', label: 'Support', icon: HelpCircle, href: '/support' })}
+              {renderNavItem({
+                id: "support",
+                label: "Support",
+                icon: HelpCircle,
+                href: "/support",
+              })}
             </div>
 
             <div className="space-y-2 pb-6">
@@ -213,7 +256,9 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
               </div>
               <div className="flex items-center gap-3 px-3 py-2">
                 <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                <span className="text-sm text-slate-300">All Systems Operational</span>
+                <span className="text-sm text-slate-300">
+                  All Systems Operational
+                </span>
               </div>
             </div>
           </ScrollArea>

@@ -4,17 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
-  Key, 
-  Plus, 
-  Edit3, 
-  Trash2, 
-  Copy, 
+import {
+  Key,
+  Plus,
+  Edit3,
+  Trash2,
+  Copy,
   Eye,
   EyeOff,
   Shield,
   Calendar,
-  AlertTriangle
+  AlertTriangle,
 } from "lucide-react";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import {
@@ -62,56 +62,88 @@ interface ApiKey {
 
 const mockApiKeys: ApiKey[] = [
   {
-    id: '1',
-    name: 'Production API Key',
-    key: 'ck_1234567890abcdefghijklmnopqrstuvwxyz',
-    permissions: ['sms:send', 'sms:read', 'wallet:read'],
+    id: "1",
+    name: "Production API Key",
+    key: "ck_1234567890abcdefghijklmnopqrstuvwxyz",
+    permissions: ["sms:send", "sms:read", "wallet:read"],
     enabled: true,
-    created: '2024-01-10 10:00',
-    lastUsed: '2024-01-14 15:30',
+    created: "2024-01-10 10:00",
+    lastUsed: "2024-01-14 15:30",
     expiresAt: null,
-    description: 'Main API key for production SMS sending',
+    description: "Main API key for production SMS sending",
     usageCount: 1547,
-    rateLimit: 1000
+    rateLimit: 1000,
   },
   {
-    id: '2',
-    name: 'Analytics Dashboard',
-    key: 'ck_abcdef1234567890ghijklmnopqrstuvwxyz',
-    permissions: ['analytics:read', 'sms:read'],
+    id: "2",
+    name: "Analytics Dashboard",
+    key: "ck_abcdef1234567890ghijklmnopqrstuvwxyz",
+    permissions: ["analytics:read", "sms:read"],
     enabled: true,
-    created: '2024-01-12 14:30',
-    lastUsed: '2024-01-14 12:45',
-    expiresAt: '2024-06-12',
-    description: 'Read-only access for analytics dashboard',
+    created: "2024-01-12 14:30",
+    lastUsed: "2024-01-14 12:45",
+    expiresAt: "2024-06-12",
+    description: "Read-only access for analytics dashboard",
     usageCount: 234,
-    rateLimit: 500
+    rateLimit: 500,
   },
   {
-    id: '3',
-    name: 'Webhook Testing',
-    key: 'ck_testing123456789abcdefghijklmnopqr',
-    permissions: ['webhooks:manage'],
+    id: "3",
+    name: "Webhook Testing",
+    key: "ck_testing123456789abcdefghijklmnopqr",
+    permissions: ["webhooks:manage"],
     enabled: false,
-    created: '2024-01-13 16:45',
+    created: "2024-01-13 16:45",
     lastUsed: null,
-    expiresAt: '2024-02-13',
-    description: 'Temporary key for webhook development',
+    expiresAt: "2024-02-13",
+    description: "Temporary key for webhook development",
     usageCount: 0,
-    rateLimit: 100
-  }
+    rateLimit: 100,
+  },
 ];
 
 const availablePermissions = [
-  { value: 'sms:send', label: 'Send SMS', description: 'Send SMS messages' },
-  { value: 'sms:read', label: 'Read SMS', description: 'View SMS history and details' },
-  { value: 'numbers:manage', label: 'Manage Numbers', description: 'Purchase and manage phone numbers' },
-  { value: 'wallet:read', label: 'Read Wallet', description: 'View wallet balance and transactions' },
-  { value: 'wallet:manage', label: 'Manage Wallet', description: 'Add funds and manage wallet' },
-  { value: 'subaccounts:manage', label: 'Manage Sub-accounts', description: 'Create and manage sub-accounts' },
-  { value: 'analytics:read', label: 'Read Analytics', description: 'View analytics and reports' },
-  { value: 'webhooks:manage', label: 'Manage Webhooks', description: 'Create and manage webhook endpoints' },
-  { value: 'admin:full', label: 'Full Admin Access', description: 'Complete access to all features' }
+  { value: "sms:send", label: "Send SMS", description: "Send SMS messages" },
+  {
+    value: "sms:read",
+    label: "Read SMS",
+    description: "View SMS history and details",
+  },
+  {
+    value: "numbers:manage",
+    label: "Manage Numbers",
+    description: "Purchase and manage phone numbers",
+  },
+  {
+    value: "wallet:read",
+    label: "Read Wallet",
+    description: "View wallet balance and transactions",
+  },
+  {
+    value: "wallet:manage",
+    label: "Manage Wallet",
+    description: "Add funds and manage wallet",
+  },
+  {
+    value: "subaccounts:manage",
+    label: "Manage Sub-accounts",
+    description: "Create and manage sub-accounts",
+  },
+  {
+    value: "analytics:read",
+    label: "Read Analytics",
+    description: "View analytics and reports",
+  },
+  {
+    value: "webhooks:manage",
+    label: "Manage Webhooks",
+    description: "Create and manage webhook endpoints",
+  },
+  {
+    value: "admin:full",
+    label: "Full Admin Access",
+    description: "Complete access to all features",
+  },
 ];
 
 export default function ApiKeys() {
@@ -121,18 +153,18 @@ export default function ApiKeys() {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [visibleKeys, setVisibleKeys] = useState<Set<string>>(new Set());
   const { toast } = useToast();
-  
+
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
+    name: "",
+    description: "",
     permissions: [] as string[],
     enabled: true,
-    expiresAt: '',
-    rateLimit: 1000
+    expiresAt: "",
+    rateLimit: 1000,
   });
 
   const toggleKeyVisibility = (id: string) => {
-    setVisibleKeys(prev => {
+    setVisibleKeys((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(id)) {
         newSet.delete(id);
@@ -152,9 +184,11 @@ export default function ApiKeys() {
   };
 
   const toggleApiKey = (id: string) => {
-    setApiKeys(prev => prev.map(key => 
-      key.id === id ? { ...key, enabled: !key.enabled } : key
-    ));
+    setApiKeys((prev) =>
+      prev.map((key) =>
+        key.id === id ? { ...key, enabled: !key.enabled } : key,
+      ),
+    );
   };
 
   const generateApiKey = () => {
@@ -173,13 +207,13 @@ export default function ApiKeys() {
       expiresAt: formData.expiresAt || null,
       description: formData.description,
       usageCount: 0,
-      rateLimit: formData.rateLimit
+      rateLimit: formData.rateLimit,
     };
-    
-    setApiKeys(prev => [...prev, newApiKey]);
+
+    setApiKeys((prev) => [...prev, newApiKey]);
     setShowCreateDialog(false);
     resetForm();
-    
+
     toast({
       title: "API Key Created",
       description: "Your new API key has been generated successfully",
@@ -188,15 +222,15 @@ export default function ApiKeys() {
 
   const handleUpdate = () => {
     if (!editingKey) return;
-    
-    setApiKeys(prev => prev.map(key => 
-      key.id === editingKey.id 
-        ? { ...key, ...formData }
-        : key
-    ));
+
+    setApiKeys((prev) =>
+      prev.map((key) =>
+        key.id === editingKey.id ? { ...key, ...formData } : key,
+      ),
+    );
     setEditingKey(null);
     resetForm();
-    
+
     toast({
       title: "API Key Updated",
       description: "API key has been updated successfully",
@@ -204,35 +238,35 @@ export default function ApiKeys() {
   };
 
   const handleDelete = (id: string) => {
-    setApiKeys(prev => prev.filter(key => key.id !== id));
+    setApiKeys((prev) => prev.filter((key) => key.id !== id));
     setDeleteId(null);
-    
+
     toast({
       title: "API Key Deleted",
       description: "API key has been permanently deleted",
-      variant: "destructive"
+      variant: "destructive",
     });
   };
 
   const resetForm = () => {
     setFormData({
-      name: '',
-      description: '',
+      name: "",
+      description: "",
       permissions: [],
       enabled: true,
-      expiresAt: '',
-      rateLimit: 1000
+      expiresAt: "",
+      rateLimit: 1000,
     });
   };
 
   const openEditDialog = (key: ApiKey) => {
     setFormData({
       name: key.name,
-      description: key.description || '',
+      description: key.description || "",
       permissions: key.permissions,
       enabled: key.enabled,
-      expiresAt: key.expiresAt || '',
-      rateLimit: key.rateLimit
+      expiresAt: key.expiresAt || "",
+      rateLimit: key.rateLimit,
     });
     setEditingKey(key);
   };
@@ -245,9 +279,11 @@ export default function ApiKeys() {
     return expiryDate <= thirtyDaysFromNow;
   };
 
-  const activeKeys = apiKeys.filter(k => k.enabled).length;
+  const activeKeys = apiKeys.filter((k) => k.enabled).length;
   const totalUsage = apiKeys.reduce((sum, k) => sum + k.usageCount, 0);
-  const expiringKeys = apiKeys.filter(k => isExpiringSoon(k.expiresAt)).length;
+  const expiringKeys = apiKeys.filter((k) =>
+    isExpiringSoon(k.expiresAt),
+  ).length;
 
   return (
     <DashboardLayout>
@@ -255,7 +291,9 @@ export default function ApiKeys() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold">API Keys</h1>
-            <p className="text-gray-600">Manage API keys for programmatic access to your account</p>
+            <p className="text-gray-600">
+              Manage API keys for programmatic access to your account
+            </p>
           </div>
           <Button onClick={() => setShowCreateDialog(true)}>
             <Plus className="w-4 h-4 mr-2" />
@@ -286,7 +324,9 @@ export default function ApiKeys() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Total Usage</p>
-                  <p className="text-xl font-bold">{totalUsage.toLocaleString()}</p>
+                  <p className="text-xl font-bold">
+                    {totalUsage.toLocaleString()}
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -333,26 +373,30 @@ export default function ApiKeys() {
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-3">
                         <h3 className="font-semibold">{apiKey.name}</h3>
-                        <Badge variant={apiKey.enabled ? "default" : "secondary"}>
-                          {apiKey.enabled ? 'Active' : 'Disabled'}
+                        <Badge
+                          variant={apiKey.enabled ? "default" : "secondary"}
+                        >
+                          {apiKey.enabled ? "Active" : "Disabled"}
                         </Badge>
-                        {apiKey.expiresAt && isExpiringSoon(apiKey.expiresAt) && (
-                          <Badge variant="destructive" className="text-xs">
-                            <AlertTriangle className="w-3 h-3 mr-1" />
-                            Expiring Soon
-                          </Badge>
-                        )}
+                        {apiKey.expiresAt &&
+                          isExpiringSoon(apiKey.expiresAt) && (
+                            <Badge variant="destructive" className="text-xs">
+                              <AlertTriangle className="w-3 h-3 mr-1" />
+                              Expiring Soon
+                            </Badge>
+                          )}
                       </div>
-                      
+
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
-                          <Label className="text-sm font-medium">API Key:</Label>
+                          <Label className="text-sm font-medium">
+                            API Key:
+                          </Label>
                           <div className="flex items-center gap-2">
                             <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono">
-                              {visibleKeys.has(apiKey.id) 
-                                ? apiKey.key 
-                                : `${apiKey.key.substring(0, 16)}${'*'.repeat(24)}`
-                              }
+                              {visibleKeys.has(apiKey.id)
+                                ? apiKey.key
+                                : `${apiKey.key.substring(0, 16)}${"*".repeat(24)}`}
                             </code>
                             <Button
                               variant="ghost"
@@ -374,27 +418,41 @@ export default function ApiKeys() {
                             </Button>
                           </div>
                         </div>
-                        
+
                         {apiKey.description && (
-                          <p className="text-sm text-gray-600">{apiKey.description}</p>
+                          <p className="text-sm text-gray-600">
+                            {apiKey.description}
+                          </p>
                         )}
-                        
+
                         <div className="flex flex-wrap gap-1">
                           {apiKey.permissions.map((permission) => (
-                            <Badge key={permission} variant="outline" className="text-xs">
-                              {availablePermissions.find(p => p.value === permission)?.label || permission}
+                            <Badge
+                              key={permission}
+                              variant="outline"
+                              className="text-xs"
+                            >
+                              {availablePermissions.find(
+                                (p) => p.value === permission,
+                              )?.label || permission}
                             </Badge>
                           ))}
                         </div>
-                        
+
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600">
                           <div>
                             <span className="font-medium">Created:</span>
-                            <div>{new Date(apiKey.created).toLocaleDateString()}</div>
+                            <div>
+                              {new Date(apiKey.created).toLocaleDateString()}
+                            </div>
                           </div>
                           <div>
                             <span className="font-medium">Last Used:</span>
-                            <div>{apiKey.lastUsed ? new Date(apiKey.lastUsed).toLocaleDateString() : 'Never'}</div>
+                            <div>
+                              {apiKey.lastUsed
+                                ? new Date(apiKey.lastUsed).toLocaleDateString()
+                                : "Never"}
+                            </div>
                           </div>
                           <div>
                             <span className="font-medium">Usage Count:</span>
@@ -405,21 +463,22 @@ export default function ApiKeys() {
                             <div>{apiKey.rateLimit}/hour</div>
                           </div>
                         </div>
-                        
+
                         {apiKey.expiresAt && (
                           <div className="text-sm text-gray-600">
-                            <span className="font-medium">Expires:</span> {new Date(apiKey.expiresAt).toLocaleDateString()}
+                            <span className="font-medium">Expires:</span>{" "}
+                            {new Date(apiKey.expiresAt).toLocaleDateString()}
                           </div>
                         )}
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center gap-2 ml-4">
                       <Switch
                         checked={apiKey.enabled}
                         onCheckedChange={() => toggleApiKey(apiKey.id)}
                       />
-                      
+
                       <Button
                         variant="outline"
                         size="sm"
@@ -427,7 +486,7 @@ export default function ApiKeys() {
                       >
                         <Edit3 className="w-4 h-4" />
                       </Button>
-                      
+
                       <Button
                         variant="outline"
                         size="sm"
@@ -439,13 +498,13 @@ export default function ApiKeys() {
                   </div>
                 </div>
               ))}
-              
+
               {apiKeys.length === 0 && (
                 <div className="text-center py-8">
                   <Key className="w-12 h-12 text-gray-400 mx-auto mb-3" />
                   <p className="text-gray-500">No API keys created yet</p>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="mt-2"
                     onClick={() => setShowCreateDialog(true)}
                   >
@@ -457,23 +516,27 @@ export default function ApiKeys() {
           </CardContent>
         </Card>
 
-        <Dialog open={showCreateDialog || !!editingKey} onOpenChange={(open) => {
-          if (!open) {
-            setShowCreateDialog(false);
-            setEditingKey(null);
-            resetForm();
-          }
-        }}>
+        <Dialog
+          open={showCreateDialog || !!editingKey}
+          onOpenChange={(open) => {
+            if (!open) {
+              setShowCreateDialog(false);
+              setEditingKey(null);
+              resetForm();
+            }
+          }}
+        >
           <DialogContent className="max-w-2xl">
             <DialogHeader>
               <DialogTitle>
-                {editingKey ? 'Edit API Key' : 'Create New API Key'}
+                {editingKey ? "Edit API Key" : "Create New API Key"}
               </DialogTitle>
               <DialogDescription>
-                Configure your API key with specific permissions and usage limits
+                Configure your API key with specific permissions and usage
+                limits
               </DialogDescription>
             </DialogHeader>
-            
+
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -481,7 +544,9 @@ export default function ApiKeys() {
                   <Input
                     id="name"
                     value={formData.name}
-                    onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, name: e.target.value }))
+                    }
                     placeholder="Production API Key"
                   />
                 </div>
@@ -491,83 +556,117 @@ export default function ApiKeys() {
                     id="rateLimit"
                     type="number"
                     value={formData.rateLimit}
-                    onChange={(e) => setFormData(prev => ({ ...prev, rateLimit: Number(e.target.value) }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        rateLimit: Number(e.target.value),
+                      }))
+                    }
                     placeholder="1000"
                   />
                 </div>
               </div>
-              
+
               <div>
                 <Label htmlFor="description">Description (Optional)</Label>
                 <Textarea
                   id="description"
                   value={formData.description}
-                  onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }))
+                  }
                   placeholder="Describe what this API key will be used for"
                 />
               </div>
-              
+
               <div>
                 <Label htmlFor="expiresAt">Expiration Date (Optional)</Label>
                 <Input
                   id="expiresAt"
                   type="date"
                   value={formData.expiresAt}
-                  onChange={(e) => setFormData(prev => ({ ...prev, expiresAt: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      expiresAt: e.target.value,
+                    }))
+                  }
                 />
               </div>
-              
+
               <div>
                 <Label>Permissions</Label>
                 <div className="space-y-2 mt-2 max-h-64 overflow-y-auto">
                   {availablePermissions.map((permission) => (
-                    <label key={permission.value} className="flex items-start gap-3 p-3 border rounded cursor-pointer hover:bg-gray-50">
+                    <label
+                      key={permission.value}
+                      className="flex items-start gap-3 p-3 border rounded cursor-pointer hover:bg-gray-50"
+                    >
                       <input
                         type="checkbox"
-                        checked={formData.permissions.includes(permission.value)}
+                        checked={formData.permissions.includes(
+                          permission.value,
+                        )}
                         onChange={(e) => {
                           if (e.target.checked) {
-                            setFormData(prev => ({ 
-                              ...prev, 
-                              permissions: [...prev.permissions, permission.value] 
+                            setFormData((prev) => ({
+                              ...prev,
+                              permissions: [
+                                ...prev.permissions,
+                                permission.value,
+                              ],
                             }));
                           } else {
-                            setFormData(prev => ({ 
-                              ...prev, 
-                              permissions: prev.permissions.filter(p => p !== permission.value) 
+                            setFormData((prev) => ({
+                              ...prev,
+                              permissions: prev.permissions.filter(
+                                (p) => p !== permission.value,
+                              ),
                             }));
                           }
                         }}
                         className="mt-1"
                       />
                       <div>
-                        <span className="font-medium text-sm">{permission.label}</span>
-                        <p className="text-xs text-gray-600">{permission.description}</p>
+                        <span className="font-medium text-sm">
+                          {permission.label}
+                        </span>
+                        <p className="text-xs text-gray-600">
+                          {permission.description}
+                        </p>
                       </div>
                     </label>
                   ))}
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-2">
                 <Switch
                   checked={formData.enabled}
-                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, enabled: checked }))}
+                  onCheckedChange={(checked) =>
+                    setFormData((prev) => ({ ...prev, enabled: checked }))
+                  }
                 />
                 <Label>Enable API key immediately</Label>
               </div>
             </div>
-            
+
             <DialogFooter>
-              <Button variant="outline" onClick={() => {
-                setShowCreateDialog(false);
-                setEditingKey(null);
-                resetForm();
-              }}>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setShowCreateDialog(false);
+                  setEditingKey(null);
+                  resetForm();
+                }}
+              >
                 Cancel
               </Button>
               <Button onClick={editingKey ? handleUpdate : handleCreate}>
-                {editingKey ? 'Update API Key' : 'Create API Key'}
+                {editingKey ? "Update API Key" : "Create API Key"}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -578,8 +677,9 @@ export default function ApiKeys() {
             <AlertDialogHeader>
               <AlertDialogTitle>Delete API Key?</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. The API key will be permanently deleted and all
-                applications using this key will lose access immediately.
+                This action cannot be undone. The API key will be permanently
+                deleted and all applications using this key will lose access
+                immediately.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
