@@ -13,7 +13,8 @@ export class SignalWireClient {
 
   constructor() {
     this.baseUrl = SIGNALWIRE_CONFIG.apiUrl;
-    this.auth = Buffer.from(`${SIGNALWIRE_CONFIG.projectId}:${SIGNALWIRE_CONFIG.token}`).toString('base64');
+    // Use btoa for browser compatibility instead of Buffer
+    this.auth = btoa(`${SIGNALWIRE_CONFIG.projectId}:${SIGNALWIRE_CONFIG.token}`);
   }
 
   // Send SMS message
