@@ -33,6 +33,12 @@ export class SignalWireClient {
   // Send SMS message
   async sendSMS(from: string, to: string, body: string) {
     try {
+      // Clean phone numbers to E.164 format
+      const cleanFrom = cleanPhoneNumber(from);
+      const cleanTo = cleanPhoneNumber(to);
+
+      console.log('Sending SMS:', { from: cleanFrom, to: cleanTo, body });
+
       const response = await fetch(`${this.baseUrl}/Accounts/${SIGNALWIRE_CONFIG.projectId}/Messages.json`, {
         method: 'POST',
         headers: {
@@ -40,8 +46,8 @@ export class SignalWireClient {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
-          From: from,
-          To: to,
+          From: cleanFrom,
+          To: cleanTo,
           Body: body
         })
       });
