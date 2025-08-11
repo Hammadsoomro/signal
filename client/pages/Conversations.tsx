@@ -167,6 +167,13 @@ export default function Conversations() {
     { id: '3', number: '+1 (555) 345-6789', label: 'Support', isActive: true }
   ];
 
+  // Request notification permission on mount
+  useEffect(() => {
+    if (Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+  }, []);
+
   // Simulate WebSocket connection for real-time messaging
   useEffect(() => {
     const connectToSocket = () => {
@@ -200,9 +207,21 @@ export default function Conversations() {
 
             // Show notification if not current conversation
             if (randomConvId !== selectedConversation) {
+              const senderName = conversations.find(c => c.id === randomConvId)?.name;
+
+              // Browser notification
+              if (Notification.permission === 'granted') {
+                new Notification(`New SMS from ${senderName}`, {
+                  body: newMessage.text,
+                  icon: '/favicon.ico',
+                  badge: '/favicon.ico'
+                });
+              }
+
+              // Toast notification
               toast({
-                title: "New Message",
-                description: `New message from ${conversations.find(c => c.id === randomConvId)?.name}`,
+                title: "📱 New SMS Message",
+                description: `${senderName}: ${newMessage.text.substring(0, 50)}${newMessage.text.length > 50 ? '...' : ''}`,
               });
             }
           }
