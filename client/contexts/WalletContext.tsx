@@ -21,7 +21,7 @@ interface WalletContextType {
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
-export function WalletProvider({ children }: { children: React.ReactNode }) {
+export function WalletProvider({ children }: { children: ReactNode }) {
   const [balance, setBalance] = useState(125.50);
   const [transactions, setTransactions] = useState<Transaction[]>([
     {
