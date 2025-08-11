@@ -152,9 +152,12 @@ export default function SubAccounts() {
 
     // Deduct transferred amount from user's wallet
     if (transferAmount > 0) {
-      // Note: This should integrate with the actual wallet system
-      // For now, we'll just log the transaction
-      console.log(`Would deduct $${transferAmount} from user wallet`);
+      const success = deductBalance(transferAmount, `Initial transfer to sub-account: ${newSubAccount.name}`);
+      if (!success) {
+        // Remove the sub-account if wallet deduction failed
+        setSubAccounts(prev => prev.filter(acc => acc.id !== newSubAccount.id));
+        return;
+      }
     }
 
     // Update phone number assignment if selected
