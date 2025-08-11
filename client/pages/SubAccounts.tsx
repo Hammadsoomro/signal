@@ -59,6 +59,7 @@ interface SubAccount {
 
 export default function SubAccounts() {
   const { toast } = useToast();
+  const { balance: userWalletBalance, deductBalance } = useWallet();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isTransferDialogOpen, setIsTransferDialogOpen] = useState(false);
@@ -68,8 +69,6 @@ export default function SubAccounts() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // Mock data
-  const [userWalletBalance] = useState(125.5);
   const [subAccounts, setSubAccounts] = useState<SubAccount[]>([]);
 
   const { purchasedNumbers, updateNumberAssignment, getAvailableNumbers } =
