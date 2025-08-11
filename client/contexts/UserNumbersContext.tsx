@@ -29,21 +29,23 @@ const UserNumbersContext = createContext<UserNumbersContextType | undefined>(
 export const UserNumbersProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [purchasedNumbers, setPurchasedNumbers] = useState<PurchasedNumber[]>([
-    // User's actual purchased number
-    {
-      id: "1",
-      number: "+1 (249) 444-0933",
-      label: "Primary Business Line",
-      city: "Ontario",
-      state: "Ontario",
-      country: "CA",
-      isActive: true,
-      purchaseDate: "2024-01-01",
-      monthlyPrice: 5.0,
-      assignedTo: null,
-    },
-  ]);
+  const [purchasedNumbers, setPurchasedNumbers] = useState<PurchasedNumber[]>(() => {
+    // Initialize with user's actual purchased number
+    return [
+      {
+        id: "1",
+        number: "+1 (249) 444-0933",
+        label: "Primary Business Line",
+        city: "Ontario",
+        state: "Ontario",
+        country: "CA",
+        isActive: true,
+        purchaseDate: "2024-01-01",
+        monthlyPrice: 5.0,
+        assignedTo: null,
+      },
+    ];
+  });
 
   const addPurchasedNumber = (number: PurchasedNumber) => {
     setPurchasedNumbers((prev) => [...prev, number]);
