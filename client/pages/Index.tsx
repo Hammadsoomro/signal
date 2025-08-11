@@ -129,42 +129,54 @@ export default function Index() {
             </CardHeader>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <Users className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>Sub-Account Management</CardTitle>
-              <CardDescription>
-                Create up to 3 sub-accounts per user. Assign numbers and manage wallet permissions easily
+          <Card className="hover:shadow-xl transition-all duration-300 border-0 shadow-lg group">
+            <CardHeader className="pb-6">
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-200 transition-colors">
+                <Users className="h-6 w-6 text-purple-600" />
+              </div>
+              <CardTitle className="text-xl font-semibold">Team Management</CardTitle>
+              <CardDescription className="text-gray-600 leading-relaxed">
+                Create up to 3 sub-accounts with individual wallets, number assignments, and granular
+                permissions for seamless team collaboration
               </CardDescription>
             </CardHeader>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <Wallet className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>Wallet System</CardTitle>
-              <CardDescription>
-                Individual wallet management with balance tracking and insufficient funds protection
+          <Card className="hover:shadow-xl transition-all duration-300 border-0 shadow-lg group">
+            <CardHeader className="pb-6">
+              <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-yellow-200 transition-colors">
+                <Wallet className="h-6 w-6 text-yellow-600" />
+              </div>
+              <CardTitle className="text-xl font-semibold">Smart Wallet System</CardTitle>
+              <CardDescription className="text-gray-600 leading-relaxed">
+                Secure wallet with Safepay integration, real-time balance tracking, automatic deductions,
+                and detailed transaction history
               </CardDescription>
             </CardHeader>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <Shield className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>Secure & Reliable</CardTitle>
-              <CardDescription>
-                Enterprise-grade security with Google OAuth integration and secure password management
+          <Card className="hover:shadow-xl transition-all duration-300 border-0 shadow-lg group">
+            <CardHeader className="pb-6">
+              <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-200 transition-colors">
+                <Shield className="h-6 w-6 text-red-600" />
+              </div>
+              <CardTitle className="text-xl font-semibold">Enterprise Security</CardTitle>
+              <CardDescription className="text-gray-600 leading-relaxed">
+                Advanced security with API key management, webhook endpoints, 2FA, IP whitelisting,
+                and comprehensive audit trails
               </CardDescription>
             </CardHeader>
           </Card>
 
-          <Card className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <Zap className="h-8 w-8 text-primary mb-2" />
-              <CardTitle>Lightning Fast</CardTitle>
-              <CardDescription>
-                Real-time messaging, instant notifications, and seamless user experience
+          <Card className="hover:shadow-xl transition-all duration-300 border-0 shadow-lg group">
+            <CardHeader className="pb-6">
+              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-indigo-200 transition-colors">
+                <Zap className="h-6 w-6 text-indigo-600" />
+              </div>
+              <CardTitle className="text-xl font-semibold">Lightning Fast Delivery</CardTitle>
+              <CardDescription className="text-gray-600 leading-relaxed">
+                High-performance messaging infrastructure with real-time delivery status,
+                instant notifications, and 99.9% uptime guarantee
               </CardDescription>
             </CardHeader>
           </Card>
