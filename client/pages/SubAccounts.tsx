@@ -55,26 +55,7 @@ export default function SubAccounts() {
 
   // Mock data
   const [userWalletBalance] = useState(125.50);
-  const [subAccounts, setSubAccounts] = useState<SubAccount[]>([
-    {
-      id: '1',
-      name: 'John Smith',
-      email: 'john@company.com',
-      walletBalance: 25.00,
-      assignedNumbers: ['+1 (555) 123-4567'],
-      createdAt: '2024-01-15',
-      status: 'active'
-    },
-    {
-      id: '2',
-      name: 'Sarah Johnson',
-      email: 'sarah@company.com',
-      walletBalance: 15.75,
-      assignedNumbers: [],
-      createdAt: '2024-01-20',
-      status: 'active'
-    }
-  ]);
+  const [subAccounts, setSubAccounts] = useState<SubAccount[]>([]);
 
   const [phoneNumbers, setPhoneNumbers] = useState<PhoneNumber[]>([]);
 
