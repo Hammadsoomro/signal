@@ -131,7 +131,7 @@ export default function Scheduled() {
   const totalRecipients = messages.reduce((sum, m) => sum + m.recipients, 0);
 
   return (
-    <DashboardLayout>
+    <DashboardLayout title="Scheduled Messages">
       <div className="p-6 space-y-6">
         <div className="flex items-center justify-between">
           <div>
