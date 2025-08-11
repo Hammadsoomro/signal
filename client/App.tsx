@@ -70,13 +70,34 @@ const App = () => (
   </QueryClientProvider>
 );
 
-// Ensure we only create one root instance
-const container = document.getElementById("root")!;
+// Ensure we only create one root instance with proper error handling
+const container = document.getElementById("root");
+if (!container) {
+  throw new Error("Root container not found");
+}
+
+// Check if we already have a root instance
 let root = (container as any)._reactRoot;
 
 if (!root) {
-  root = createRoot(container);
-  (container as any)._reactRoot = root;
+  try {
+    // Clear any existing content to prevent conflicts
+    container.innerHTML = '';
+    root = createRoot(container);
+    (container as any)._reactRoot = root;
+  } catch (error) {
+    console.error("Failed to create React root:", error);
+    throw error;
+  }
+}
+
+// Handle hot module replacement cleanup
+if (module.hot) {
+  module.hot.dispose(() => {
+    if ((container as any)._reactRoot) {
+      (container as any)._reactRoot = null;
+    }
+  });
 }
 
 root.render(<App />);
