@@ -230,7 +230,13 @@ export default function SubAccounts() {
       return;
     }
 
-    // Transfer funds to sub-account
+    // First deduct from user's wallet
+    const success = deductBalance(amount, `Transfer to sub-account: ${transferForm.subAccountId}`);
+    if (!success) {
+      return; // Stop if wallet deduction failed
+    }
+
+    // Then transfer funds to sub-account
     setSubAccounts((prev) =>
       prev.map((account) =>
         account.id === transferForm.subAccountId
@@ -238,10 +244,6 @@ export default function SubAccounts() {
           : account,
       ),
     );
-
-    // Deduct amount from user's wallet
-    // Note: This should integrate with the actual wallet system
-    console.log(`Would deduct $${amount} from user wallet`);
 
     setTransferForm({ amount: "", subAccountId: "" });
     setIsTransferDialogOpen(false);
