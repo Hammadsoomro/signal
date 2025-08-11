@@ -25,6 +25,7 @@ import {
   PhoneOff
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useUserNumbers } from '@/contexts/UserNumbersContext';
 
 interface SubAccount {
   id: string;
@@ -36,12 +37,6 @@ interface SubAccount {
   status: 'active' | 'suspended';
 }
 
-interface PhoneNumber {
-  id: string;
-  number: string;
-  label: string;
-  assignedTo: string | null; // sub-account id or null if unassigned
-}
 
 export default function SubAccounts() {
   const { toast } = useToast();
@@ -57,7 +52,8 @@ export default function SubAccounts() {
   const [userWalletBalance] = useState(125.50);
   const [subAccounts, setSubAccounts] = useState<SubAccount[]>([]);
 
-  const [phoneNumbers, setPhoneNumbers] = useState<PhoneNumber[]>([]);
+  const { purchasedNumbers, updateNumberAssignment, getAvailableNumbers } = useUserNumbers();
+  const availableForAssignment = getAvailableNumbers();
 
   // Form states
   const [createForm, setCreateForm] = useState({
@@ -139,11 +135,10 @@ export default function SubAccounts() {
 
     // Update phone number assignment if selected
     if (createForm.assignedNumber) {
-      setPhoneNumbers(prev => prev.map(num => 
-        num.number === createForm.assignedNumber 
-          ? { ...num, assignedTo: newSubAccount.id }
-          : num
-      ));
+      const selectedNumber = purchasedNumbers.find(num => num.number === createForm.assignedNumber);
+      if (selectedNumber) {
+        updateNumberAssignment(selectedNumber.id, newSubAccount.id);
+      }
     }
 
     setCreateForm({
@@ -226,22 +221,18 @@ export default function SubAccounts() {
   const handleNumberAssignment = (e: React.FormEvent) => {
     e.preventDefault();
 
+    const selectedNumber = purchasedNumbers.find(num => num.id === numberForm.numberId);
+    if (!selectedNumber) return;
+
     if (numberForm.action === 'assign') {
       // Assign number to sub-account
-      setPhoneNumbers(prev => prev.map(num => 
-        num.id === numberForm.numberId 
-          ? { ...num, assignedTo: numberForm.subAccountId }
-          : num
-      ));
+      updateNumberAssignment(numberForm.numberId, numberForm.subAccountId);
 
-      const selectedNumber = phoneNumbers.find(num => num.id === numberForm.numberId);
-      if (selectedNumber) {
-        setSubAccounts(prev => prev.map(account => 
-          account.id === numberForm.subAccountId 
-            ? { ...account, assignedNumbers: [...account.assignedNumbers, selectedNumber.number] }
-            : account
-        ));
-      }
+      setSubAccounts(prev => prev.map(account =>
+        account.id === numberForm.subAccountId
+          ? { ...account, assignedNumbers: [...account.assignedNumbers, selectedNumber.number] }
+          : account
+      ));
 
       toast({
         title: "Success",
@@ -249,20 +240,13 @@ export default function SubAccounts() {
       });
     } else {
       // Unassign number from sub-account
-      setPhoneNumbers(prev => prev.map(num => 
-        num.id === numberForm.numberId 
-          ? { ...num, assignedTo: null }
-          : num
-      ));
+      updateNumberAssignment(numberForm.numberId, null);
 
-      const selectedNumber = phoneNumbers.find(num => num.id === numberForm.numberId);
-      if (selectedNumber) {
-        setSubAccounts(prev => prev.map(account => 
-          account.id === numberForm.subAccountId 
-            ? { ...account, assignedNumbers: account.assignedNumbers.filter(num => num !== selectedNumber.number) }
-            : account
-        ));
-      }
+      setSubAccounts(prev => prev.map(account =>
+        account.id === numberForm.subAccountId
+          ? { ...account, assignedNumbers: account.assignedNumbers.filter(num => num !== selectedNumber.number) }
+          : account
+      ));
 
       toast({
         title: "Success",
@@ -276,9 +260,11 @@ export default function SubAccounts() {
 
   const handleDeleteSubAccount = (id: string) => {
     // Unassign all numbers from this sub-account
-    setPhoneNumbers(prev => prev.map(num => 
-      num.assignedTo === id ? { ...num, assignedTo: null } : num
-    ));
+    purchasedNumbers.forEach(num => {
+      if (num.assignedTo === id) {
+        updateNumberAssignment(num.id, null);
+      }
+    });
 
     setSubAccounts(prev => prev.filter(account => account.id !== id));
     toast({
@@ -299,7 +285,7 @@ export default function SubAccounts() {
   };
 
   const getAssignedSubAccountName = (numberId: string) => {
-    const number = phoneNumbers.find(num => num.id === numberId);
+    const number = purchasedNumbers.find(num => num.id === numberId);
     if (!number || !number.assignedTo) return 'Unassigned';
     const subAccount = subAccounts.find(acc => acc.id === number.assignedTo);
     return subAccount ? subAccount.name : 'Unassigned';
@@ -443,7 +429,7 @@ export default function SubAccounts() {
                         <SelectValue placeholder="Select a number to assign" />
                       </SelectTrigger>
                       <SelectContent>
-                        {phoneNumbers.filter(num => !num.assignedTo).map((number) => (
+                        {availableForAssignment.map((number) => (
                           <SelectItem key={number.id} value={number.number}>
                             {number.number} ({number.label})
                           </SelectItem>
@@ -567,7 +553,7 @@ export default function SubAccounts() {
                       <SelectValue placeholder="Select phone number" />
                     </SelectTrigger>
                     <SelectContent>
-                      {phoneNumbers
+                      {purchasedNumbers
                         .filter(num => numberForm.action === 'assign' ? !num.assignedTo : num.assignedTo)
                         .map((number) => (
                           <SelectItem key={number.id} value={number.id}>
@@ -621,32 +607,40 @@ export default function SubAccounts() {
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              {phoneNumbers.map((number) => (
-                <div key={number.id} className="flex items-center justify-between p-3 border rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <Phone className="h-4 w-4 text-muted-foreground" />
-                    <div>
-                      <p className="font-medium">{number.number}</p>
-                      <p className="text-sm text-muted-foreground">{number.label}</p>
+              {purchasedNumbers.length === 0 ? (
+                <div className="text-center py-8">
+                  <Phone className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                  <p className="text-muted-foreground mb-4">No purchased numbers yet</p>
+                  <p className="text-sm text-muted-foreground">Purchase phone numbers to assign them to sub-accounts</p>
+                </div>
+              ) : (
+                purchasedNumbers.map((number) => (
+                  <div key={number.id} className="flex items-center justify-between p-3 border rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <Phone className="h-4 w-4 text-muted-foreground" />
+                      <div>
+                        <p className="font-medium">{number.number}</p>
+                        <p className="text-sm text-muted-foreground">{number.label}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge variant={number.assignedTo ? "default" : "secondary"}>
+                        {number.assignedTo ? (
+                          <>
+                            <PhoneCall className="h-3 w-3 mr-1" />
+                            Assigned to {getAssignedSubAccountName(number.id)}
+                          </>
+                        ) : (
+                          <>
+                            <PhoneOff className="h-3 w-3 mr-1" />
+                            Unassigned
+                          </>
+                        )}
+                      </Badge>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Badge variant={number.assignedTo ? "default" : "secondary"}>
-                      {number.assignedTo ? (
-                        <>
-                          <PhoneCall className="h-3 w-3 mr-1" />
-                          Assigned to {getAssignedSubAccountName(number.id)}
-                        </>
-                      ) : (
-                        <>
-                          <PhoneOff className="h-3 w-3 mr-1" />
-                          Unassigned
-                        </>
-                      )}
-                    </Badge>
-                  </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </CardContent>
         </Card>
