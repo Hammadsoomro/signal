@@ -76,13 +76,7 @@ export default function SubAccounts() {
     }
   ]);
 
-  const [phoneNumbers, setPhoneNumbers] = useState<PhoneNumber[]>([
-    { id: '1', number: '+1 (555) 123-4567', label: 'Main Line', assignedTo: '1' },
-    { id: '2', number: '+1 (555) 234-5678', label: 'Business', assignedTo: null },
-    { id: '3', number: '+1 (555) 345-6789', label: 'Support', assignedTo: null },
-    { id: '4', number: '+1 (555) 456-7890', label: 'Marketing', assignedTo: null },
-    { id: '5', number: '+1 (555) 567-8901', label: 'Sales', assignedTo: null }
-  ]);
+  const [phoneNumbers, setPhoneNumbers] = useState<PhoneNumber[]>([]);
 
   // Form states
   const [createForm, setCreateForm] = useState({
