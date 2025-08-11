@@ -20,6 +20,7 @@ import {
   Wallet as WalletIcon
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { signalWireClient } from '@/lib/signalwire';
 
 interface AvailableNumber {
   id: string;
@@ -169,34 +170,44 @@ export default function BuyNumbers() {
 
   const searchNumbers = async () => {
     setIsLoading(true);
-    
+
     try {
-      // Simulate API call to SignalWire
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      // Use real SignalWire API to search for numbers
+      const response = await signalWireClient.getAvailablePhoneNumbers(selectedCountry, searchQuery);
+
+      // Convert SignalWire response to our format
+      const numbers = response.available_phone_numbers?.map((num: any, index: number) => ({
+        id: `sw_${index}`,
+        number: num.phone_number,
+        city: num.locality || 'Unknown',
+        state: num.region || 'Unknown',
+        country: selectedCountry,
+        price: 5.00, // Standard SignalWire price
+        features: num.capabilities?.sms ? ['SMS', 'Voice'] : ['Voice'],
+        carrier: 'SignalWire'
+      })) || [];
+
+      setAvailableNumbers(numbers);
+
+      toast({
+        title: "Search Complete",
+        description: `Found ${numbers.length} real available numbers from SignalWire`,
+      });
+    } catch (error) {
+      console.error('SignalWire search error:', error);
+
+      // Fallback to demo numbers with clear indication
       let filteredNumbers = mockNumbers.filter(num =>
         num.country === selectedCountry &&
         (selectedState && selectedState !== 'all' ? num.state === selectedState : true) &&
         (searchQuery ? num.number.includes(searchQuery) || num.city.toLowerCase().includes(searchQuery.toLowerCase()) : true)
       );
 
-      // Show all available numbers if no filters applied
-      if (selectedCountry === 'all') {
-        filteredNumbers = mockNumbers.filter(num =>
-          (searchQuery ? num.number.includes(searchQuery) || num.city.toLowerCase().includes(searchQuery.toLowerCase()) : true)
-        );
-      }
-      
       setAvailableNumbers(filteredNumbers);
-      
+
       toast({
-        title: "Search Complete",
-        description: `Found ${filteredNumbers.length} available numbers`,
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to search numbers. Please try again.",
+        title: "Using Demo Numbers",
+        description: "SignalWire API unavailable. Showing demo numbers for testing.",
         variant: "destructive",
       });
     } finally {
