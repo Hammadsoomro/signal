@@ -297,7 +297,7 @@ export default function Webhooks() {
   const successfulEvents = events.filter((e) => e.status === "success").length;
 
   return (
-    <DashboardLayout>
+    <DashboardLayout title="Webhooks">
       <div className="p-6 space-y-6">
         <div className="flex items-center justify-between">
           <div>
