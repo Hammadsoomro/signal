@@ -62,11 +62,11 @@ export default function Analytics() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{stat.value}</div>
-                <p className="text-xs text-muted-foreground">
+                <div className="text-xs text-muted-foreground">
                   <Badge variant={stat.trend === 'up' ? 'default' : 'secondary'} className="text-xs">
                     {stat.change} from last month
                   </Badge>
-                </p>
+                </div>
               </CardContent>
             </Card>
           ))}
