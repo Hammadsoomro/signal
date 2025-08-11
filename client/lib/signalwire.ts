@@ -1,3 +1,16 @@
+// Helper function to clean phone number format for SignalWire
+export const cleanPhoneNumber = (phoneNumber: string): string => {
+  // Remove all non-digit characters except the leading +
+  const cleaned = phoneNumber.replace(/[^\d+]/g, '');
+
+  // Ensure it starts with + if it doesn't already
+  if (!cleaned.startsWith('+')) {
+    return `+${cleaned}`;
+  }
+
+  return cleaned;
+};
+
 // SignalWire Configuration
 export const SIGNALWIRE_CONFIG = {
   projectId: '208c6520-b4c1-4dfa-a8ac-e91a18b37f38',
