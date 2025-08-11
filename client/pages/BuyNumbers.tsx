@@ -229,22 +229,31 @@ export default function BuyNumbers() {
     setSelectedNumber(number);
 
     try {
-      // Simulate purchase API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      // Use real SignalWire API to purchase the number
+      const purchaseResponse = await signalWireClient.purchasePhoneNumber(number.number);
+
+      // Deduct wallet balance (assuming global wallet function exists)
+      if (typeof window !== 'undefined' && (window as any).deductWalletBalance) {
+        const success = (window as any).deductWalletBalance(number.price, `Phone number purchase: ${number.number}`);
+        if (!success) {
+          throw new Error('Failed to deduct wallet balance');
+        }
+      }
+
       toast({
         title: "Purchase Successful!",
-        description: `Successfully purchased ${number.number} for $${number.price.toFixed(2)}`,
+        description: `Successfully purchased ${number.number} for $${number.price.toFixed(2)} via SignalWire`,
       });
-      
+
       // Remove purchased number from available list
       setAvailableNumbers(prev => prev.filter(n => n.id !== number.id));
       setSelectedNumber(null);
-      
+
     } catch (error) {
+      console.error('SignalWire purchase error:', error);
       toast({
         title: "Purchase Failed",
-        description: "Failed to purchase number. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to purchase phone number. Please try again.",
         variant: "destructive",
       });
     } finally {
