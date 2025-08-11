@@ -149,8 +149,32 @@ export default function Index() {
         </div>
       </div>
 
+      {/* Stats Section */}
+      <div className="bg-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="text-4xl font-bold text-blue-600 mb-2">10M+</div>
+              <div className="text-gray-600">Messages Sent</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-purple-600 mb-2">50K+</div>
+              <div className="text-gray-600">Active Users</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-green-600 mb-2">99.9%</div>
+              <div className="text-gray-600">Uptime SLA</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-orange-600 mb-2">24/7</div>
+              <div className="text-gray-600">Support</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Features Section */}
-      <div className="container mx-auto px-4 py-20 bg-white">
+      <div className="container mx-auto px-4 py-20 bg-gray-50">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-6 text-gray-900">Everything you need for SMS management</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
