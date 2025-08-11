@@ -36,6 +36,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { signalWireClient } from '@/lib/signalwire';
+import { useUserNumbers } from '@/contexts/UserNumbersContext';
 
 interface Message {
   id: string;
@@ -58,12 +59,6 @@ interface Conversation {
   isArchived: boolean;
 }
 
-interface UserNumber {
-  id: string;
-  number: string;
-  label: string;
-  isActive: boolean;
-}
 
 export default function Conversations() {
   const { toast } = useToast();
@@ -77,11 +72,8 @@ export default function Conversations() {
   const [showAddContact, setShowAddContact] = useState(false);
   const [newContact, setNewContact] = useState({ name: '', phone: '' });
 
-  const userNumbers: UserNumber[] = [
-    { id: '1', number: '+1 (555) 123-4567', label: 'Primary', isActive: true },
-    { id: '2', number: '+1 (555) 234-5678', label: 'Business', isActive: true },
-    { id: '3', number: '+1 (555) 345-6789', label: 'Support', isActive: true }
-  ];
+  const { purchasedNumbers, getAvailableNumbers } = useUserNumbers();
+  const availableNumbers = getAvailableNumbers();
 
   // Request notification permission on mount
   useEffect(() => {
@@ -671,7 +663,7 @@ export default function Conversations() {
                       <SelectValue placeholder="Select sending number" />
                     </SelectTrigger>
                     <SelectContent>
-                      {userNumbers.filter(num => num.isActive).map((num) => (
+                      {availableNumbers.map((num) => (
                         <SelectItem key={num.id} value={num.number}>
                           <div className="flex items-center gap-2">
                             <Phone className="h-4 w-4" />
@@ -684,7 +676,14 @@ export default function Conversations() {
                   </Select>
                 </div>
 
-                {!selectedNumber && (
+                {availableNumbers.length === 0 ? (
+                  <Alert className="mb-3">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription>
+                      No purchased numbers available. Please buy a phone number first to send messages.
+                    </AlertDescription>
+                  </Alert>
+                ) : !selectedNumber && (
                   <Alert className="mb-3">
                     <AlertCircle className="h-4 w-4" />
                     <AlertDescription>
