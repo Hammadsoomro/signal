@@ -229,7 +229,7 @@ export default function Support() {
   const pendingTickets = tickets.filter((t) => t.status === "pending").length;
 
   return (
-    <DashboardLayout>
+    <DashboardLayout title="Support">
       <div className="p-6 space-y-6">
         <div className="flex items-center justify-between">
           <div>
