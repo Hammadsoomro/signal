@@ -95,8 +95,8 @@ if (!root) {
 }
 
 // Handle hot module replacement cleanup
-if (module.hot) {
-  module.hot.dispose(() => {
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
     if ((container as any)._reactRoot) {
       (container as any)._reactRoot = null;
     }
