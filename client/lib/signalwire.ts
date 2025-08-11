@@ -189,6 +189,38 @@ export class SignalWireClient {
       throw error;
     }
   }
+
+  // Test connection and verify account
+  async testConnection() {
+    try {
+      console.log('Testing SignalWire connection...');
+      const account = await fetch(`${this.baseUrl}/Accounts/${SIGNALWIRE_CONFIG.projectId}.json`, {
+        headers: {
+          'Authorization': `Basic ${this.auth}`,
+        }
+      });
+
+      if (!account.ok) {
+        throw new Error(`Account verification failed: ${account.status}`);
+      }
+
+      const accountData = await account.json();
+      console.log('SignalWire account verified:', accountData.friendly_name);
+
+      // Get owned numbers
+      const numbers = await this.getOwnedPhoneNumbers();
+      console.log('Owned phone numbers:', numbers.incoming_phone_numbers?.map((num: any) => num.phone_number) || []);
+
+      return {
+        accountVerified: true,
+        accountName: accountData.friendly_name,
+        ownedNumbers: numbers.incoming_phone_numbers || []
+      };
+    } catch (error) {
+      console.error('SignalWire connection test failed:', error);
+      throw error;
+    }
+  }
 }
 
 export const signalWireClient = new SignalWireClient();
