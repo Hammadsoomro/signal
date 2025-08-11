@@ -152,7 +152,9 @@ export default function SubAccounts() {
 
     // Deduct transferred amount from user's wallet
     if (transferAmount > 0) {
-      setUserWalletBalance((prev) => prev - transferAmount);
+      // Note: This should integrate with the actual wallet system
+      // For now, we'll just log the transaction
+      console.log(`Would deduct $${transferAmount} from user wallet`);
     }
 
     // Update phone number assignment if selected
