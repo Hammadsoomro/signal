@@ -39,6 +39,21 @@ export class SignalWireClient {
 
       console.log('Sending SMS:', { from: cleanFrom, to: cleanTo, body });
 
+      // Validate that the from number is owned by this account
+      try {
+        const ownedNumbers = await this.getOwnedPhoneNumbers();
+        const isOwnedNumber = ownedNumbers.incoming_phone_numbers?.some((num: any) =>
+          cleanPhoneNumber(num.phone_number) === cleanFrom
+        );
+
+        if (!isOwnedNumber) {
+          throw new Error(`Phone number ${cleanFrom} is not owned by this SignalWire account. Please purchase this number first or verify it in your SignalWire dashboard.`);
+        }
+      } catch (validateError) {
+        console.warn('Could not validate number ownership:', validateError);
+        // Continue with the request anyway - let SignalWire handle the validation
+      }
+
       const response = await fetch(`${this.baseUrl}/Accounts/${SIGNALWIRE_CONFIG.projectId}/Messages.json`, {
         method: 'POST',
         headers: {
