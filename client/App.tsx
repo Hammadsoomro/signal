@@ -49,6 +49,13 @@ const App = () => (
           <Route path="/buy-numbers" element={<BuyNumbers />} />
           <Route path="/sub-accounts" element={<SubAccounts />} />
           <Route path="/wallet" element={<Wallet />} />
+          <Route path="/scheduled" element={<Scheduled />} />
+          <Route path="/responses" element={<Responses />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/alerts" element={<Alerts />} />
+          <Route path="/webhooks" element={<Webhooks />} />
+          <Route path="/api-keys" element={<ApiKeys />} />
+          <Route path="/support" element={<Support />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
