@@ -75,6 +75,24 @@ export default function Conversations() {
   const { purchasedNumbers, getAvailableNumbers } = useUserNumbers();
   const availableNumbers = getAvailableNumbers();
 
+  // Test SignalWire connection
+  const testSignalWire = async () => {
+    try {
+      const result = await signalWireClient.testConnection();
+      toast({
+        title: "SignalWire Connection Test",
+        description: `✅ Connected to ${result.accountName}. Found ${result.ownedNumbers.length} owned numbers.`,
+      });
+      console.log('SignalWire test result:', result);
+    } catch (error) {
+      toast({
+        title: "SignalWire Connection Failed",
+        description: error instanceof Error ? error.message : "Failed to connect to SignalWire",
+        variant: "destructive",
+      });
+    }
+  };
+
   // Request notification permission on mount
   useEffect(() => {
     if (Notification.permission === 'default') {
