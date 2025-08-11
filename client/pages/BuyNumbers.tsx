@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { signalWireClient } from '@/lib/signalwire';
+import { useUserNumbers, PurchasedNumber } from '@/contexts/UserNumbersContext';
 
 interface AvailableNumber {
   id: string;
@@ -35,6 +36,7 @@ interface AvailableNumber {
 
 export default function BuyNumbers() {
   const { toast } = useToast();
+  const { addPurchasedNumber } = useUserNumbers();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('US');
   const [selectedState, setSelectedState] = useState('all');
@@ -239,6 +241,22 @@ export default function BuyNumbers() {
           throw new Error('Failed to deduct wallet balance');
         }
       }
+
+      // Add to user's purchased numbers
+      const purchasedNumber: PurchasedNumber = {
+        id: Date.now().toString(),
+        number: number.number,
+        label: `${number.city} Line`,
+        city: number.city,
+        state: number.state,
+        country: number.country,
+        isActive: true,
+        purchaseDate: new Date().toISOString(),
+        monthlyPrice: number.price,
+        assignedTo: null
+      };
+
+      addPurchasedNumber(purchasedNumber);
 
       toast({
         title: "Purchase Successful!",
