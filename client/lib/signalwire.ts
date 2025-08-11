@@ -34,7 +34,26 @@ export class SignalWireClient {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        // Get detailed error information from SignalWire
+        let errorDetails = `HTTP error! status: ${response.status}`;
+        try {
+          const errorData = await response.json();
+          if (errorData.message) {
+            errorDetails += ` - ${errorData.message}`;
+          }
+          if (errorData.more_info) {
+            errorDetails += ` - More info: ${errorData.more_info}`;
+          }
+          if (errorData.code) {
+            errorDetails += ` - Code: ${errorData.code}`;
+          }
+          console.error('SignalWire API Error Details:', errorData);
+        } catch (parseError) {
+          const responseText = await response.text();
+          errorDetails += ` - Response: ${responseText}`;
+          console.error('SignalWire Raw Error Response:', responseText);
+        }
+        throw new Error(errorDetails);
       }
 
       return await response.json();
