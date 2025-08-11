@@ -339,13 +339,31 @@ export default function Conversations() {
   };
 
   const togglePin = (conversationId: string) => {
-    setConversations(prev => prev.map(conv => 
+    setConversations(prev => prev.map(conv =>
       conv.id === conversationId ? { ...conv, isPinned: !conv.isPinned } : conv
     ));
+
+    const conv = conversations.find(c => c.id === conversationId);
+    toast({
+      title: conv?.isPinned ? "Conversation Unpinned" : "Conversation Pinned",
+      description: `${conv?.name} has been ${conv?.isPinned ? 'unpinned' : 'pinned to top'}`,
+    });
+  };
+
+  const toggleStar = (conversationId: string) => {
+    setConversations(prev => prev.map(conv =>
+      conv.id === conversationId ? { ...conv, isStarred: !conv.isStarred } : conv
+    ));
+
+    const conv = conversations.find(c => c.id === conversationId);
+    toast({
+      title: conv?.isStarred ? "Removed from Starred" : "Added to Starred",
+      description: `${conv?.name} has been ${conv?.isStarred ? 'removed from starred' : 'starred'}`,
+    });
   };
 
   const archiveConversation = (conversationId: string) => {
-    setConversations(prev => prev.map(conv => 
+    setConversations(prev => prev.map(conv =>
       conv.id === conversationId ? { ...conv, isArchived: !conv.isArchived } : conv
     ));
   };
@@ -396,8 +414,15 @@ export default function Conversations() {
 
   const activeConversations = conversations.filter(conv => !conv.isArchived);
   const sortedConversations = activeConversations.sort((a, b) => {
+    // Pinned conversations first
     if (a.isPinned && !b.isPinned) return -1;
     if (!a.isPinned && b.isPinned) return 1;
+
+    // Starred conversations next
+    if (a.isStarred && !b.isStarred) return -1;
+    if (!a.isStarred && b.isStarred) return 1;
+
+    // Then sort by latest message time
     return new Date(b.lastMessageTime).getTime() - new Date(a.lastMessageTime).getTime();
   });
 
