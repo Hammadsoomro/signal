@@ -34,41 +34,43 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <WalletProvider>
-        <UserNumbersProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route path="/send" element={<Send />} />
-              <Route path="/conversations" element={<Conversations />} />
-              <Route path="/buy-numbers" element={<BuyNumbers />} />
-              <Route path="/sub-accounts" element={<SubAccounts />} />
-              <Route path="/wallet" element={<Wallet />} />
-              <Route path="/scheduled" element={<Scheduled />} />
-              <Route path="/responses" element={<Responses />} />
-              <Route path="/transactions" element={<Transactions />} />
-              <Route path="/alerts" element={<Alerts />} />
-              <Route path="/webhooks" element={<Webhooks />} />
-              <Route path="/api-keys" element={<ApiKeys />} />
-              <Route path="/support" element={<Support />} />
-              <Route path="/profile" element={<Profile />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </UserNumbersProvider>
-      </WalletProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <WalletProvider>
+          <UserNumbersProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/analytics" element={<Analytics />} />
+                <Route path="/send" element={<Send />} />
+                <Route path="/conversations" element={<Conversations />} />
+                <Route path="/buy-numbers" element={<BuyNumbers />} />
+                <Route path="/sub-accounts" element={<SubAccounts />} />
+                <Route path="/wallet" element={<Wallet />} />
+                <Route path="/scheduled" element={<Scheduled />} />
+                <Route path="/responses" element={<Responses />} />
+                <Route path="/transactions" element={<Transactions />} />
+                <Route path="/alerts" element={<Alerts />} />
+                <Route path="/webhooks" element={<Webhooks />} />
+                <Route path="/api-keys" element={<ApiKeys />} />
+                <Route path="/support" element={<Support />} />
+                <Route path="/profile" element={<Profile />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </UserNumbersProvider>
+        </WalletProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 // Ensure we only create one root instance with proper error handling
