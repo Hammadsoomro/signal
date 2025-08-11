@@ -234,7 +234,7 @@ export default function Conversations() {
         if (conv.id === selectedConversation) {
           return {
             ...conv,
-            messages: conv.messages.map(msg => 
+            messages: conv.messages.map(msg =>
               msg.id === tempId ? { ...msg, status: 'failed' } : msg
             )
           };
@@ -242,9 +242,16 @@ export default function Conversations() {
         return conv;
       }));
 
+      console.error('SMS send error details:', error);
+
+      // Show detailed error message
+      const errorMessage = error instanceof Error ? error.message : 'Failed to send SMS. Please try again.';
+
       toast({
         title: "Message Failed",
-        description: "Failed to send SMS. Please try again.",
+        description: errorMessage.includes('HTTP error! status: 422')
+          ? "Invalid phone number format or number not verified in SignalWire account. Please check your sending number."
+          : errorMessage,
         variant: "destructive",
       });
     } finally {
