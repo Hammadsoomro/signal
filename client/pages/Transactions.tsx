@@ -231,7 +231,7 @@ export default function Transactions() {
   ).length;
 
   return (
-    <DashboardLayout>
+    <DashboardLayout title="Transactions">
       <div className="p-6 space-y-6">
         <div className="flex items-center justify-between">
           <div>
