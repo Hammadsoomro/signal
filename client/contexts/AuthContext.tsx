@@ -2,17 +2,33 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface User {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
+  name: string; // computed from firstName + lastName
   email: string;
+  phone: string;
+  walletBalance: number;
+  subscription: {
+    plan: string;
+  };
   isAuthenticated: boolean;
 }
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<boolean>;
+  login: (email: string, password: string) => Promise<{ success: boolean; message: string }>;
+  register: (userData: RegisterData) => Promise<{ success: boolean; message: string }>;
   logout: () => void;
   isAuthenticated: boolean;
+}
+
+interface RegisterData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  password: string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
