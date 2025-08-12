@@ -112,7 +112,7 @@ const UserSchema: Schema = new Schema(
 );
 
 // Add indexes for better query performance
-UserSchema.index({ email: 1 });
+UserSchema.index({ email: 1 }, { unique: true });
 UserSchema.index({ phone: 1 });
 UserSchema.index({ createdAt: -1 });
 
