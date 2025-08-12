@@ -230,6 +230,110 @@ export const verifyToken = async (req: AuthRequest, res: Response, next: any) =>
   }
 };
 
+// Google OAuth login/register
+export const googleAuth = async (req: Request, res: Response) => {
+  try {
+    const { idToken } = req.body;
+
+    if (!idToken) {
+      return res.status(400).json({
+        success: false,
+        message: "Google ID token is required"
+      });
+    }
+
+    // Verify the Google ID token
+    const ticket = await oauth2Client.verifyIdToken({
+      idToken,
+      audience: GOOGLE_CLIENT_ID
+    });
+
+    const payload = ticket.getPayload();
+
+    if (!payload || !payload.email) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Google token"
+      });
+    }
+
+    const { email, given_name, family_name, sub: googleId } = payload;
+
+    // Check if user already exists
+    let user = await User.findOne({
+      $or: [
+        { email: email.toLowerCase() },
+        { googleId }
+      ]
+    });
+
+    if (user) {
+      // Update Google ID if not set
+      if (!user.googleId) {
+        user.googleId = googleId;
+        await user.save();
+      }
+    } else {
+      // Create new user with Google data
+      user = new User({
+        firstName: given_name || 'User',
+        lastName: family_name || 'Google',
+        email: email.toLowerCase(),
+        phone: '', // Will be updated later if needed
+        password: '', // Google users don't need password
+        googleId,
+        walletBalance: 0, // New users start with 0 balance
+        subscription: {
+          plan: "free"
+        },
+        isGoogleUser: true
+      });
+
+      await user.save();
+    }
+
+    // Generate JWT token
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        email: user.email
+      },
+      JWT_SECRET,
+      { expiresIn: JWT_EXPIRES_IN }
+    );
+
+    // Return user data
+    const userResponse = {
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phone: user.phone,
+      walletBalance: user.walletBalance,
+      subscription: user.subscription,
+      isGoogleUser: user.isGoogleUser,
+      createdAt: user.createdAt
+    };
+
+    res.status(200).json({
+      success: true,
+      message: user.isGoogleUser ? "Signed in with Google successfully" : "Account linked with Google",
+      data: {
+        user: userResponse,
+        token,
+        isNewUser: !user.createdAt || (Date.now() - new Date(user.createdAt).getTime()) < 10000 // Created within last 10 seconds
+      }
+    });
+
+  } catch (error) {
+    console.error("Google auth error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Google authentication failed"
+    });
+  }
+};
+
 // Get current user profile
 export const getCurrentUser = async (req: AuthRequest, res: Response) => {
   try {
