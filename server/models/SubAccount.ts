@@ -172,7 +172,7 @@ SubAccountSchema.index({ email: 1 });
 // Ensure max 3 sub-accounts per user
 SubAccountSchema.pre("save", async function (next) {
   if (this.isNew) {
-    const count = await this.constructor.countDocuments({
+    const count = await (this.constructor as any).countDocuments({
       userId: this.userId,
     });
     if (count >= 3) {
