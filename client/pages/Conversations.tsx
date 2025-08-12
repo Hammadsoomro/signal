@@ -90,22 +90,22 @@ export default function Conversations() {
   const { purchasedNumbers, getAvailableNumbers } = useUserNumbers();
   const availableNumbers = getAvailableNumbers();
 
-  // Test SignalWire connection
-  const testSignalWire = async () => {
+  // Test SMS service connection
+  const testSMSService = async () => {
     try {
       const result = await signalWireClient.testConnection();
       toast({
-        title: "SignalWire Connection Test",
-        description: `✅ Connected to ${result.accountName}. Found ${result.ownedNumbers.length} owned numbers.`,
+        title: "SMS Service Connection Test",
+        description: `✅ Connected to SMS provider. Found ${result.ownedNumbers.length} owned numbers.`,
       });
-      console.log("SignalWire test result:", result);
+      console.log("SMS service test result:", result);
     } catch (error) {
       toast({
-        title: "SignalWire Connection Failed",
+        title: "SMS Service Connection Failed",
         description:
           error instanceof Error
             ? error.message
-            : "Failed to connect to SignalWire",
+            : "Failed to connect to SMS service",
         variant: "destructive",
       });
     }
