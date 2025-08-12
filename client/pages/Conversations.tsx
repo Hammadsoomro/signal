@@ -121,71 +121,11 @@ export default function Conversations() {
   useEffect(() => {
     const connectToSocket = () => {
       setIsConnected(true);
-
-      // Simulate incoming messages
-      const messageInterval = setInterval(() => {
-        if (Math.random() > 0.7) {
-          // 30% chance of receiving a message
-          const randomConvId =
-            conversations[Math.floor(Math.random() * conversations.length)]?.id;
-          if (randomConvId) {
-            const newMessage: Message = {
-              id: Date.now().toString(),
-              text: `Auto message at ${new Date().toLocaleTimeString()}`,
-              sent: false,
-              timestamp: new Date().toISOString(),
-              status: "delivered",
-            };
-
-            setConversations((prev) =>
-              prev.map((conv) => {
-                if (conv.id === randomConvId) {
-                  return {
-                    ...conv,
-                    messages: [...conv.messages, newMessage],
-                    lastMessage: newMessage.text,
-                    lastMessageTime: newMessage.timestamp,
-                    unreadCount:
-                      conv.id === selectedConversation
-                        ? 0
-                        : conv.unreadCount + 1,
-                  };
-                }
-                return conv;
-              }),
-            );
-
-            // Show notification if not current conversation
-            if (randomConvId !== selectedConversation) {
-              const senderName = conversations.find(
-                (c) => c.id === randomConvId,
-              )?.name;
-
-              // Browser notification
-              if (Notification.permission === "granted") {
-                new Notification(`New SMS from ${senderName}`, {
-                  body: newMessage.text,
-                  icon: "/favicon.ico",
-                  badge: "/favicon.ico",
-                });
-              }
-
-              // Toast notification
-              toast({
-                title: "📱 New SMS Message",
-                description: `${senderName}: ${newMessage.text.substring(0, 50)}${newMessage.text.length > 50 ? "..." : ""}`,
-              });
-            }
-          }
-        }
-      }, 15000); // Check every 15 seconds
-
-      return () => clearInterval(messageInterval);
+      // Removed automatic message generation to fix auto message issue
     };
 
-    const cleanup = connectToSocket();
-    return cleanup;
-  }, [selectedConversation, conversations]);
+    connectToSocket();
+  }, []);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
