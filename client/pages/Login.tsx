@@ -489,13 +489,6 @@ export default function Login() {
             </form>
           )}
 
-          {/* Security Notice */}
-          <Alert className="border-red-200 bg-red-50">
-            <Shield className="h-4 w-4 text-red-600" />
-            <AlertDescription className="text-red-800 text-sm">
-              <strong>Real Database:</strong> Only registered users can access the platform. New accounts start with $0.00 balance.
-            </AlertDescription>
-          </Alert>
 
           <div className="text-center text-sm">
             <span className="text-muted-foreground">
