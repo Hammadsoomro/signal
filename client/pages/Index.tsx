@@ -329,7 +329,7 @@ export default function Index() {
       </section>
 
       {/* Premium Features Section */}
-      <section className="py-24 bg-gradient-to-br from-slate-50 to-blue-50">
+      <section id="features" className="py-24 bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="container mx-auto px-6">
           <div className="text-center mb-20">
             <Badge className="mb-6 bg-blue-100 text-blue-700 px-4 py-2">Enterprise Features</Badge>
