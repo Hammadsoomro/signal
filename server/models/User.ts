@@ -61,7 +61,6 @@ const UserSchema: Schema = new Schema(
     },
     googleId: {
       type: String,
-      sparse: true, // Allows null values but creates unique index for non-null values
     },
     isGoogleUser: {
       type: Boolean,
