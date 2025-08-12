@@ -128,6 +128,7 @@ const UserSchema: Schema = new Schema(
 // Add indexes for better query performance
 UserSchema.index({ email: 1 }, { unique: true });
 UserSchema.index({ phone: 1 });
+UserSchema.index({ googleId: 1 }, { unique: true, sparse: true });
 UserSchema.index({ createdAt: -1 });
 
 export default mongoose.model<IUser>("User", UserSchema);
