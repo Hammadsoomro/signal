@@ -72,12 +72,12 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      const success = await login(loginData.email, loginData.password);
+      const result = await login(loginData.email, loginData.password);
 
-      if (success) {
+      if (result.success) {
         toast({
           title: "Login Successful",
-          description: "Welcome back! Secure session established.",
+          description: result.message,
         });
 
         // Redirect to intended page or dashboard
@@ -86,7 +86,7 @@ export default function Login() {
       } else {
         toast({
           title: "Login Failed",
-          description: "Invalid email or password. Please try again.",
+          description: result.message,
           variant: "destructive"
         });
       }
