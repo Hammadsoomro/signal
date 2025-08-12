@@ -179,19 +179,29 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-primary/10 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md bg-white/80 backdrop-blur-lg border-0 shadow-2xl">
         <CardHeader className="text-center">
           <Link to="/" className="flex items-center justify-center gap-2 mb-4">
-            <MessageSquare className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold">Connectlify</span>
+            <div className="w-10 h-10 bg-gradient-to-tr from-blue-600 via-purple-600 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <MessageSquare className="h-5 w-5 text-white" />
+            </div>
+            <span className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">Connectlify</span>
+            <Badge className="bg-blue-100 text-blue-700">Secure</Badge>
           </Link>
-          <CardTitle>{isLogin ? 'Welcome Back' : 'Create Account'}</CardTitle>
-          <CardDescription>
-            {isLogin ? 'Sign in to your account' : 'Sign up to get started with Connectlify'}
+          <CardTitle className="text-slate-900">{isLogin ? 'Secure Login' : 'Create Account'}</CardTitle>
+          <CardDescription className="text-slate-600">
+            {isLogin ? 'Enter your credentials to access your secure dashboard' : 'Create your account to access enterprise messaging features'}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
+          {/* Security Notice */}
+          <Alert className="border-blue-200 bg-blue-50">
+            <Shield className="h-4 w-4 text-blue-600" />
+            <AlertDescription className="text-blue-800">
+              <strong>Secure Access:</strong> All sessions are encrypted and protected with enterprise-grade security.
+            </AlertDescription>
+          </Alert>
           <Button 
             variant="outline" 
             className="w-full" 
