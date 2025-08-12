@@ -755,6 +755,335 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Enterprise Section */}
+      <section id="enterprise" className="py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-20">
+            <Badge className="mb-6 bg-gradient-to-r from-yellow-400 to-orange-500 text-slate-900 px-6 py-3 font-bold">
+              Enterprise Solutions
+            </Badge>
+            <h2 className="text-5xl font-bold mb-6 text-white leading-tight">
+              Built for Fortune 500
+              <br />
+              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                Companies
+              </span>
+            </h2>
+            <p className="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
+              When your business demands the highest levels of security, compliance,
+              and performance, our enterprise solutions deliver unmatched reliability.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+            {/* Left Column - Enterprise Features */}
+            <div>
+              <h3 className="text-3xl font-bold text-white mb-8">Enterprise-Grade Infrastructure</h3>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Shield className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-semibold text-white mb-2">SOC 2 Type II Certified</h4>
+                    <p className="text-slate-300 leading-relaxed">
+                      Comprehensive security controls audited by third-party organizations.
+                      Full compliance with enterprise security requirements.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Globe className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-semibold text-white mb-2">Global Multi-Region Infrastructure</h4>
+                    <p className="text-slate-300 leading-relaxed">
+                      Redundant data centers across 6 continents ensuring 99.99% uptime
+                      with automatic failover and disaster recovery.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Lock className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-semibold text-white mb-2">Advanced Data Protection</h4>
+                    <p className="text-slate-300 leading-relaxed">
+                      End-to-end encryption, zero-trust architecture, and comprehensive
+                      audit trails for complete data governance.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Enterprise Stats */}
+            <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
+              <h3 className="text-2xl font-bold text-white mb-8 text-center">Enterprise Performance</h3>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="text-center">
+                  <div className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">
+                    99.99%
+                  </div>
+                  <div className="text-slate-300 font-medium">Uptime SLA</div>
+                  <div className="text-sm text-slate-400">Guaranteed</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent mb-2">
+                    &lt;100ms
+                  </div>
+                  <div className="text-slate-300 font-medium">Global Latency</div>
+                  <div className="text-sm text-slate-400">Average</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
+                    24/7
+                  </div>
+                  <div className="text-slate-300 font-medium">Support</div>
+                  <div className="text-sm text-slate-400">White Glove</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-2">
+                    15min
+                  </div>
+                  <div className="text-slate-300 font-medium">Setup Time</div>
+                  <div className="text-sm text-slate-400">Enterprise</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Enterprise Compliance */}
+          <div className="grid md:grid-cols-4 gap-6 mb-16">
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/10">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Award className="w-8 h-8 text-white" />
+              </div>
+              <h4 className="text-white font-semibold mb-2">SOC 2 Type II</h4>
+              <p className="text-slate-400 text-sm">Security & Availability</p>
+            </div>
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/10">
+              <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-green-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Shield className="w-8 h-8 text-white" />
+              </div>
+              <h4 className="text-white font-semibold mb-2">GDPR Compliant</h4>
+              <p className="text-slate-400 text-sm">Data Protection</p>
+            </div>
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/10">
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Lock className="w-8 h-8 text-white" />
+              </div>
+              <h4 className="text-white font-semibold mb-2">ISO 27001</h4>
+              <p className="text-slate-400 text-sm">Information Security</p>
+            </div>
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/10">
+              <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Briefcase className="w-8 h-8 text-white" />
+              </div>
+              <h4 className="text-white font-semibold mb-2">HIPAA Ready</h4>
+              <p className="text-slate-400 text-sm">Healthcare Compliance</p>
+            </div>
+          </div>
+
+          {/* Enterprise CTAs */}
+          <div className="text-center">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Button
+                size="lg"
+                className="bg-white text-slate-900 hover:bg-gray-100 text-xl px-12 py-6 shadow-2xl font-bold"
+                asChild
+              >
+                <Link to="/support">
+                  <Briefcase className="mr-3 h-6 w-6" />
+                  Contact Enterprise Sales
+                </Link>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="text-white border-white/30 hover:bg-white/10 text-xl px-12 py-6 font-bold"
+                asChild
+              >
+                <Link to="/login">
+                  Schedule Demo
+                  <ArrowRight className="ml-3 h-6 w-6" />
+                </Link>
+              </Button>
+            </div>
+            <p className="text-slate-400 mt-6 text-lg">
+              Join 500+ Fortune 500 companies using Connectlify Enterprise
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Documentation Section */}
+      <section id="docs" className="py-24 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-20">
+            <Badge className="mb-6 bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-2">
+              Developer Resources
+            </Badge>
+            <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+              Comprehensive Documentation
+            </h2>
+            <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+              Everything you need to integrate and scale with Connectlify.
+              From quick start guides to advanced enterprise configurations.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8 mb-16">
+            {/* Quick Start */}
+            <Card className="group hover:shadow-2xl transition-all duration-500 border-0 bg-white/70 backdrop-blur-sm">
+              <CardHeader className="pb-6">
+                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <Zap className="h-8 w-8 text-white" />
+                </div>
+                <CardTitle className="text-2xl font-bold text-slate-900 mb-4">
+                  Quick Start Guide
+                </CardTitle>
+                <CardDescription className="text-slate-600 text-lg leading-relaxed">
+                  Get up and running in minutes with our comprehensive quick start guide.
+                  From account setup to sending your first message.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-3 text-slate-700">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Account setup walkthrough</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-slate-700">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>API key configuration</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-slate-700">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Send your first SMS</span>
+                  </div>
+                </div>
+                <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white" asChild>
+                  <Link to="/support">Start Building</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* API Reference */}
+            <Card className="group hover:shadow-2xl transition-all duration-500 border-0 bg-white/70 backdrop-blur-sm">
+              <CardHeader className="pb-6">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <BarChart3 className="h-8 w-8 text-white" />
+                </div>
+                <CardTitle className="text-2xl font-bold text-slate-900 mb-4">
+                  API Reference
+                </CardTitle>
+                <CardDescription className="text-slate-600 text-lg leading-relaxed">
+                  Complete API documentation with interactive examples,
+                  code samples, and comprehensive endpoint references.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-3 text-slate-700">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Interactive API explorer</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-slate-700">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Code samples in 8+ languages</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-slate-700">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Authentication guides</span>
+                  </div>
+                </div>
+                <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white" asChild>
+                  <Link to="/api-keys">View API Docs</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Enterprise Guides */}
+            <Card className="group hover:shadow-2xl transition-all duration-500 border-0 bg-white/70 backdrop-blur-sm">
+              <CardHeader className="pb-6">
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <Building className="h-8 w-8 text-white" />
+                </div>
+                <CardTitle className="text-2xl font-bold text-slate-900 mb-4">
+                  Enterprise Guides
+                </CardTitle>
+                <CardDescription className="text-slate-600 text-lg leading-relaxed">
+                  Advanced configuration guides for enterprise deployments,
+                  security best practices, and compliance requirements.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-3 text-slate-700">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Security implementation</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-slate-700">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Compliance checklists</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-slate-700">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Architecture patterns</span>
+                  </div>
+                </div>
+                <Button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white" asChild>
+                  <Link to="/sub-accounts">Enterprise Docs</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Developer Tools */}
+          <div className="bg-gradient-to-r from-slate-50 to-blue-50 rounded-3xl p-12">
+            <div className="text-center mb-12">
+              <h3 className="text-3xl font-bold text-slate-900 mb-4">Developer Tools & SDKs</h3>
+              <p className="text-xl text-slate-600">Official SDKs and tools to accelerate development</p>
+            </div>
+            <div className="grid md:grid-cols-4 gap-6">
+              <div className="bg-white rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
+                <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white font-bold text-xl">JS</span>
+                </div>
+                <h4 className="font-bold text-slate-900 mb-2">Node.js SDK</h4>
+                <p className="text-slate-600 text-sm">Official JavaScript library</p>
+              </div>
+              <div className="bg-white rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white font-bold text-xl">PY</span>
+                </div>
+                <h4 className="font-bold text-slate-900 mb-2">Python SDK</h4>
+                <p className="text-slate-600 text-sm">Full-featured Python package</p>
+              </div>
+              <div className="bg-white rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
+                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white font-bold text-xl">GO</span>
+                </div>
+                <h4 className="font-bold text-slate-900 mb-2">Go SDK</h4>
+                <p className="text-slate-600 text-sm">High-performance Go library</p>
+              </div>
+              <div className="bg-white rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white font-bold text-xl">PHP</span>
+                </div>
+                <h4 className="font-bold text-slate-900 mb-2">PHP SDK</h4>
+                <p className="text-slate-600 text-sm">Easy integration for PHP</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Premium CTA Section */}
       <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 relative overflow-hidden">
         <div className={"absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.05\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"}></div>
