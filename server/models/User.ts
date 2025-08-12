@@ -48,12 +48,24 @@ const UserSchema: Schema = new Schema(
     },
     phone: {
       type: String,
-      required: true,
+      required: function() {
+        return !this.isGoogleUser; // Phone not required for Google users
+      },
       trim: true,
     },
     password: {
       type: String,
-      required: true,
+      required: function() {
+        return !this.isGoogleUser; // Password not required for Google users
+      },
+    },
+    googleId: {
+      type: String,
+      sparse: true, // Allows null values but creates unique index for non-null values
+    },
+    isGoogleUser: {
+      type: Boolean,
+      default: false,
     },
     company: {
       type: String,
