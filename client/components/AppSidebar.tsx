@@ -199,7 +199,7 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
         <div className="p-4 flex-shrink-0">
           <Card className="bg-gradient-to-r from-emerald-500 to-cyan-500 border-emerald-400/50 shadow-lg">
             <CardContent className="p-4">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 mb-3">
                 <div className="p-2 bg-white/20 rounded-lg backdrop-blur">
                   <Wallet className="h-5 w-5 text-white" />
                 </div>
@@ -207,9 +207,20 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
                   <p className="text-white/90 text-xs font-medium uppercase tracking-wide">
                     Current Balance
                   </p>
-                  <p className="text-white text-xl font-bold">$125.50</p>
+                  <p className="text-white text-xl font-bold">${balance.toFixed(2)}</p>
                 </div>
               </div>
+              <Button
+                asChild
+                size="sm"
+                className="w-full bg-white/20 hover:bg-white/30 text-white border-white/30"
+                variant="outline"
+              >
+                <Link to="/wallet" className="flex items-center gap-2">
+                  <Plus className="h-4 w-4" />
+                  Add Funds
+                </Link>
+              </Button>
             </CardContent>
           </Card>
         </div>
