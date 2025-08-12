@@ -238,6 +238,16 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
 
             <Separator className="my-4 bg-blue-700/50 mx-3" />
 
+            {/* Advertisement */}
+            <div className="px-3 pb-4">
+              <AdSense
+                adSlot={AdSenseConfigs.sidebar.adSlot}
+                adFormat={AdSenseConfigs.sidebar.adFormat}
+                style={AdSenseConfigs.sidebar.style}
+                className="w-full"
+              />
+            </div>
+
             <div className="space-y-2 pb-6">
               <div className="text-xs font-medium text-slate-400 uppercase tracking-wide px-3 py-2">
                 System Health
