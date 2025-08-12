@@ -58,10 +58,36 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <Wallet className="h-4 w-4 text-primary" />
-                <span className="font-medium">${balance.toFixed(2)}</span>
-              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="flex items-center gap-2">
+                    <Wallet className="h-4 w-4 text-primary" />
+                    <span className="font-medium">${balance.toFixed(2)}</span>
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem asChild>
+                    <Link
+                      to="/wallet"
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
+                      <Wallet className="h-4 w-4" />
+                      Add Funds
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link
+                      to="/transactions"
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
+                      <Receipt className="h-4 w-4" />
+                      View Transactions
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <Button variant="outline" size="sm">
                 <Bell className="h-4 w-4" />
               </Button>
