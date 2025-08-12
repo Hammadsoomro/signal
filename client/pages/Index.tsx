@@ -59,16 +59,16 @@ export default function Index() {
 
             {/* Premium Navigation */}
             <nav className="hidden md:flex items-center gap-8">
-              <Link to="/features" className="text-slate-700 hover:text-blue-600 font-medium transition-colors">
+              <Link to="/conversations" className="text-slate-700 hover:text-blue-600 font-medium transition-colors">
                 Features
               </Link>
-              <Link to="/pricing" className="text-slate-700 hover:text-blue-600 font-medium transition-colors">
+              <Link to="/wallet" className="text-slate-700 hover:text-blue-600 font-medium transition-colors">
                 Pricing
               </Link>
-              <Link to="/enterprise" className="text-slate-700 hover:text-blue-600 font-medium transition-colors">
+              <Link to="/sub-accounts" className="text-slate-700 hover:text-blue-600 font-medium transition-colors">
                 Enterprise
               </Link>
-              <Link to="/docs" className="text-slate-700 hover:text-blue-600 font-medium transition-colors">
+              <Link to="/support" className="text-slate-700 hover:text-blue-600 font-medium transition-colors">
                 Docs
               </Link>
             </nav>
@@ -231,25 +231,6 @@ export default function Index() {
                   </Card>
                 </div>
 
-                {/* Live Message Feed */}
-                <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-4 mb-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span className="text-slate-300 text-sm font-medium">Live Message Stream</span>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="bg-blue-600 text-white p-3 rounded-xl text-sm font-medium">
-                      🌍 New message from +44 20 7946 0958
-                    </div>
-                    <div className="bg-slate-700 text-slate-300 p-3 rounded-xl text-sm">
-                      "Thanks for the quick support! Your platform is amazing."
-                    </div>
-                    <div className="flex items-center gap-2 text-green-400 text-xs font-medium">
-                      <CheckCircle className="w-3 h-3" />
-                      Delivered globally • $0.005 • 847ms
-                    </div>
-                  </div>
-                </div>
 
                 {/* Global Stats */}
                 <div className="grid grid-cols-3 gap-3">
@@ -648,11 +629,11 @@ export default function Index() {
             <div>
               <h3 className="font-bold text-white mb-6 text-lg">Enterprise Platform</h3>
               <ul className="space-y-4">
-                <li><Link to="/features" className="hover:text-white transition-colors text-lg">Global Messaging</Link></li>
-                <li><Link to="/security" className="hover:text-white transition-colors text-lg">Enterprise Security</Link></li>
+                <li><Link to="/conversations" className="hover:text-white transition-colors text-lg">Global Messaging</Link></li>
+                <li><Link to="/api-keys" className="hover:text-white transition-colors text-lg">Enterprise Security</Link></li>
                 <li><Link to="/analytics" className="hover:text-white transition-colors text-lg">Advanced Analytics</Link></li>
-                <li><Link to="/api" className="hover:text-white transition-colors text-lg">Developer API</Link></li>
-                <li><Link to="/integrations" className="hover:text-white transition-colors text-lg">Integrations</Link></li>
+                <li><Link to="/api-keys" className="hover:text-white transition-colors text-lg">Developer API</Link></li>
+                <li><Link to="/webhooks" className="hover:text-white transition-colors text-lg">Integrations</Link></li>
               </ul>
             </div>
 
@@ -660,11 +641,11 @@ export default function Index() {
             <div>
               <h3 className="font-bold text-white mb-6 text-lg">Solutions</h3>
               <ul className="space-y-4">
-                <li><Link to="/enterprise" className="hover:text-white transition-colors text-lg">Enterprise</Link></li>
-                <li><Link to="/healthcare" className="hover:text-white transition-colors text-lg">Healthcare</Link></li>
-                <li><Link to="/financial" className="hover:text-white transition-colors text-lg">Financial Services</Link></li>
-                <li><Link to="/retail" className="hover:text-white transition-colors text-lg">Retail & E-commerce</Link></li>
-                <li><Link to="/government" className="hover:text-white transition-colors text-lg">Government</Link></li>
+                <li><Link to="/sub-accounts" className="hover:text-white transition-colors text-lg">Enterprise</Link></li>
+                <li><Link to="/send" className="hover:text-white transition-colors text-lg">Bulk Messaging</Link></li>
+                <li><Link to="/buy-numbers" className="hover:text-white transition-colors text-lg">Phone Numbers</Link></li>
+                <li><Link to="/wallet" className="hover:text-white transition-colors text-lg">Wallet & Billing</Link></li>
+                <li><Link to="/scheduled" className="hover:text-white transition-colors text-lg">Scheduled Messages</Link></li>
               </ul>
             </div>
 
@@ -673,10 +654,10 @@ export default function Index() {
               <h3 className="font-bold text-white mb-6 text-lg">Enterprise Support</h3>
               <ul className="space-y-4">
                 <li><Link to="/support" className="hover:text-white transition-colors text-lg">24/7 Support</Link></li>
-                <li><Link to="/docs" className="hover:text-white transition-colors text-lg">Documentation</Link></li>
-                <li><Link to="/status" className="hover:text-white transition-colors text-lg">System Status</Link></li>
-                <li><Link to="/compliance" className="hover:text-white transition-colors text-lg">Compliance Center</Link></li>
-                <li><Link to="/contact" className="hover:text-white transition-colors text-lg">Contact Sales</Link></li>
+                <li><Link to="/support" className="hover:text-white transition-colors text-lg">Documentation</Link></li>
+                <li><Link to="/alerts" className="hover:text-white transition-colors text-lg">System Status</Link></li>
+                <li><Link to="/profile" className="hover:text-white transition-colors text-lg">Account Settings</Link></li>
+                <li><Link to="/support" className="hover:text-white transition-colors text-lg">Contact Sales</Link></li>
               </ul>
             </div>
           </div>
@@ -689,7 +670,7 @@ export default function Index() {
               <div className="flex items-center gap-8">
                 <Link to="/privacy" className="text-slate-400 hover:text-white transition-colors">Privacy Policy</Link>
                 <Link to="/terms" className="text-slate-400 hover:text-white transition-colors">Terms of Service</Link>
-                <Link to="/security" className="text-slate-400 hover:text-white transition-colors">Security</Link>
+                <Link to="/api-keys" className="text-slate-400 hover:text-white transition-colors">Security</Link>
               </div>
             </div>
           </div>
