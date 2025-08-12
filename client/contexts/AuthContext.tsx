@@ -37,18 +37,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Check if user is already logged in (simulate with localStorage)
+  // Check if user is already logged in (check token with server)
   useEffect(() => {
-    const checkAuth = () => {
+    const checkAuth = async () => {
       try {
-        const savedUser = localStorage.getItem('connectlify_user');
-        if (savedUser) {
-          const userData = JSON.parse(savedUser);
-          setUser(userData);
+        const token = localStorage.getItem('connectlify_token');
+        if (token) {
+          // Verify token with server
+          const response = await fetch('/api/auth/me', {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            }
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.success) {
+              const userData = data.data.user;
+              setUser({
+                id: userData.id,
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                name: `${userData.firstName} ${userData.lastName}`,
+                email: userData.email,
+                phone: userData.phone,
+                walletBalance: userData.walletBalance,
+                subscription: userData.subscription,
+                isAuthenticated: true
+              });
+            } else {
+              // Invalid token, remove it
+              localStorage.removeItem('connectlify_token');
+            }
+          } else {
+            // Invalid token, remove it
+            localStorage.removeItem('connectlify_token');
+          }
         }
       } catch (error) {
         console.error('Auth check error:', error);
-        localStorage.removeItem('connectlify_user');
+        localStorage.removeItem('connectlify_token');
       } finally {
         setIsLoading(false);
       }
