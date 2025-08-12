@@ -40,6 +40,29 @@ export default function Login() {
     }
   }, [isAuthenticated, navigate, location]);
 
+  // Initialize Google Sign-In
+  useEffect(() => {
+    const initializeGoogleSignIn = () => {
+      if (window.google) {
+        window.google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleGoogleResponse,
+        });
+      }
+    };
+
+    // Check if Google script is loaded
+    if (window.google) {
+      initializeGoogleSignIn();
+    } else {
+      // Wait for script to load
+      const script = document.querySelector('script[src="https://accounts.google.com/gsi/client"]');
+      if (script) {
+        script.addEventListener('load', initializeGoogleSignIn);
+      }
+    }
+  }, []);
+
   // Login form state
   const [loginData, setLoginData] = useState({
     email: '',
