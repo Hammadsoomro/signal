@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { DashboardLayout } from "@/components/DashboardLayout";
+import { AdSense, AdSenseConfigs } from "@/components/AdSense";
 import { MessageSquare, Phone, Users, Wallet } from "lucide-react";
 import { signalWireClient } from "@/lib/signalwire";
 import { useWallet } from "@/contexts/WalletContext";
