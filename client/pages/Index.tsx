@@ -149,9 +149,9 @@ export default function Index() {
                   className="text-lg px-10 py-6 border-2 border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold group"
                   asChild
                 >
-                  <Link to="/demo">
+                  <Link to="/conversations">
                     <PlayCircle className="mr-3 h-5 w-5 group-hover:text-blue-600 transition-colors" />
-                    Watch Demo
+                    View Dashboard
                   </Link>
                 </Button>
               </div>
