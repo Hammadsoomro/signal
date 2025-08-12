@@ -103,8 +103,8 @@ export default function Login() {
 
   const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!signupData.firstName || !signupData.lastName || !signupData.email || 
+
+    if (!signupData.firstName || !signupData.lastName || !signupData.email ||
         !signupData.password || !signupData.mobile || !signupData.recommendation) {
       toast({
         title: "Error",
@@ -126,14 +126,24 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      toast({
-        title: "Success",
-        description: "Account created successfully! Welcome to Connectlify!",
-      });
-      
-      navigate('/home');
+      // For now, auto-login after signup
+      const success = await login(signupData.email, signupData.password);
+
+      if (success) {
+        toast({
+          title: "Account Created Successfully!",
+          description: "Welcome to Connectlify! Your secure session is ready.",
+        });
+
+        const from = (location.state as any)?.from || '/home';
+        navigate(from, { replace: true });
+      } else {
+        toast({
+          title: "Signup Successful",
+          description: "Please sign in with your new credentials.",
+        });
+        setIsLogin(true);
+      }
     } catch (error) {
       toast({
         title: "Error",
