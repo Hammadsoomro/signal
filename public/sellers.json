@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "sellers": [
+    {
+      "seller_id": "pub-8199077937393778",
+      "seller_type": "PUBLISHER",
+      "domain": "connectlify.app",
+      "is_confidential": 0
+    }
+  ]
+}
