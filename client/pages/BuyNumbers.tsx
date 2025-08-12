@@ -310,7 +310,7 @@ export default function BuyNumbers() {
     setSelectedNumber(number);
 
     try {
-      // Use real SignalWire API to purchase the number
+      // Use SMS service API to purchase the number
       const purchaseResponse = await signalWireClient.purchasePhoneNumber(
         number.number,
       );
