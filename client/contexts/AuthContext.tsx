@@ -176,6 +176,55 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const googleAuth = async (idToken: string): Promise<{ success: boolean; message: string; isNewUser?: boolean }> => {
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/auth/google', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ idToken }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        const userData = data.data.user;
+        const token = data.data.token;
+
+        const user: User = {
+          id: userData.id,
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          name: `${userData.firstName} ${userData.lastName}`,
+          email: userData.email,
+          phone: userData.phone || '',
+          walletBalance: userData.walletBalance,
+          subscription: userData.subscription,
+          isAuthenticated: true
+        };
+
+        setUser(user);
+        localStorage.setItem('connectlify_token', token);
+
+        return {
+          success: true,
+          message: data.message,
+          isNewUser: data.data.isNewUser
+        };
+      } else {
+        return { success: false, message: data.message };
+      }
+    } catch (error) {
+      console.error('Google auth error:', error);
+      return { success: false, message: 'Google authentication failed. Please try again.' };
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem('connectlify_token');
