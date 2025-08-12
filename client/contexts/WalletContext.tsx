@@ -29,26 +29,9 @@ interface WalletContextType {
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
 export function WalletProvider({ children }: { children: ReactNode }) {
-  const [balance, setBalance] = useState(125.5);
-  const [transactions, setTransactions] = useState<Transaction[]>([
-    {
-      id: "1",
-      type: "credit",
-      amount: 100.0,
-      description: "Wallet top-up via Safepay",
-      date: "2024-01-20T10:30:00Z",
-      status: "completed",
-      reference: "SP_12345678",
-    },
-    {
-      id: "2",
-      type: "debit",
-      amount: 2.5,
-      description: "SMS sent to +1 (555) 123-4567",
-      date: "2024-01-20T09:15:00Z",
-      status: "completed",
-    },
-  ]);
+  const { user } = useAuth();
+  const [balance, setBalance] = useState(0);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
