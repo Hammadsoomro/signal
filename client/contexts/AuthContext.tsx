@@ -85,32 +85,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     checkAuth();
   }, []);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
+  const login = async (email: string, password: string): Promise<{ success: boolean; message: string }> => {
     setIsLoading(true);
-    
+
     try {
-      // Simulate API call with validation
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For demo - accept any email/password combination
-      // In production, this would be a real API call
-      if (email && password && password.length >= 6) {
-        const userData: User = {
-          id: '1',
-          name: email.split('@')[0] || 'User',
-          email: email,
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        const userData = data.data.user;
+        const token = data.data.token;
+
+        const user: User = {
+          id: userData.id,
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          name: `${userData.firstName} ${userData.lastName}`,
+          email: userData.email,
+          phone: userData.phone,
+          walletBalance: userData.walletBalance,
+          subscription: userData.subscription,
           isAuthenticated: true
         };
-        
-        setUser(userData);
-        localStorage.setItem('connectlify_user', JSON.stringify(userData));
-        return true;
+
+        setUser(user);
+        localStorage.setItem('connectlify_token', token);
+
+        return { success: true, message: data.message };
+      } else {
+        return { success: false, message: data.message };
       }
-      
-      return false;
     } catch (error) {
       console.error('Login error:', error);
-      return false;
+      return { success: false, message: 'Network error. Please try again.' };
     } finally {
       setIsLoading(false);
     }
