@@ -383,7 +383,7 @@ export default function BuyNumbers() {
               Buy Phone Numbers
             </h1>
             <p className="text-muted-foreground">
-              Purchase new phone numbers through SignalWire for SMS and voice
+              Purchase new phone numbers through our SMS service for SMS and voice
               communications
             </p>
           </div>
