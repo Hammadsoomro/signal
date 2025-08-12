@@ -529,14 +529,6 @@ export default function Conversations() {
                 >
                   <UserPlus className="h-4 w-4" />
                 </Button>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={testSignalWire}
-                  title="Test SignalWire Connection"
-                >
-                  <Phone className="h-4 w-4" />
-                </Button>
                 <Button size="sm" variant="ghost">
                   <Bell className="h-4 w-4" />
                 </Button>
