@@ -7,6 +7,17 @@ import User, { IUser } from "../models/User";
 const JWT_SECRET = process.env.JWT_SECRET || "connectlify_secret_key_2024";
 const JWT_EXPIRES_IN = "7d";
 
+// Google OAuth configuration
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "your-google-client-id";
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || "your-google-client-secret";
+const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI || "http://localhost:3000/auth/google/callback";
+
+const oauth2Client = new google.auth.OAuth2(
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  GOOGLE_REDIRECT_URI
+);
+
 export interface AuthRequest extends Request {
   user?: IUser;
 }
