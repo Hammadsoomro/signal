@@ -46,6 +46,7 @@ interface NavItem {
 export function AppSidebar({ isOpen, onClose }: SidebarProps) {
   const location = useLocation();
   const [expandedItems, setExpandedItems] = useState<string[]>(["messaging"]);
+  const { balance } = useWallet();
 
   const toggleExpanded = (id: string) => {
     setExpandedItems((prev) =>
