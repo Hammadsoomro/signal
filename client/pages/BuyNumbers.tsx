@@ -288,7 +288,7 @@ export default function BuyNumbers() {
       toast({
         title: "Using Demo Numbers",
         description:
-          "SignalWire API unavailable. Showing demo numbers for testing.",
+          "SMS service API unavailable. Showing demo numbers for testing.",
         variant: "destructive",
       });
     } finally {
