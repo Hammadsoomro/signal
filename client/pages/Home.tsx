@@ -293,7 +293,7 @@ export default function Home() {
               <CardHeader>
                 <CardTitle>System Status</CardTitle>
                 <CardDescription>
-                  SignalWire and Database connectivity
+                  SMS Service and Database connectivity
                 </CardDescription>
               </CardHeader>
               <CardContent>
