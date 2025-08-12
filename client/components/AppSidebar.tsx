@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useWallet } from "@/contexts/WalletContext";
+import { AdSense, AdSenseConfigs } from "@/components/AdSense";
 
 interface SidebarProps {
   isOpen: boolean;
