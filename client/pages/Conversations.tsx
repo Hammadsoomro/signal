@@ -263,7 +263,7 @@ export default function Conversations() {
       toast({
         title: "Message Failed",
         description: errorMessage.includes("HTTP error! status: 422")
-          ? "Invalid phone number format or number not verified in SignalWire account. Please check your sending number."
+          ? "Invalid phone number format or number not verified in SMS service account. Please check your sending number."
           : errorMessage,
         variant: "destructive",
       });
