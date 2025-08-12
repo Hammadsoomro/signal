@@ -29,6 +29,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DashboardLayout } from "@/components/DashboardLayout";
+import { AdSense, AdSenseConfigs } from "@/components/AdSense";
 import {
   Send,
   Phone,
