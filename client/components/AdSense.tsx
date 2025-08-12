@@ -24,15 +24,18 @@ export function AdSense({
     }
   }, []);
 
-  // Don't render ads in development or if no AdSense client ID
-  if (process.env.NODE_ENV === 'development') {
+  // Show placeholder in development, real ads in production
+  const isProduction = import.meta.env.PROD;
+
+  if (!isProduction) {
     return (
-      <div 
+      <div
         className={`bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-4 text-center text-gray-500 ${className}`}
         style={{ minHeight: '100px', ...style }}
       >
         <p className="text-sm">AdSense Ad Placeholder</p>
         <p className="text-xs">Slot: {adSlot}</p>
+        <p className="text-xs">Publisher: pub-8199077937393778</p>
       </div>
     );
   }
