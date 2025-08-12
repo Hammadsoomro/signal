@@ -59,7 +59,7 @@ export default function Login() {
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!loginData.email || !loginData.password) {
       toast({
         title: "Error",
@@ -72,18 +72,28 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      toast({
-        title: "Success",
-        description: "Welcome back!",
-      });
-      
-      navigate('/home');
+      const success = await login(loginData.email, loginData.password);
+
+      if (success) {
+        toast({
+          title: "Login Successful",
+          description: "Welcome back! Secure session established.",
+        });
+
+        // Redirect to intended page or dashboard
+        const from = (location.state as any)?.from || '/home';
+        navigate(from, { replace: true });
+      } else {
+        toast({
+          title: "Login Failed",
+          description: "Invalid email or password. Please try again.",
+          variant: "destructive"
+        });
+      }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Invalid credentials. Please try again.",
+        title: "Authentication Error",
+        description: "Something went wrong. Please try again.",
         variant: "destructive",
       });
     } finally {
