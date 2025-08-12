@@ -185,7 +185,7 @@ export default function Home() {
               <CardHeader>
                 <CardTitle>Recent Messages</CardTitle>
                 <CardDescription>
-                  Your latest SMS conversations from SignalWire
+                  Your latest SMS conversations from our SMS service
                 </CardDescription>
               </CardHeader>
               <CardContent>
