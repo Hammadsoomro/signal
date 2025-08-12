@@ -13,8 +13,8 @@ import { Eye, EyeOff, MessageSquare, Shield, Loader2, AlertCircle } from 'lucide
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 
-// Google Sign-In configuration
-const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
+// Google Sign-In configuration - In production, use real Google OAuth credentials
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "demo-google-client-id";
 
 // Declare Google Sign-In types
 declare global {
