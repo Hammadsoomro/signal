@@ -237,18 +237,6 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
 
             <Separator className="my-4 bg-blue-700/50 mx-3" />
 
-            <div className="space-y-2 pb-4">
-              <div className="text-xs font-medium text-slate-400 uppercase tracking-wide px-3 py-2">
-                Help
-              </div>
-              {renderNavItem({
-                id: "support",
-                label: "Support",
-                icon: HelpCircle,
-                href: "/support",
-              })}
-            </div>
-
             <div className="space-y-2 pb-6">
               <div className="text-xs font-medium text-slate-400 uppercase tracking-wide px-3 py-2">
                 System Health
