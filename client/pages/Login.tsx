@@ -193,18 +193,29 @@ export default function Login() {
     }
   };
 
-  const handleGoogleAuth = async () => {
+  const handleGoogleResponse = async (response: any) => {
     setIsLoading(true);
-    
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Success",
-        description: "Signed in with Google successfully!",
-      });
-      
-      navigate('/home');
+      const result = await googleAuth(response.credential);
+
+      if (result.success) {
+        toast({
+          title: "Success",
+          description: result.isNewUser ?
+            "Account created and signed in with Google successfully! Your balance is $0.00 - please deposit funds to begin." :
+            result.message,
+        });
+
+        const from = (location.state as any)?.from || '/home';
+        navigate(from, { replace: true });
+      } else {
+        toast({
+          title: "Authentication Failed",
+          description: result.message,
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       toast({
         title: "Error",
@@ -213,6 +224,18 @@ export default function Login() {
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleGoogleAuth = () => {
+    if (window.google) {
+      window.google.accounts.id.prompt();
+    } else {
+      toast({
+        title: "Error",
+        description: "Google Sign-In is not available. Please try again later.",
+        variant: "destructive",
+      });
     }
   };
 
