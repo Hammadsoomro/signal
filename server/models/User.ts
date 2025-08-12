@@ -14,6 +14,8 @@ export interface IUser extends Document {
   profilePicture?: string;
   timezone: string;
   language: string;
+  googleId?: string;
+  isGoogleUser?: boolean;
   settings: {
     emailNotifications: boolean;
     smsNotifications: boolean;
