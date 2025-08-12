@@ -130,14 +130,59 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const register = async (userData: RegisterData): Promise<{ success: boolean; message: string }> => {
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        const userInfo = data.data.user;
+        const token = data.data.token;
+
+        const user: User = {
+          id: userInfo.id,
+          firstName: userInfo.firstName,
+          lastName: userInfo.lastName,
+          name: `${userInfo.firstName} ${userInfo.lastName}`,
+          email: userInfo.email,
+          phone: userInfo.phone,
+          walletBalance: userInfo.walletBalance, // Will be 0 for new users
+          subscription: userInfo.subscription,
+          isAuthenticated: true
+        };
+
+        setUser(user);
+        localStorage.setItem('connectlify_token', token);
+
+        return { success: true, message: data.message };
+      } else {
+        return { success: false, message: data.message };
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      return { success: false, message: 'Network error. Please try again.' };
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('connectlify_user');
-    
+    localStorage.removeItem('connectlify_token');
+
     // Clear any other sensitive data
     localStorage.removeItem('connectlify_wallet_balance');
     localStorage.removeItem('connectlify_api_keys');
-    
+
     // Redirect to home
     window.location.href = '/';
   };
