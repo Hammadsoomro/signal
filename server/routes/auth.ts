@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { google } from "googleapis";
 import User, { IUser } from "../models/User";
 
 const JWT_SECRET = process.env.JWT_SECRET || "connectlify_secret_key_2024";
