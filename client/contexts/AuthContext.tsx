@@ -19,6 +19,7 @@ interface AuthContextType {
   isLoading: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; message: string }>;
   register: (userData: RegisterData) => Promise<{ success: boolean; message: string }>;
+  googleAuth: (idToken: string) => Promise<{ success: boolean; message: string; isNewUser?: boolean }>;
   logout: () => void;
   isAuthenticated: boolean;
 }
