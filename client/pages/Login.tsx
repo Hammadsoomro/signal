@@ -126,23 +126,28 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      // For now, auto-login after signup
-      const success = await login(signupData.email, signupData.password);
+      const result = await register({
+        firstName: signupData.firstName,
+        lastName: signupData.lastName,
+        email: signupData.email,
+        phone: signupData.mobile,
+        password: signupData.password
+      });
 
-      if (success) {
+      if (result.success) {
         toast({
           title: "Account Created Successfully!",
-          description: "Welcome to Connectlify! Your secure session is ready.",
+          description: `${result.message} Your starting balance is $0.00 - please deposit funds to begin.`,
         });
 
         const from = (location.state as any)?.from || '/home';
         navigate(from, { replace: true });
       } else {
         toast({
-          title: "Signup Successful",
-          description: "Please sign in with your new credentials.",
+          title: "Registration Failed",
+          description: result.message,
+          variant: "destructive"
         });
-        setIsLogin(true);
       }
     } catch (error) {
       toast({
