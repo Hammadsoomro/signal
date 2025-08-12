@@ -10,6 +10,7 @@ import { WalletProvider } from "./contexts/WalletContext";
 import { UserNumbersProvider } from "./contexts/UserNumbersContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { Layout } from "./components/Layout";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
@@ -38,37 +39,42 @@ const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WalletProvider>
-          <UserNumbersProvider>
+        <AuthProvider>
+          <WalletProvider>
+            <UserNumbersProvider>
             <Toaster />
             <Sonner />
             <BrowserRouter>
               <Routes>
+                {/* Public Routes */}
                 <Route path="/" element={<Index />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Terms />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/analytics" element={<Analytics />} />
-                <Route path="/send" element={<Send />} />
-                <Route path="/conversations" element={<Conversations />} />
-                <Route path="/buy-numbers" element={<BuyNumbers />} />
-                <Route path="/sub-accounts" element={<SubAccounts />} />
-                <Route path="/wallet" element={<Wallet />} />
-                <Route path="/scheduled" element={<Scheduled />} />
-                <Route path="/responses" element={<Responses />} />
-                <Route path="/transactions" element={<Transactions />} />
-                <Route path="/alerts" element={<Alerts />} />
-                <Route path="/webhooks" element={<Webhooks />} />
-                <Route path="/api-keys" element={<ApiKeys />} />
-                <Route path="/support" element={<Support />} />
-                <Route path="/profile" element={<Profile />} />
+
+                {/* Protected Routes */}
+                <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+                <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+                <Route path="/send" element={<ProtectedRoute><Send /></ProtectedRoute>} />
+                <Route path="/conversations" element={<ProtectedRoute><Conversations /></ProtectedRoute>} />
+                <Route path="/buy-numbers" element={<ProtectedRoute><BuyNumbers /></ProtectedRoute>} />
+                <Route path="/sub-accounts" element={<ProtectedRoute><SubAccounts /></ProtectedRoute>} />
+                <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
+                <Route path="/scheduled" element={<ProtectedRoute><Scheduled /></ProtectedRoute>} />
+                <Route path="/responses" element={<ProtectedRoute><Responses /></ProtectedRoute>} />
+                <Route path="/transactions" element={<ProtectedRoute><Transactions /></ProtectedRoute>} />
+                <Route path="/alerts" element={<ProtectedRoute><Alerts /></ProtectedRoute>} />
+                <Route path="/webhooks" element={<ProtectedRoute><Webhooks /></ProtectedRoute>} />
+                <Route path="/api-keys" element={<ProtectedRoute><ApiKeys /></ProtectedRoute>} />
+                <Route path="/support" element={<ProtectedRoute><Support /></ProtectedRoute>} />
+                <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
-          </UserNumbersProvider>
-        </WalletProvider>
+            </UserNumbersProvider>
+          </WalletProvider>
+        </AuthProvider>
       </TooltipProvider>
     </QueryClientProvider>
   </ErrorBoundary>
