@@ -8,14 +8,18 @@ const JWT_SECRET = process.env.JWT_SECRET || "connectlify_secret_key_2024";
 const JWT_EXPIRES_IN = "7d";
 
 // Google OAuth configuration
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "your-google-client-id";
-const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || "your-google-client-secret";
-const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI || "http://localhost:3000/auth/google/callback";
+const GOOGLE_CLIENT_ID =
+  process.env.GOOGLE_CLIENT_ID || "your-google-client-id";
+const GOOGLE_CLIENT_SECRET =
+  process.env.GOOGLE_CLIENT_SECRET || "your-google-client-secret";
+const GOOGLE_REDIRECT_URI =
+  process.env.GOOGLE_REDIRECT_URI ||
+  "http://localhost:3000/auth/google/callback";
 
 const oauth2Client = new google.auth.OAuth2(
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
-  GOOGLE_REDIRECT_URI
+  GOOGLE_REDIRECT_URI,
 );
 
 export interface AuthRequest extends Request {
@@ -31,33 +35,33 @@ export const registerUser = async (req: Request, res: Response) => {
     if (!firstName || !lastName || !email || !phone || !password) {
       return res.status(400).json({
         success: false,
-        message: "All fields are required"
+        message: "All fields are required",
       });
     }
 
     if (password.length < 6) {
       return res.status(400).json({
         success: false,
-        message: "Password must be at least 6 characters long"
+        message: "Password must be at least 6 characters long",
       });
     }
 
     // Check if user already exists
-    const existingUser = await User.findOne({ 
-      $or: [{ email: email.toLowerCase() }, { phone }] 
+    const existingUser = await User.findOne({
+      $or: [{ email: email.toLowerCase() }, { phone }],
     });
 
     if (existingUser) {
       if (existingUser.email === email.toLowerCase()) {
         return res.status(400).json({
           success: false,
-          message: "Email is already registered"
+          message: "Email is already registered",
         });
       }
       if (existingUser.phone === phone) {
         return res.status(400).json({
           success: false,
-          message: "Phone number is already registered"
+          message: "Phone number is already registered",
         });
       }
     }
@@ -75,20 +79,20 @@ export const registerUser = async (req: Request, res: Response) => {
       password: hashedPassword,
       walletBalance: 0, // New users start with 0 balance
       subscription: {
-        plan: "free"
-      }
+        plan: "free",
+      },
     });
 
     await newUser.save();
 
     // Generate JWT token
     const token = jwt.sign(
-      { 
-        userId: newUser._id, 
-        email: newUser.email 
+      {
+        userId: newUser._id,
+        email: newUser.email,
       },
       JWT_SECRET,
-      { expiresIn: JWT_EXPIRES_IN }
+      { expiresIn: JWT_EXPIRES_IN },
     );
 
     // Return user data without password
@@ -100,7 +104,7 @@ export const registerUser = async (req: Request, res: Response) => {
       phone: newUser.phone,
       walletBalance: newUser.walletBalance,
       subscription: newUser.subscription,
-      createdAt: newUser.createdAt
+      createdAt: newUser.createdAt,
     };
 
     res.status(201).json({
@@ -108,15 +112,14 @@ export const registerUser = async (req: Request, res: Response) => {
       message: "Account created successfully",
       data: {
         user: userResponse,
-        token
-      }
+        token,
+      },
     });
-
   } catch (error) {
     console.error("Registration error:", error);
     res.status(500).json({
       success: false,
-      message: "Internal server error during registration"
+      message: "Internal server error during registration",
     });
   }
 };
@@ -130,20 +133,20 @@ export const loginUser = async (req: Request, res: Response) => {
     if (!email || !password) {
       return res.status(400).json({
         success: false,
-        message: "Email and password are required"
+        message: "Email and password are required",
       });
     }
 
     // Find user by email
-    const user = await User.findOne({ 
+    const user = await User.findOne({
       email: email.toLowerCase(),
-      isActive: true 
+      isActive: true,
     });
 
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: "Invalid email or password"
+        message: "Invalid email or password",
       });
     }
 
@@ -153,18 +156,18 @@ export const loginUser = async (req: Request, res: Response) => {
     if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
-        message: "Invalid email or password"
+        message: "Invalid email or password",
       });
     }
 
     // Generate JWT token
     const token = jwt.sign(
-      { 
-        userId: user._id, 
-        email: user.email 
+      {
+        userId: user._id,
+        email: user.email,
       },
       JWT_SECRET,
-      { expiresIn: JWT_EXPIRES_IN }
+      { expiresIn: JWT_EXPIRES_IN },
     );
 
     // Return user data without password
@@ -176,7 +179,7 @@ export const loginUser = async (req: Request, res: Response) => {
       phone: user.phone,
       walletBalance: user.walletBalance,
       subscription: user.subscription,
-      createdAt: user.createdAt
+      createdAt: user.createdAt,
     };
 
     res.status(200).json({
@@ -184,28 +187,31 @@ export const loginUser = async (req: Request, res: Response) => {
       message: "Login successful",
       data: {
         user: userResponse,
-        token
-      }
+        token,
+      },
     });
-
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({
       success: false,
-      message: "Internal server error during login"
+      message: "Internal server error during login",
     });
   }
 };
 
 // Verify token middleware
-export const verifyToken = async (req: AuthRequest, res: Response, next: any) => {
+export const verifyToken = async (
+  req: AuthRequest,
+  res: Response,
+  next: any,
+) => {
   try {
     const token = req.header("Authorization")?.replace("Bearer ", "");
 
     if (!token) {
       return res.status(401).json({
         success: false,
-        message: "Access denied. No token provided."
+        message: "Access denied. No token provided.",
       });
     }
 
@@ -215,17 +221,16 @@ export const verifyToken = async (req: AuthRequest, res: Response, next: any) =>
     if (!user || !user.isActive) {
       return res.status(401).json({
         success: false,
-        message: "Invalid token or user not found"
+        message: "Invalid token or user not found",
       });
     }
 
     req.user = user;
     next();
-
   } catch (error) {
     res.status(401).json({
       success: false,
-      message: "Invalid token"
+      message: "Invalid token",
     });
   }
 };
@@ -238,14 +243,17 @@ export const googleAuth = async (req: Request, res: Response) => {
     if (!idToken) {
       return res.status(400).json({
         success: false,
-        message: "Google ID token is required"
+        message: "Google ID token is required",
       });
     }
 
     let payload;
 
     // Handle demo mode or real Google tokens
-    if (idToken.startsWith('demo-') || GOOGLE_CLIENT_ID === "your-google-client-id") {
+    if (
+      idToken.startsWith("demo-") ||
+      GOOGLE_CLIENT_ID === "your-google-client-id"
+    ) {
       // Demo mode - decode base64 token
       try {
         const decoded = JSON.parse(atob(idToken));
@@ -253,21 +261,21 @@ export const googleAuth = async (req: Request, res: Response) => {
           email: decoded.email || "user@gmail.com",
           given_name: decoded.given_name || "Demo",
           family_name: decoded.family_name || "User",
-          sub: decoded.sub || "demo-google-id-123"
+          sub: decoded.sub || "demo-google-id-123",
         };
       } catch {
         payload = {
           email: "user@gmail.com",
           given_name: "Demo",
           family_name: "User",
-          sub: "demo-google-id-123"
+          sub: "demo-google-id-123",
         };
       }
     } else {
       // Real Google token verification
       const ticket = await oauth2Client.verifyIdToken({
         idToken,
-        audience: GOOGLE_CLIENT_ID
+        audience: GOOGLE_CLIENT_ID,
       });
 
       payload = ticket.getPayload();
@@ -275,7 +283,7 @@ export const googleAuth = async (req: Request, res: Response) => {
       if (!payload || !payload.email) {
         return res.status(400).json({
           success: false,
-          message: "Invalid Google token"
+          message: "Invalid Google token",
         });
       }
     }
@@ -284,10 +292,7 @@ export const googleAuth = async (req: Request, res: Response) => {
 
     // Check if user already exists
     let user = await User.findOne({
-      $or: [
-        { email: email.toLowerCase() },
-        { googleId }
-      ]
+      $or: [{ email: email.toLowerCase() }, { googleId }],
     });
 
     if (user) {
@@ -299,17 +304,17 @@ export const googleAuth = async (req: Request, res: Response) => {
     } else {
       // Create new user with Google data
       user = new User({
-        firstName: given_name || 'User',
-        lastName: family_name || 'Google',
+        firstName: given_name || "User",
+        lastName: family_name || "Google",
         email: email.toLowerCase(),
-        phone: '', // Will be updated later if needed
-        password: '', // Google users don't need password
+        phone: "", // Will be updated later if needed
+        password: "", // Google users don't need password
         googleId,
         walletBalance: 0, // New users start with 0 balance
         subscription: {
-          plan: "free"
+          plan: "free",
         },
-        isGoogleUser: true
+        isGoogleUser: true,
       });
 
       await user.save();
@@ -319,10 +324,10 @@ export const googleAuth = async (req: Request, res: Response) => {
     const token = jwt.sign(
       {
         userId: user._id,
-        email: user.email
+        email: user.email,
       },
       JWT_SECRET,
-      { expiresIn: JWT_EXPIRES_IN }
+      { expiresIn: JWT_EXPIRES_IN },
     );
 
     // Return user data
@@ -335,24 +340,27 @@ export const googleAuth = async (req: Request, res: Response) => {
       walletBalance: user.walletBalance,
       subscription: user.subscription,
       isGoogleUser: user.isGoogleUser,
-      createdAt: user.createdAt
+      createdAt: user.createdAt,
     };
 
     res.status(200).json({
       success: true,
-      message: user.isGoogleUser ? "Signed in with Google successfully" : "Account linked with Google",
+      message: user.isGoogleUser
+        ? "Signed in with Google successfully"
+        : "Account linked with Google",
       data: {
         user: userResponse,
         token,
-        isNewUser: !user.createdAt || (Date.now() - new Date(user.createdAt).getTime()) < 10000 // Created within last 10 seconds
-      }
+        isNewUser:
+          !user.createdAt ||
+          Date.now() - new Date(user.createdAt).getTime() < 10000, // Created within last 10 seconds
+      },
     });
-
   } catch (error) {
     console.error("Google auth error:", error);
     res.status(500).json({
       success: false,
-      message: "Google authentication failed"
+      message: "Google authentication failed",
     });
   }
 };
@@ -365,7 +373,7 @@ export const getCurrentUser = async (req: AuthRequest, res: Response) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: "User not found"
+        message: "User not found",
       });
     }
 
@@ -378,21 +386,20 @@ export const getCurrentUser = async (req: AuthRequest, res: Response) => {
       walletBalance: user.walletBalance,
       subscription: user.subscription,
       settings: user.settings,
-      createdAt: user.createdAt
+      createdAt: user.createdAt,
     };
 
     res.status(200).json({
       success: true,
       data: {
-        user: userResponse
-      }
+        user: userResponse,
+      },
     });
-
   } catch (error) {
     console.error("Get user error:", error);
     res.status(500).json({
       success: false,
-      message: "Internal server error"
+      message: "Internal server error",
     });
   }
 };

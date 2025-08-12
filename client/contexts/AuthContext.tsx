@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 interface User {
   id: string;
@@ -17,9 +17,16 @@ interface User {
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<{ success: boolean; message: string }>;
-  register: (userData: RegisterData) => Promise<{ success: boolean; message: string }>;
-  googleAuth: (idToken: string) => Promise<{ success: boolean; message: string; isNewUser?: boolean }>;
+  login: (
+    email: string,
+    password: string,
+  ) => Promise<{ success: boolean; message: string }>;
+  register: (
+    userData: RegisterData,
+  ) => Promise<{ success: boolean; message: string }>;
+  googleAuth: (
+    idToken: string,
+  ) => Promise<{ success: boolean; message: string; isNewUser?: boolean }>;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -34,7 +41,9 @@ interface RegisterData {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -42,13 +51,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = localStorage.getItem('connectlify_token');
+        const token = localStorage.getItem("connectlify_token");
         if (token) {
           // Verify token with server
-          const response = await fetch('/api/auth/me', {
+          const response = await fetch("/api/auth/me", {
             headers: {
-              'Authorization': `Bearer ${token}`,
-            }
+              Authorization: `Bearer ${token}`,
+            },
           });
 
           if (response.ok) {
@@ -64,20 +73,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 phone: userData.phone,
                 walletBalance: userData.walletBalance,
                 subscription: userData.subscription,
-                isAuthenticated: true
+                isAuthenticated: true,
               });
             } else {
               // Invalid token, remove it
-              localStorage.removeItem('connectlify_token');
+              localStorage.removeItem("connectlify_token");
             }
           } else {
             // Invalid token, remove it
-            localStorage.removeItem('connectlify_token');
+            localStorage.removeItem("connectlify_token");
           }
         }
       } catch (error) {
-        console.error('Auth check error:', error);
-        localStorage.removeItem('connectlify_token');
+        console.error("Auth check error:", error);
+        localStorage.removeItem("connectlify_token");
       } finally {
         setIsLoading(false);
       }
@@ -86,14 +95,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     checkAuth();
   }, []);
 
-  const login = async (email: string, password: string): Promise<{ success: boolean; message: string }> => {
+  const login = async (
+    email: string,
+    password: string,
+  ): Promise<{ success: boolean; message: string }> => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
@@ -113,32 +125,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           phone: userData.phone,
           walletBalance: userData.walletBalance,
           subscription: userData.subscription,
-          isAuthenticated: true
+          isAuthenticated: true,
         };
 
         setUser(user);
-        localStorage.setItem('connectlify_token', token);
+        localStorage.setItem("connectlify_token", token);
 
         return { success: true, message: data.message };
       } else {
         return { success: false, message: data.message };
       }
     } catch (error) {
-      console.error('Login error:', error);
-      return { success: false, message: 'Network error. Please try again.' };
+      console.error("Login error:", error);
+      return { success: false, message: "Network error. Please try again." };
     } finally {
       setIsLoading(false);
     }
   };
 
-  const register = async (userData: RegisterData): Promise<{ success: boolean; message: string }> => {
+  const register = async (
+    userData: RegisterData,
+  ): Promise<{ success: boolean; message: string }> => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(userData),
       });
@@ -158,32 +172,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           phone: userInfo.phone,
           walletBalance: userInfo.walletBalance, // Will be 0 for new users
           subscription: userInfo.subscription,
-          isAuthenticated: true
+          isAuthenticated: true,
         };
 
         setUser(user);
-        localStorage.setItem('connectlify_token', token);
+        localStorage.setItem("connectlify_token", token);
 
         return { success: true, message: data.message };
       } else {
         return { success: false, message: data.message };
       }
     } catch (error) {
-      console.error('Registration error:', error);
-      return { success: false, message: 'Network error. Please try again.' };
+      console.error("Registration error:", error);
+      return { success: false, message: "Network error. Please try again." };
     } finally {
       setIsLoading(false);
     }
   };
 
-  const googleAuth = async (idToken: string): Promise<{ success: boolean; message: string; isNewUser?: boolean }> => {
+  const googleAuth = async (
+    idToken: string,
+  ): Promise<{ success: boolean; message: string; isNewUser?: boolean }> => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/google', {
-        method: 'POST',
+      const response = await fetch("/api/auth/google", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ idToken }),
       });
@@ -200,26 +216,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           lastName: userData.lastName,
           name: `${userData.firstName} ${userData.lastName}`,
           email: userData.email,
-          phone: userData.phone || '',
+          phone: userData.phone || "",
           walletBalance: userData.walletBalance,
           subscription: userData.subscription,
-          isAuthenticated: true
+          isAuthenticated: true,
         };
 
         setUser(user);
-        localStorage.setItem('connectlify_token', token);
+        localStorage.setItem("connectlify_token", token);
 
         return {
           success: true,
           message: data.message,
-          isNewUser: data.data.isNewUser
+          isNewUser: data.data.isNewUser,
         };
       } else {
         return { success: false, message: data.message };
       }
     } catch (error) {
-      console.error('Google auth error:', error);
-      return { success: false, message: 'Google authentication failed. Please try again.' };
+      console.error("Google auth error:", error);
+      return {
+        success: false,
+        message: "Google authentication failed. Please try again.",
+      };
     } finally {
       setIsLoading(false);
     }
@@ -227,28 +246,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('connectlify_token');
+    localStorage.removeItem("connectlify_token");
 
     // Clear any other sensitive data
-    localStorage.removeItem('connectlify_wallet_balance');
-    localStorage.removeItem('connectlify_api_keys');
+    localStorage.removeItem("connectlify_wallet_balance");
+    localStorage.removeItem("connectlify_api_keys");
 
     // Redirect to home
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   const isAuthenticated = !!user?.isAuthenticated;
 
   return (
-    <AuthContext.Provider value={{
-      user,
-      isLoading,
-      login,
-      register,
-      googleAuth,
-      logout,
-      isAuthenticated
-    }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isLoading,
+        login,
+        register,
+        googleAuth,
+        logout,
+        isAuthenticated,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -257,7 +278,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };

@@ -1,20 +1,40 @@
-import { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { Eye, EyeOff, MessageSquare, Shield, Loader2, AlertCircle } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/contexts/AuthContext';
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import {
+  Eye,
+  EyeOff,
+  MessageSquare,
+  Shield,
+  Loader2,
+  AlertCircle,
+} from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 // Google Sign-In configuration - In production, use real Google OAuth credentials
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "demo-google-client-id";
+const GOOGLE_CLIENT_ID =
+  import.meta.env.VITE_GOOGLE_CLIENT_ID || "demo-google-client-id";
 
 // Declare Google Sign-In types
 declare global {
@@ -35,7 +55,7 @@ export default function Login() {
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      const from = (location.state as any)?.from || '/home';
+      const from = (location.state as any)?.from || "/home";
       navigate(from, { replace: true });
     }
   }, [isAuthenticated, navigate, location]);
@@ -56,38 +76,40 @@ export default function Login() {
       initializeGoogleSignIn();
     } else {
       // Wait for script to load
-      const script = document.querySelector('script[src="https://accounts.google.com/gsi/client"]');
+      const script = document.querySelector(
+        'script[src="https://accounts.google.com/gsi/client"]',
+      );
       if (script) {
-        script.addEventListener('load', initializeGoogleSignIn);
+        script.addEventListener("load", initializeGoogleSignIn);
       }
     }
   }, []);
 
   // Login form state
   const [loginData, setLoginData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
 
   // Signup form state
   const [signupData, setSignupData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    mobile: '',
-    recommendation: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    mobile: "",
+    recommendation: "",
     privacyAccepted: false,
-    termsAccepted: false
+    termsAccepted: false,
   });
 
   const recommendations = [
-    { value: 'google-search', label: 'Google Search' },
-    { value: 'social-media', label: 'Social Media' },
-    { value: 'friend-referral', label: 'Friend Referral' },
-    { value: 'online-ad', label: 'Online Advertisement' },
-    { value: 'blog-article', label: 'Blog/Article' },
-    { value: 'other', label: 'Other' }
+    { value: "google-search", label: "Google Search" },
+    { value: "social-media", label: "Social Media" },
+    { value: "friend-referral", label: "Friend Referral" },
+    { value: "online-ad", label: "Online Advertisement" },
+    { value: "blog-article", label: "Blog/Article" },
+    { value: "other", label: "Other" },
   ];
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
@@ -114,13 +136,13 @@ export default function Login() {
         });
 
         // Redirect to intended page or dashboard
-        const from = (location.state as any)?.from || '/home';
+        const from = (location.state as any)?.from || "/home";
         navigate(from, { replace: true });
       } else {
         toast({
           title: "Login Failed",
           description: result.message,
-          variant: "destructive"
+          variant: "destructive",
         });
       }
     } catch (error) {
@@ -137,8 +159,14 @@ export default function Login() {
   const handleSignupSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!signupData.firstName || !signupData.lastName || !signupData.email ||
-        !signupData.password || !signupData.mobile || !signupData.recommendation) {
+    if (
+      !signupData.firstName ||
+      !signupData.lastName ||
+      !signupData.email ||
+      !signupData.password ||
+      !signupData.mobile ||
+      !signupData.recommendation
+    ) {
       toast({
         title: "Error",
         description: "Please fill in all fields",
@@ -164,7 +192,7 @@ export default function Login() {
         lastName: signupData.lastName,
         email: signupData.email,
         phone: signupData.mobile,
-        password: signupData.password
+        password: signupData.password,
       });
 
       if (result.success) {
@@ -173,13 +201,13 @@ export default function Login() {
           description: `${result.message} Your starting balance is $0.00 - please deposit funds to begin.`,
         });
 
-        const from = (location.state as any)?.from || '/home';
+        const from = (location.state as any)?.from || "/home";
         navigate(from, { replace: true });
       } else {
         toast({
           title: "Registration Failed",
           description: result.message,
-          variant: "destructive"
+          variant: "destructive",
         });
       }
     } catch (error) {
@@ -202,12 +230,12 @@ export default function Login() {
       if (result.success) {
         toast({
           title: "Success",
-          description: result.isNewUser ?
-            "Account created and signed in with Google successfully! Your balance is $0.00 - please deposit funds to begin." :
-            result.message,
+          description: result.isNewUser
+            ? "Account created and signed in with Google successfully! Your balance is $0.00 - please deposit funds to begin."
+            : result.message,
         });
 
-        const from = (location.state as any)?.from || '/home';
+        const from = (location.state as any)?.from || "/home";
         navigate(from, { replace: true });
       } else {
         toast({
@@ -238,28 +266,30 @@ export default function Login() {
       } else {
         // Demo Google authentication
         const demoGoogleUser = {
-          credential: "demo-jwt-token-for-google-user"
+          credential: "demo-jwt-token-for-google-user",
         };
 
         // Simulate Google user data
-        const mockIdToken = btoa(JSON.stringify({
-          email: "user@gmail.com",
-          given_name: "Demo",
-          family_name: "User",
-          sub: "demo-google-id-123"
-        }));
+        const mockIdToken = btoa(
+          JSON.stringify({
+            email: "user@gmail.com",
+            given_name: "Demo",
+            family_name: "User",
+            sub: "demo-google-id-123",
+          }),
+        );
 
         const result = await googleAuth(mockIdToken);
 
         if (result.success) {
           toast({
             title: "Success",
-            description: result.isNewUser ?
-              "Account created and signed in with Google successfully! Your balance is $0.00 - please deposit funds to begin." :
-              result.message,
+            description: result.isNewUser
+              ? "Account created and signed in with Google successfully! Your balance is $0.00 - please deposit funds to begin."
+              : result.message,
           });
 
-          const from = (location.state as any)?.from || '/home';
+          const from = (location.state as any)?.from || "/home";
           navigate(from, { replace: true });
         } else {
           toast({
@@ -288,12 +318,18 @@ export default function Login() {
             <div className="w-10 h-10 bg-gradient-to-tr from-blue-600 via-purple-600 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg">
               <MessageSquare className="h-5 w-5 text-white" />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">Connectlify</span>
+            <span className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+              Connectlify
+            </span>
             <Badge className="bg-blue-100 text-blue-700">Secure</Badge>
           </Link>
-          <CardTitle className="text-slate-900">{isLogin ? 'Secure Login' : 'Create Account'}</CardTitle>
+          <CardTitle className="text-slate-900">
+            {isLogin ? "Secure Login" : "Create Account"}
+          </CardTitle>
           <CardDescription className="text-slate-600">
-            {isLogin ? 'Enter your credentials to access your secure dashboard' : 'Create your account to access enterprise messaging features'}
+            {isLogin
+              ? "Enter your credentials to access your secure dashboard"
+              : "Create your account to access enterprise messaging features"}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -301,20 +337,33 @@ export default function Login() {
           <Alert className="border-blue-200 bg-blue-50">
             <Shield className="h-4 w-4 text-blue-600" />
             <AlertDescription className="text-blue-800">
-              <strong>Secure Access:</strong> All sessions are encrypted and protected with enterprise-grade security.
+              <strong>Secure Access:</strong> All sessions are encrypted and
+              protected with enterprise-grade security.
             </AlertDescription>
           </Alert>
-          <Button 
-            variant="outline" 
-            className="w-full" 
+          <Button
+            variant="outline"
+            className="w-full"
             onClick={handleGoogleAuth}
             disabled={isLoading}
           >
             <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
-              <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-              <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-              <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+              <path
+                fill="currentColor"
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+              />
+              <path
+                fill="currentColor"
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+              />
+              <path
+                fill="currentColor"
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+              />
+              <path
+                fill="currentColor"
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+              />
             </svg>
             Continue with Google
           </Button>
@@ -324,7 +373,9 @@ export default function Login() {
               <Separator className="w-full" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+              <span className="bg-background px-2 text-muted-foreground">
+                Or continue with
+              </span>
             </div>
           </div>
 
@@ -338,7 +389,9 @@ export default function Login() {
                   type="email"
                   placeholder="Enter your email"
                   value={loginData.email}
-                  onChange={(e) => setLoginData(prev => ({ ...prev, email: e.target.value }))}
+                  onChange={(e) =>
+                    setLoginData((prev) => ({ ...prev, email: e.target.value }))
+                  }
                   required
                 />
               </div>
@@ -347,10 +400,15 @@ export default function Login() {
                 <div className="relative">
                   <Input
                     id="password"
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     value={loginData.password}
-                    onChange={(e) => setLoginData(prev => ({ ...prev, password: e.target.value }))}
+                    onChange={(e) =>
+                      setLoginData((prev) => ({
+                        ...prev,
+                        password: e.target.value,
+                      }))
+                    }
                     required
                     minLength={6}
                   />
@@ -370,12 +428,8 @@ export default function Login() {
                 </div>
               </div>
 
-              <Button 
-                type="submit" 
-                className="w-full" 
-                disabled={isLoading}
-              >
-                {isLoading ? 'Signing In...' : 'Sign In'}
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? "Signing In..." : "Sign In"}
               </Button>
             </form>
           ) : (
@@ -389,7 +443,12 @@ export default function Login() {
                     type="text"
                     placeholder="John"
                     value={signupData.firstName}
-                    onChange={(e) => setSignupData(prev => ({ ...prev, firstName: e.target.value }))}
+                    onChange={(e) =>
+                      setSignupData((prev) => ({
+                        ...prev,
+                        firstName: e.target.value,
+                      }))
+                    }
                     required
                   />
                 </div>
@@ -400,7 +459,12 @@ export default function Login() {
                     type="text"
                     placeholder="Doe"
                     value={signupData.lastName}
-                    onChange={(e) => setSignupData(prev => ({ ...prev, lastName: e.target.value }))}
+                    onChange={(e) =>
+                      setSignupData((prev) => ({
+                        ...prev,
+                        lastName: e.target.value,
+                      }))
+                    }
                     required
                   />
                 </div>
@@ -413,7 +477,12 @@ export default function Login() {
                   type="email"
                   placeholder="john@example.com"
                   value={signupData.email}
-                  onChange={(e) => setSignupData(prev => ({ ...prev, email: e.target.value }))}
+                  onChange={(e) =>
+                    setSignupData((prev) => ({
+                      ...prev,
+                      email: e.target.value,
+                    }))
+                  }
                   required
                 />
               </div>
@@ -425,7 +494,12 @@ export default function Login() {
                   type="tel"
                   placeholder="+1 (555) 123-4567"
                   value={signupData.mobile}
-                  onChange={(e) => setSignupData(prev => ({ ...prev, mobile: e.target.value }))}
+                  onChange={(e) =>
+                    setSignupData((prev) => ({
+                      ...prev,
+                      mobile: e.target.value,
+                    }))
+                  }
                   required
                 />
               </div>
@@ -435,10 +509,15 @@ export default function Login() {
                 <div className="relative">
                   <Input
                     id="signupPassword"
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     placeholder="Create a strong password"
                     value={signupData.password}
-                    onChange={(e) => setSignupData(prev => ({ ...prev, password: e.target.value }))}
+                    onChange={(e) =>
+                      setSignupData((prev) => ({
+                        ...prev,
+                        password: e.target.value,
+                      }))
+                    }
                     required
                     minLength={6}
                   />
@@ -459,10 +538,17 @@ export default function Login() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="recommendation">How did you hear about us?</Label>
-                <Select 
-                  value={signupData.recommendation} 
-                  onValueChange={(value) => setSignupData(prev => ({ ...prev, recommendation: value }))}
+                <Label htmlFor="recommendation">
+                  How did you hear about us?
+                </Label>
+                <Select
+                  value={signupData.recommendation}
+                  onValueChange={(value) =>
+                    setSignupData((prev) => ({
+                      ...prev,
+                      recommendation: value,
+                    }))
+                  }
                   required
                 >
                   <SelectTrigger>
@@ -480,68 +566,75 @@ export default function Login() {
 
               <div className="space-y-3">
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="privacy" 
+                  <Checkbox
+                    id="privacy"
                     checked={signupData.privacyAccepted}
-                    onCheckedChange={(checked) => 
-                      setSignupData(prev => ({ ...prev, privacyAccepted: checked as boolean }))
+                    onCheckedChange={(checked) =>
+                      setSignupData((prev) => ({
+                        ...prev,
+                        privacyAccepted: checked as boolean,
+                      }))
                     }
                     required
                   />
-                  <Label 
-                    htmlFor="privacy" 
+                  <Label
+                    htmlFor="privacy"
                     className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                    I agree to the{' '}
-                    <Link to="/privacy" className="text-primary underline hover:no-underline">
+                    I agree to the{" "}
+                    <Link
+                      to="/privacy"
+                      className="text-primary underline hover:no-underline"
+                    >
                       Privacy Policy
                     </Link>
                   </Label>
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="terms" 
+                  <Checkbox
+                    id="terms"
                     checked={signupData.termsAccepted}
-                    onCheckedChange={(checked) => 
-                      setSignupData(prev => ({ ...prev, termsAccepted: checked as boolean }))
+                    onCheckedChange={(checked) =>
+                      setSignupData((prev) => ({
+                        ...prev,
+                        termsAccepted: checked as boolean,
+                      }))
                     }
                     required
                   />
-                  <Label 
-                    htmlFor="terms" 
+                  <Label
+                    htmlFor="terms"
                     className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                    I agree to the{' '}
-                    <Link to="/terms" className="text-primary underline hover:no-underline">
+                    I agree to the{" "}
+                    <Link
+                      to="/terms"
+                      className="text-primary underline hover:no-underline"
+                    >
                       Terms & Conditions
                     </Link>
                   </Label>
                 </div>
               </div>
 
-              <Button 
-                type="submit" 
-                className="w-full" 
-                disabled={isLoading}
-              >
-                {isLoading ? 'Creating Account...' : 'Create Account'}
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? "Creating Account..." : "Create Account"}
               </Button>
             </form>
           )}
 
-
           <div className="text-center text-sm">
             <span className="text-muted-foreground">
               {isLogin ? "Don't have an account?" : "Already have an account?"}
-            </span>{' '}
+            </span>{" "}
             <Button
               variant="link"
               className="p-0 h-auto"
               onClick={() => setIsLogin(!isLogin)}
               disabled={isLoading}
             >
-              {isLogin ? 'Sign up' : 'Sign in'}
+              {isLogin ? "Sign up" : "Sign in"}
             </Button>
           </div>
         </CardContent>

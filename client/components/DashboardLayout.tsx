@@ -62,7 +62,11 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
             <div className="flex items-center gap-4">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center gap-2"
+                  >
                     <Wallet className="h-4 w-4 text-primary" />
                     <span className="font-medium">${balance.toFixed(2)}</span>
                     <ChevronDown className="h-4 w-4" />
@@ -102,11 +106,11 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
                   >
                     <Avatar className="h-8 w-8">
                       <AvatarFallback className="bg-primary/10 text-primary">
-                        {user?.name.charAt(0).toUpperCase() || 'U'}
+                        {user?.name.charAt(0).toUpperCase() || "U"}
                       </AvatarFallback>
                     </Avatar>
                     <span className="hidden md:block text-sm font-medium">
-                      {user?.name || 'User'}
+                      {user?.name || "User"}
                     </span>
                     <ChevronDown className="h-4 w-4" />
                   </Button>

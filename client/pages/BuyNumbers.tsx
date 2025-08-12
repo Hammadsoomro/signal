@@ -383,8 +383,8 @@ export default function BuyNumbers() {
               Buy Phone Numbers
             </h1>
             <p className="text-muted-foreground">
-              Purchase new phone numbers through our SMS service for SMS and voice
-              communications
+              Purchase new phone numbers through our SMS service for SMS and
+              voice communications
             </p>
           </div>
           <div className="flex items-center gap-4">

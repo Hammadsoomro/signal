@@ -3,7 +3,13 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 import { connectDatabase } from "./config/database";
-import { registerUser, loginUser, verifyToken, getCurrentUser, googleAuth } from "./routes/auth";
+import {
+  registerUser,
+  loginUser,
+  verifyToken,
+  getCurrentUser,
+  googleAuth,
+} from "./routes/auth";
 
 export function createServer() {
   const app = express();

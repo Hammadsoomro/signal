@@ -52,7 +52,10 @@ export default function Index() {
               <span className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
                 Connectlify
               </span>
-              <Badge variant="secondary" className="bg-blue-100 text-blue-700 font-medium px-3 py-1">
+              <Badge
+                variant="secondary"
+                className="bg-blue-100 text-blue-700 font-medium px-3 py-1"
+              >
                 Enterprise
               </Badge>
             </Link>
@@ -64,7 +67,9 @@ export default function Index() {
                 className="text-slate-700 hover:text-blue-600 font-medium transition-colors cursor-pointer"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+                  document
+                    .getElementById("features")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
                 Features
@@ -74,7 +79,9 @@ export default function Index() {
                 className="text-slate-700 hover:text-blue-600 font-medium transition-colors cursor-pointer"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+                  document
+                    .getElementById("pricing")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
                 Pricing
@@ -84,7 +91,9 @@ export default function Index() {
                 className="text-slate-700 hover:text-blue-600 font-medium transition-colors cursor-pointer"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById('enterprise')?.scrollIntoView({ behavior: 'smooth' });
+                  document
+                    .getElementById("enterprise")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
                 Enterprise
@@ -94,7 +103,9 @@ export default function Index() {
                 className="text-slate-700 hover:text-blue-600 font-medium transition-colors cursor-pointer"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById('docs')?.scrollIntoView({ behavior: 'smooth' });
+                  document
+                    .getElementById("docs")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
                 Docs
@@ -103,11 +114,16 @@ export default function Index() {
 
             {/* Premium Action Buttons */}
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="lg" className="text-slate-700 hover:text-blue-600 font-medium" asChild>
+              <Button
+                variant="ghost"
+                size="lg"
+                className="text-slate-700 hover:text-blue-600 font-medium"
+                asChild
+              >
                 <Link to="/login">Sign In</Link>
               </Button>
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-6 shadow-lg hover:shadow-xl transition-all duration-300"
                 asChild
               >
@@ -125,8 +141,12 @@ export default function Index() {
       <section className="relative pt-32 pb-20 overflow-hidden">
         {/* Premium Background Effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"></div>
-        <div className={"absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%2364748b\" fill-opacity=\"0.03\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"}></div>
-        
+        <div
+          className={
+            'absolute top-0 left-0 w-full h-full bg-[url(\'data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%2364748b" fill-opacity="0.03"%3E%3Ccircle cx="30" cy="30" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\')]'
+          }
+        ></div>
+
         {/* Floating Orbs */}
         <div className="absolute top-1/4 left-10 w-72 h-72 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -136,14 +156,14 @@ export default function Index() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left Column - Premium Content */}
             <div className="text-left max-w-2xl">
-              <Badge 
-                variant="outline" 
+              <Badge
+                variant="outline"
                 className="mb-8 bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200/50 text-blue-700 px-4 py-2 text-sm font-medium"
               >
                 <Award className="w-4 h-4 mr-2 text-blue-600" />
                 #1 Enterprise SMS Platform
               </Badge>
-              
+
               <h1 className="text-6xl lg:text-7xl font-bold mb-8 leading-tight">
                 <span className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 bg-clip-text text-transparent">
                   Connect
@@ -153,10 +173,12 @@ export default function Index() {
                   Globally
                 </span>
               </h1>
-              
+
               <p className="text-xl lg:text-2xl text-slate-600 mb-10 leading-relaxed font-light">
-                The world's most advanced SMS platform trusted by <span className="font-semibold text-blue-600">Fortune 500</span> companies. 
-                Scale your communication with enterprise-grade security and international reach.
+                The world's most advanced SMS platform trusted by{" "}
+                <span className="font-semibold text-blue-600">Fortune 500</span>{" "}
+                companies. Scale your communication with enterprise-grade
+                security and international reach.
               </p>
 
               {/* Premium CTAs */}
@@ -190,28 +212,36 @@ export default function Index() {
                   <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mb-3 shadow-lg">
                     <CheckCircle className="h-6 w-6 text-white" />
                   </div>
-                  <span className="text-sm font-semibold text-slate-900">99.99% Uptime</span>
+                  <span className="text-sm font-semibold text-slate-900">
+                    99.99% Uptime
+                  </span>
                   <span className="text-xs text-slate-500">SLA Guaranteed</span>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mb-3 shadow-lg">
                     <Shield className="h-6 w-6 text-white" />
                   </div>
-                  <span className="text-sm font-semibold text-slate-900">SOC 2 Type II</span>
+                  <span className="text-sm font-semibold text-slate-900">
+                    SOC 2 Type II
+                  </span>
                   <span className="text-xs text-slate-500">Certified</span>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-3 shadow-lg">
                     <Globe className="h-6 w-6 text-white" />
                   </div>
-                  <span className="text-sm font-semibold text-slate-900">Global Reach</span>
+                  <span className="text-sm font-semibold text-slate-900">
+                    Global Reach
+                  </span>
                   <span className="text-xs text-slate-500">180+ Countries</span>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mb-3 shadow-lg">
                     <Headphones className="h-6 w-6 text-white" />
                   </div>
-                  <span className="text-sm font-semibold text-slate-900">24/7 Support</span>
+                  <span className="text-sm font-semibold text-slate-900">
+                    24/7 Support
+                  </span>
                   <span className="text-xs text-slate-500">White Glove</span>
                 </div>
               </div>
@@ -227,7 +257,9 @@ export default function Index() {
                     <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
                     <div className="w-3 h-3 bg-green-400 rounded-full"></div>
                   </div>
-                  <Badge className="bg-green-100 text-green-700 border-green-200">Live Dashboard</Badge>
+                  <Badge className="bg-green-100 text-green-700 border-green-200">
+                    Live Dashboard
+                  </Badge>
                 </div>
 
                 {/* Analytics Cards */}
@@ -238,27 +270,38 @@ export default function Index() {
                         <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
                           <TrendingUp className="h-4 w-4 text-white" />
                         </div>
-                        <span className="text-sm font-medium text-slate-600">Messages Sent</span>
+                        <span className="text-sm font-medium text-slate-600">
+                          Messages Sent
+                        </span>
                       </div>
-                      <div className="text-2xl font-bold text-slate-900">2.4M</div>
-                      <div className="text-xs text-green-600 font-medium">+12% this month</div>
+                      <div className="text-2xl font-bold text-slate-900">
+                        2.4M
+                      </div>
+                      <div className="text-xs text-green-600 font-medium">
+                        +12% this month
+                      </div>
                     </CardContent>
                   </Card>
-                  
+
                   <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200/50">
                     <CardContent className="p-4">
                       <div className="flex items-center gap-3 mb-2">
                         <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
                           <BarChart3 className="h-4 w-4 text-white" />
                         </div>
-                        <span className="text-sm font-medium text-slate-600">Delivery Rate</span>
+                        <span className="text-sm font-medium text-slate-600">
+                          Delivery Rate
+                        </span>
                       </div>
-                      <div className="text-2xl font-bold text-slate-900">99.8%</div>
-                      <div className="text-xs text-green-600 font-medium">Industry leading</div>
+                      <div className="text-2xl font-bold text-slate-900">
+                        99.8%
+                      </div>
+                      <div className="text-xs text-green-600 font-medium">
+                        Industry leading
+                      </div>
                     </CardContent>
                   </Card>
                 </div>
-
 
                 {/* Global Stats */}
                 <div className="grid grid-cols-3 gap-3">
@@ -274,7 +317,9 @@ export default function Index() {
                   </div>
                   <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 p-3 rounded-xl text-center border border-purple-200/50">
                     <Target className="w-5 h-5 text-purple-600 mx-auto mb-1" />
-                    <div className="text-lg font-bold text-slate-900">99.8%</div>
+                    <div className="text-lg font-bold text-slate-900">
+                      99.8%
+                    </div>
                     <div className="text-xs text-slate-600">Success Rate</div>
                   </div>
                 </div>
@@ -300,14 +345,18 @@ export default function Index() {
               <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
                 100B+
               </div>
-              <div className="text-slate-600 font-medium">Messages Delivered</div>
+              <div className="text-slate-600 font-medium">
+                Messages Delivered
+              </div>
               <div className="text-sm text-slate-400">Globally Trusted</div>
             </div>
             <div className="group hover:scale-105 transition-transform duration-300">
               <div className="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
                 Fortune 500
               </div>
-              <div className="text-slate-600 font-medium">Enterprise Clients</div>
+              <div className="text-slate-600 font-medium">
+                Enterprise Clients
+              </div>
               <div className="text-sm text-slate-400">Industry Leaders</div>
             </div>
             <div className="group hover:scale-105 transition-transform duration-300">
@@ -321,7 +370,9 @@ export default function Index() {
               <div className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
                 180+
               </div>
-              <div className="text-slate-600 font-medium">Countries Covered</div>
+              <div className="text-slate-600 font-medium">
+                Countries Covered
+              </div>
               <div className="text-sm text-slate-400">Global Reach</div>
             </div>
           </div>
@@ -329,16 +380,22 @@ export default function Index() {
       </section>
 
       {/* Premium Features Section */}
-      <section id="features" className="py-24 bg-gradient-to-br from-slate-50 to-blue-50">
+      <section
+        id="features"
+        className="py-24 bg-gradient-to-br from-slate-50 to-blue-50"
+      >
         <div className="container mx-auto px-6">
           <div className="text-center mb-20">
-            <Badge className="mb-6 bg-blue-100 text-blue-700 px-4 py-2">Enterprise Features</Badge>
+            <Badge className="mb-6 bg-blue-100 text-blue-700 px-4 py-2">
+              Enterprise Features
+            </Badge>
             <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
               Built for Global Scale
             </h2>
             <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
-              Everything you need to manage enterprise-grade SMS communication across continents, 
-              with military-grade security and white-glove support.
+              Everything you need to manage enterprise-grade SMS communication
+              across continents, with military-grade security and white-glove
+              support.
             </p>
           </div>
 
@@ -354,8 +411,9 @@ export default function Index() {
                   Real-time Global Messaging
                 </CardTitle>
                 <CardDescription className="text-slate-600 text-lg leading-relaxed">
-                  Instant SMS delivery to 180+ countries with sub-second latency. 
-                  Advanced routing algorithms ensure 99.8% delivery rates worldwide.
+                  Instant SMS delivery to 180+ countries with sub-second
+                  latency. Advanced routing algorithms ensure 99.8% delivery
+                  rates worldwide.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -387,8 +445,9 @@ export default function Index() {
                   Enterprise Security
                 </CardTitle>
                 <CardDescription className="text-slate-600 text-lg leading-relaxed">
-                  SOC 2 Type II certified with end-to-end encryption, GDPR compliance, 
-                  and comprehensive audit trails for enterprise peace of mind.
+                  SOC 2 Type II certified with end-to-end encryption, GDPR
+                  compliance, and comprehensive audit trails for enterprise
+                  peace of mind.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -420,8 +479,9 @@ export default function Index() {
                   Advanced Analytics
                 </CardTitle>
                 <CardDescription className="text-slate-600 text-lg leading-relaxed">
-                  Real-time insights with AI-powered analytics, delivery optimization, 
-                  and comprehensive reporting for data-driven decision making.
+                  Real-time insights with AI-powered analytics, delivery
+                  optimization, and comprehensive reporting for data-driven
+                  decision making.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -444,8 +504,8 @@ export default function Index() {
           </div>
 
           <div className="text-center mt-16">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="bg-gradient-to-r from-slate-900 to-slate-700 hover:from-slate-800 hover:to-slate-600 text-white px-10 py-6 text-lg font-semibold shadow-xl"
               asChild
             >
@@ -469,8 +529,8 @@ export default function Index() {
               Scale Your Business
             </h2>
             <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
-              Transparent, enterprise-grade pricing that grows with your business.
-              No hidden fees, just predictable costs at global scale.
+              Transparent, enterprise-grade pricing that grows with your
+              business. No hidden fees, just predictable costs at global scale.
             </p>
           </div>
 
@@ -479,9 +539,13 @@ export default function Index() {
             <Card className="relative overflow-hidden border-2 border-slate-200 hover:border-blue-300 transition-all duration-300">
               <CardHeader className="pb-8 pt-8">
                 <div className="text-center">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">Starter</h3>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">
+                    Starter
+                  </h3>
                   <p className="text-slate-600 mb-6">Perfect for small teams</p>
-                  <div className="text-5xl font-bold text-slate-900 mb-2">$29</div>
+                  <div className="text-5xl font-bold text-slate-900 mb-2">
+                    $29
+                  </div>
                   <div className="text-slate-500">per month</div>
                 </div>
               </CardHeader>
@@ -508,7 +572,10 @@ export default function Index() {
                     <span className="text-slate-700">99.5% uptime SLA</span>
                   </div>
                 </div>
-                <Button className="w-full bg-slate-900 text-white hover:bg-slate-800" asChild>
+                <Button
+                  className="w-full bg-slate-900 text-white hover:bg-slate-800"
+                  asChild
+                >
                   <Link to="/login">Get Started</Link>
                 </Button>
               </CardContent>
@@ -521,9 +588,13 @@ export default function Index() {
               </div>
               <CardHeader className="pb-8 pt-12">
                 <div className="text-center">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">Business</h3>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">
+                    Business
+                  </h3>
                   <p className="text-slate-600 mb-6">For growing companies</p>
-                  <div className="text-5xl font-bold text-blue-600 mb-2">$99</div>
+                  <div className="text-5xl font-bold text-blue-600 mb-2">
+                    $99
+                  </div>
                   <div className="text-slate-500">per month</div>
                 </div>
               </CardHeader>
@@ -531,7 +602,9 @@ export default function Index() {
                 <div className="space-y-4 mb-8">
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span className="text-slate-700">50,000 messages/month</span>
+                    <span className="text-slate-700">
+                      50,000 messages/month
+                    </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500" />
@@ -558,7 +631,10 @@ export default function Index() {
                     <span className="text-slate-700">Custom integrations</span>
                   </div>
                 </div>
-                <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600" asChild>
+                <Button
+                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600"
+                  asChild
+                >
                   <Link to="/login">Start Free Trial</Link>
                 </Button>
               </CardContent>
@@ -568,9 +644,13 @@ export default function Index() {
             <Card className="relative overflow-hidden border-2 border-slate-200 hover:border-purple-300 transition-all duration-300">
               <CardHeader className="pb-8 pt-8">
                 <div className="text-center">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">Enterprise</h3>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">
+                    Enterprise
+                  </h3>
                   <p className="text-slate-600 mb-6">For large organizations</p>
-                  <div className="text-5xl font-bold text-purple-600 mb-2">Custom</div>
+                  <div className="text-5xl font-bold text-purple-600 mb-2">
+                    Custom
+                  </div>
                   <div className="text-slate-500">contact sales</div>
                 </div>
               </CardHeader>
@@ -602,10 +682,15 @@ export default function Index() {
                   </div>
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span className="text-slate-700">White-label solutions</span>
+                    <span className="text-slate-700">
+                      White-label solutions
+                    </span>
                   </div>
                 </div>
-                <Button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700" asChild>
+                <Button
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700"
+                  asChild
+                >
                   <Link to="/support">Contact Sales</Link>
                 </Button>
               </CardContent>
@@ -615,8 +700,12 @@ export default function Index() {
           {/* Pricing Features */}
           <div className="mt-20 bg-gradient-to-r from-slate-50 to-blue-50 rounded-3xl p-12">
             <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-slate-900 mb-4">All Plans Include</h3>
-              <p className="text-xl text-slate-600">Enterprise-grade features across all pricing tiers</p>
+              <h3 className="text-3xl font-bold text-slate-900 mb-4">
+                All Plans Include
+              </h3>
+              <p className="text-xl text-slate-600">
+                Enterprise-grade features across all pricing tiers
+              </p>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="flex items-center gap-4">
@@ -624,7 +713,9 @@ export default function Index() {
                   <Globe className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <div className="font-semibold text-slate-900">Global Coverage</div>
+                  <div className="font-semibold text-slate-900">
+                    Global Coverage
+                  </div>
                   <div className="text-slate-600">180+ countries supported</div>
                 </div>
               </div>
@@ -633,7 +724,9 @@ export default function Index() {
                   <Shield className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <div className="font-semibold text-slate-900">Bank-Grade Security</div>
+                  <div className="font-semibold text-slate-900">
+                    Bank-Grade Security
+                  </div>
                   <div className="text-slate-600">End-to-end encryption</div>
                 </div>
               </div>
@@ -642,7 +735,9 @@ export default function Index() {
                   <Zap className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <div className="font-semibold text-slate-900">Lightning Fast</div>
+                  <div className="font-semibold text-slate-900">
+                    Lightning Fast
+                  </div>
                   <div className="text-slate-600">Sub-second delivery</div>
                 </div>
               </div>
@@ -655,12 +750,15 @@ export default function Index() {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-20">
-            <Badge className="mb-6 bg-purple-100 text-purple-700 px-4 py-2">Customer Success</Badge>
+            <Badge className="mb-6 bg-purple-100 text-purple-700 px-4 py-2">
+              Customer Success
+            </Badge>
             <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
               Trusted by Industry Leaders
             </h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              See how global enterprises are transforming their communication with Connectlify
+              See how global enterprises are transforming their communication
+              with Connectlify
             </p>
           </div>
 
@@ -672,23 +770,33 @@ export default function Index() {
                 <div className="flex items-center gap-2 mb-6">
                   <div className="flex">
                     {[1, 2, 3, 4, 5].map((i) => (
-                      <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                      <Star
+                        key={i}
+                        className="h-5 w-5 text-yellow-400 fill-current"
+                      />
                     ))}
                   </div>
-                  <span className="text-sm font-bold text-slate-700 ml-2">5.0 Rating</span>
+                  <span className="text-sm font-bold text-slate-700 ml-2">
+                    5.0 Rating
+                  </span>
                 </div>
                 <blockquote className="text-slate-700 text-lg leading-relaxed mb-8 font-medium">
-                  "Connectlify transformed our global customer support. The enterprise-grade security 
-                  and 99.99% uptime gave us the confidence to scale internationally."
+                  "Connectlify transformed our global customer support. The
+                  enterprise-grade security and 99.99% uptime gave us the
+                  confidence to scale internationally."
                 </blockquote>
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
                     <span className="text-white font-bold text-xl">SM</span>
                   </div>
                   <div>
-                    <div className="font-bold text-slate-900 text-lg">Sarah Mitchell</div>
+                    <div className="font-bold text-slate-900 text-lg">
+                      Sarah Mitchell
+                    </div>
                     <div className="text-slate-600">CTO, TechGlobal Inc.</div>
-                    <div className="text-sm text-blue-600 font-medium">Fortune 100 Company</div>
+                    <div className="text-sm text-blue-600 font-medium">
+                      Fortune 100 Company
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -701,23 +809,35 @@ export default function Index() {
                 <div className="flex items-center gap-2 mb-6">
                   <div className="flex">
                     {[1, 2, 3, 4, 5].map((i) => (
-                      <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                      <Star
+                        key={i}
+                        className="h-5 w-5 text-yellow-400 fill-current"
+                      />
                     ))}
                   </div>
-                  <span className="text-sm font-bold text-slate-700 ml-2">5.0 Rating</span>
+                  <span className="text-sm font-bold text-slate-700 ml-2">
+                    5.0 Rating
+                  </span>
                 </div>
                 <blockquote className="text-slate-700 text-lg leading-relaxed mb-8 font-medium">
-                  "The AI-powered analytics and global reach capabilities are unmatched. 
-                  We've seen 40% improvement in customer engagement across all markets."
+                  "The AI-powered analytics and global reach capabilities are
+                  unmatched. We've seen 40% improvement in customer engagement
+                  across all markets."
                 </blockquote>
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
                     <span className="text-white font-bold text-xl">DK</span>
                   </div>
                   <div>
-                    <div className="font-bold text-slate-900 text-lg">David Kim</div>
-                    <div className="text-slate-600">VP Marketing, Enterprise Solutions</div>
-                    <div className="text-sm text-emerald-600 font-medium">Global Enterprise</div>
+                    <div className="font-bold text-slate-900 text-lg">
+                      David Kim
+                    </div>
+                    <div className="text-slate-600">
+                      VP Marketing, Enterprise Solutions
+                    </div>
+                    <div className="text-sm text-emerald-600 font-medium">
+                      Global Enterprise
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -730,23 +850,33 @@ export default function Index() {
                 <div className="flex items-center gap-2 mb-6">
                   <div className="flex">
                     {[1, 2, 3, 4, 5].map((i) => (
-                      <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                      <Star
+                        key={i}
+                        className="h-5 w-5 text-yellow-400 fill-current"
+                      />
                     ))}
                   </div>
-                  <span className="text-sm font-bold text-slate-700 ml-2">5.0 Rating</span>
+                  <span className="text-sm font-bold text-slate-700 ml-2">
+                    5.0 Rating
+                  </span>
                 </div>
                 <blockquote className="text-slate-700 text-lg leading-relaxed mb-8 font-medium">
-                  "SOC 2 Type II certification and GDPR compliance made this an easy choice. 
-                  The white-glove support is exactly what our enterprise needed."
+                  "SOC 2 Type II certification and GDPR compliance made this an
+                  easy choice. The white-glove support is exactly what our
+                  enterprise needed."
                 </blockquote>
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg">
                     <span className="text-white font-bold text-xl">EJ</span>
                   </div>
                   <div>
-                    <div className="font-bold text-slate-900 text-lg">Emily Johnson</div>
+                    <div className="font-bold text-slate-900 text-lg">
+                      Emily Johnson
+                    </div>
                     <div className="text-slate-600">Chief Security Officer</div>
-                    <div className="text-sm text-purple-600 font-medium">Financial Services</div>
+                    <div className="text-sm text-purple-600 font-medium">
+                      Financial Services
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -756,7 +886,10 @@ export default function Index() {
       </section>
 
       {/* Enterprise Section */}
-      <section id="enterprise" className="py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <section
+        id="enterprise"
+        className="py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
+      >
         <div className="container mx-auto px-6">
           <div className="text-center mb-20">
             <Badge className="mb-6 bg-gradient-to-r from-yellow-400 to-orange-500 text-slate-900 px-6 py-3 font-bold">
@@ -770,25 +903,31 @@ export default function Index() {
               </span>
             </h2>
             <p className="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
-              When your business demands the highest levels of security, compliance,
-              and performance, our enterprise solutions deliver unmatched reliability.
+              When your business demands the highest levels of security,
+              compliance, and performance, our enterprise solutions deliver
+              unmatched reliability.
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
             {/* Left Column - Enterprise Features */}
             <div>
-              <h3 className="text-3xl font-bold text-white mb-8">Enterprise-Grade Infrastructure</h3>
+              <h3 className="text-3xl font-bold text-white mb-8">
+                Enterprise-Grade Infrastructure
+              </h3>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Shield className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-semibold text-white mb-2">SOC 2 Type II Certified</h4>
+                    <h4 className="text-xl font-semibold text-white mb-2">
+                      SOC 2 Type II Certified
+                    </h4>
                     <p className="text-slate-300 leading-relaxed">
-                      Comprehensive security controls audited by third-party organizations.
-                      Full compliance with enterprise security requirements.
+                      Comprehensive security controls audited by third-party
+                      organizations. Full compliance with enterprise security
+                      requirements.
                     </p>
                   </div>
                 </div>
@@ -798,10 +937,12 @@ export default function Index() {
                     <Globe className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-semibold text-white mb-2">Global Multi-Region Infrastructure</h4>
+                    <h4 className="text-xl font-semibold text-white mb-2">
+                      Global Multi-Region Infrastructure
+                    </h4>
                     <p className="text-slate-300 leading-relaxed">
-                      Redundant data centers across 6 continents ensuring 99.99% uptime
-                      with automatic failover and disaster recovery.
+                      Redundant data centers across 6 continents ensuring 99.99%
+                      uptime with automatic failover and disaster recovery.
                     </p>
                   </div>
                 </div>
@@ -811,10 +952,12 @@ export default function Index() {
                     <Lock className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="text-xl font-semibold text-white mb-2">Advanced Data Protection</h4>
+                    <h4 className="text-xl font-semibold text-white mb-2">
+                      Advanced Data Protection
+                    </h4>
                     <p className="text-slate-300 leading-relaxed">
-                      End-to-end encryption, zero-trust architecture, and comprehensive
-                      audit trails for complete data governance.
+                      End-to-end encryption, zero-trust architecture, and
+                      comprehensive audit trails for complete data governance.
                     </p>
                   </div>
                 </div>
@@ -823,7 +966,9 @@ export default function Index() {
 
             {/* Right Column - Enterprise Stats */}
             <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
-              <h3 className="text-2xl font-bold text-white mb-8 text-center">Enterprise Performance</h3>
+              <h3 className="text-2xl font-bold text-white mb-8 text-center">
+                Enterprise Performance
+              </h3>
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
                   <div className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">
@@ -836,7 +981,9 @@ export default function Index() {
                   <div className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent mb-2">
                     &lt;100ms
                   </div>
-                  <div className="text-slate-300 font-medium">Global Latency</div>
+                  <div className="text-slate-300 font-medium">
+                    Global Latency
+                  </div>
                   <div className="text-sm text-slate-400">Average</div>
                 </div>
                 <div className="text-center">
@@ -922,7 +1069,10 @@ export default function Index() {
       </section>
 
       {/* Documentation Section */}
-      <section id="docs" className="py-24 bg-gradient-to-br from-blue-50 to-indigo-50">
+      <section
+        id="docs"
+        className="py-24 bg-gradient-to-br from-blue-50 to-indigo-50"
+      >
         <div className="container mx-auto px-6">
           <div className="text-center mb-20">
             <Badge className="mb-6 bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-2">
@@ -932,8 +1082,8 @@ export default function Index() {
               Comprehensive Documentation
             </h2>
             <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
-              Everything you need to integrate and scale with Connectlify.
-              From quick start guides to advanced enterprise configurations.
+              Everything you need to integrate and scale with Connectlify. From
+              quick start guides to advanced enterprise configurations.
             </p>
           </div>
 
@@ -948,8 +1098,8 @@ export default function Index() {
                   Quick Start Guide
                 </CardTitle>
                 <CardDescription className="text-slate-600 text-lg leading-relaxed">
-                  Get up and running in minutes with our comprehensive quick start guide.
-                  From account setup to sending your first message.
+                  Get up and running in minutes with our comprehensive quick
+                  start guide. From account setup to sending your first message.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -967,7 +1117,10 @@ export default function Index() {
                     <span>Send your first SMS</span>
                   </div>
                 </div>
-                <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white" asChild>
+                <Button
+                  className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white"
+                  asChild
+                >
                   <Link to="/support">Start Building</Link>
                 </Button>
               </CardContent>
@@ -983,8 +1136,8 @@ export default function Index() {
                   API Reference
                 </CardTitle>
                 <CardDescription className="text-slate-600 text-lg leading-relaxed">
-                  Complete API documentation with interactive examples,
-                  code samples, and comprehensive endpoint references.
+                  Complete API documentation with interactive examples, code
+                  samples, and comprehensive endpoint references.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -1002,7 +1155,10 @@ export default function Index() {
                     <span>Authentication guides</span>
                   </div>
                 </div>
-                <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white" asChild>
+                <Button
+                  className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white"
+                  asChild
+                >
                   <Link to="/api-keys">View API Docs</Link>
                 </Button>
               </CardContent>
@@ -1037,7 +1193,10 @@ export default function Index() {
                     <span>Architecture patterns</span>
                   </div>
                 </div>
-                <Button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white" asChild>
+                <Button
+                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white"
+                  asChild
+                >
                   <Link to="/sub-accounts">Enterprise Docs</Link>
                 </Button>
               </CardContent>
@@ -1047,8 +1206,12 @@ export default function Index() {
           {/* Developer Tools */}
           <div className="bg-gradient-to-r from-slate-50 to-blue-50 rounded-3xl p-12">
             <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-slate-900 mb-4">Developer Tools & SDKs</h3>
-              <p className="text-xl text-slate-600">Official SDKs and tools to accelerate development</p>
+              <h3 className="text-3xl font-bold text-slate-900 mb-4">
+                Developer Tools & SDKs
+              </h3>
+              <p className="text-xl text-slate-600">
+                Official SDKs and tools to accelerate development
+              </p>
             </div>
             <div className="grid md:grid-cols-4 gap-6">
               <div className="bg-white rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
@@ -1056,28 +1219,36 @@ export default function Index() {
                   <span className="text-white font-bold text-xl">JS</span>
                 </div>
                 <h4 className="font-bold text-slate-900 mb-2">Node.js SDK</h4>
-                <p className="text-slate-600 text-sm">Official JavaScript library</p>
+                <p className="text-slate-600 text-sm">
+                  Official JavaScript library
+                </p>
               </div>
               <div className="bg-white rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
                 <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <span className="text-white font-bold text-xl">PY</span>
                 </div>
                 <h4 className="font-bold text-slate-900 mb-2">Python SDK</h4>
-                <p className="text-slate-600 text-sm">Full-featured Python package</p>
+                <p className="text-slate-600 text-sm">
+                  Full-featured Python package
+                </p>
               </div>
               <div className="bg-white rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
                 <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <span className="text-white font-bold text-xl">GO</span>
                 </div>
                 <h4 className="font-bold text-slate-900 mb-2">Go SDK</h4>
-                <p className="text-slate-600 text-sm">High-performance Go library</p>
+                <p className="text-slate-600 text-sm">
+                  High-performance Go library
+                </p>
               </div>
               <div className="bg-white rounded-2xl p-6 text-center shadow-lg hover:shadow-xl transition-shadow">
                 <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <span className="text-white font-bold text-xl">PHP</span>
                 </div>
                 <h4 className="font-bold text-slate-900 mb-2">PHP SDK</h4>
-                <p className="text-slate-600 text-sm">Easy integration for PHP</p>
+                <p className="text-slate-600 text-sm">
+                  Easy integration for PHP
+                </p>
               </div>
             </div>
           </div>
@@ -1086,14 +1257,18 @@ export default function Index() {
 
       {/* Premium CTA Section */}
       <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 relative overflow-hidden">
-        <div className={"absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.05\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"}></div>
+        <div
+          className={
+            'absolute inset-0 bg-[url(\'data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\')]'
+          }
+        ></div>
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-600/20 to-purple-600/20"></div>
-        
+
         <div className="relative container mx-auto px-6 text-center">
           <Badge className="mb-8 bg-white/10 text-white border-white/20 px-6 py-3 text-lg">
             Ready to Scale Globally?
           </Badge>
-          
+
           <h2 className="text-6xl font-bold text-white mb-8 leading-tight">
             Join the Enterprise
             <br />
@@ -1101,12 +1276,13 @@ export default function Index() {
               Communication Revolution
             </span>
           </h2>
-          
+
           <p className="text-2xl text-blue-100 mb-12 max-w-4xl mx-auto leading-relaxed">
-            Connect with millions of customers globally through the most advanced SMS platform. 
-            Enterprise-grade security, 99.99% uptime, and white-glove support included.
+            Connect with millions of customers globally through the most
+            advanced SMS platform. Enterprise-grade security, 99.99% uptime, and
+            white-glove support included.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
             <Button
               size="lg"
@@ -1134,17 +1310,23 @@ export default function Index() {
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
               <Clock className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
-              <div className="text-white font-semibold text-lg mb-2">Setup in Minutes</div>
+              <div className="text-white font-semibold text-lg mb-2">
+                Setup in Minutes
+              </div>
               <div className="text-blue-200">Enterprise deployment ready</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
               <Lock className="w-12 h-12 text-green-400 mx-auto mb-4" />
-              <div className="text-white font-semibold text-lg mb-2">Bank-Grade Security</div>
+              <div className="text-white font-semibold text-lg mb-2">
+                Bank-Grade Security
+              </div>
               <div className="text-blue-200">SOC 2 Type II certified</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
               <Headphones className="w-12 h-12 text-purple-400 mx-auto mb-4" />
-              <div className="text-white font-semibold text-lg mb-2">White-Glove Support</div>
+              <div className="text-white font-semibold text-lg mb-2">
+                White-Glove Support
+              </div>
               <div className="text-blue-200">24/7 dedicated team</div>
             </div>
           </div>
@@ -1161,29 +1343,75 @@ export default function Index() {
                 <div className="w-12 h-12 bg-gradient-to-tr from-blue-600 via-purple-600 to-pink-600 rounded-2xl flex items-center justify-center">
                   <MessageSquare className="h-6 w-6 text-white" />
                 </div>
-                <span className="text-2xl font-bold text-white">Connectlify</span>
+                <span className="text-2xl font-bold text-white">
+                  Connectlify
+                </span>
                 <Badge className="bg-blue-600 text-white">Enterprise</Badge>
               </div>
               <p className="text-slate-400 mb-6 text-lg leading-relaxed">
-                The world's most advanced SMS platform trusted by Fortune 500 companies. 
-                Connect globally with enterprise-grade security and reliability.
+                The world's most advanced SMS platform trusted by Fortune 500
+                companies. Connect globally with enterprise-grade security and
+                reliability.
               </p>
               <div className="flex items-center gap-6">
-                <Badge className="bg-green-100 text-green-700">SOC 2 Type II</Badge>
-                <Badge className="bg-blue-100 text-blue-700">GDPR Compliant</Badge>
-                <Badge className="bg-purple-100 text-purple-700">ISO 27001</Badge>
+                <Badge className="bg-green-100 text-green-700">
+                  SOC 2 Type II
+                </Badge>
+                <Badge className="bg-blue-100 text-blue-700">
+                  GDPR Compliant
+                </Badge>
+                <Badge className="bg-purple-100 text-purple-700">
+                  ISO 27001
+                </Badge>
               </div>
             </div>
 
             {/* Product Links */}
             <div>
-              <h3 className="font-bold text-white mb-6 text-lg">Enterprise Platform</h3>
+              <h3 className="font-bold text-white mb-6 text-lg">
+                Enterprise Platform
+              </h3>
               <ul className="space-y-4">
-                <li><Link to="/conversations" className="hover:text-white transition-colors text-lg">Global Messaging</Link></li>
-                <li><Link to="/api-keys" className="hover:text-white transition-colors text-lg">Enterprise Security</Link></li>
-                <li><Link to="/analytics" className="hover:text-white transition-colors text-lg">Advanced Analytics</Link></li>
-                <li><Link to="/api-keys" className="hover:text-white transition-colors text-lg">Developer API</Link></li>
-                <li><Link to="/webhooks" className="hover:text-white transition-colors text-lg">Integrations</Link></li>
+                <li>
+                  <Link
+                    to="/conversations"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    Global Messaging
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/api-keys"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    Enterprise Security
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/analytics"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    Advanced Analytics
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/api-keys"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    Developer API
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/webhooks"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    Integrations
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -1191,23 +1419,95 @@ export default function Index() {
             <div>
               <h3 className="font-bold text-white mb-6 text-lg">Solutions</h3>
               <ul className="space-y-4">
-                <li><Link to="/sub-accounts" className="hover:text-white transition-colors text-lg">Enterprise</Link></li>
-                <li><Link to="/send" className="hover:text-white transition-colors text-lg">Bulk Messaging</Link></li>
-                <li><Link to="/buy-numbers" className="hover:text-white transition-colors text-lg">Phone Numbers</Link></li>
-                <li><Link to="/wallet" className="hover:text-white transition-colors text-lg">Wallet & Billing</Link></li>
-                <li><Link to="/scheduled" className="hover:text-white transition-colors text-lg">Scheduled Messages</Link></li>
+                <li>
+                  <Link
+                    to="/sub-accounts"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    Enterprise
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/send"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    Bulk Messaging
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/buy-numbers"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    Phone Numbers
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/wallet"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    Wallet & Billing
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/scheduled"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    Scheduled Messages
+                  </Link>
+                </li>
               </ul>
             </div>
 
             {/* Support */}
             <div>
-              <h3 className="font-bold text-white mb-6 text-lg">Enterprise Support</h3>
+              <h3 className="font-bold text-white mb-6 text-lg">
+                Enterprise Support
+              </h3>
               <ul className="space-y-4">
-                <li><Link to="/support" className="hover:text-white transition-colors text-lg">24/7 Support</Link></li>
-                <li><Link to="/support" className="hover:text-white transition-colors text-lg">Documentation</Link></li>
-                <li><Link to="/alerts" className="hover:text-white transition-colors text-lg">System Status</Link></li>
-                <li><Link to="/profile" className="hover:text-white transition-colors text-lg">Account Settings</Link></li>
-                <li><Link to="/support" className="hover:text-white transition-colors text-lg">Contact Sales</Link></li>
+                <li>
+                  <Link
+                    to="/support"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    24/7 Support
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/support"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    Documentation
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/alerts"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    System Status
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/profile"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    Account Settings
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/support"
+                    className="hover:text-white transition-colors text-lg"
+                  >
+                    Contact Sales
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -1215,12 +1515,28 @@ export default function Index() {
           <div className="border-t border-slate-800 mt-16 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-6">
               <p className="text-slate-400 text-lg">
-                © 2024 Connectlify Enterprise. All rights reserved. SOC 2 Type II Certified.
+                © 2024 Connectlify Enterprise. All rights reserved. SOC 2 Type
+                II Certified.
               </p>
               <div className="flex items-center gap-8">
-                <Link to="/privacy" className="text-slate-400 hover:text-white transition-colors">Privacy Policy</Link>
-                <Link to="/terms" className="text-slate-400 hover:text-white transition-colors">Terms of Service</Link>
-                <Link to="/api-keys" className="text-slate-400 hover:text-white transition-colors">Security</Link>
+                <Link
+                  to="/privacy"
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
+                  Privacy Policy
+                </Link>
+                <Link
+                  to="/terms"
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
+                  Terms of Service
+                </Link>
+                <Link
+                  to="/api-keys"
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
+                  Security
+                </Link>
               </div>
             </div>
           </div>

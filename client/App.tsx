@@ -37,31 +37,101 @@ const App = () => (
         <AuthProvider>
           <WalletProvider>
             <UserNumbersProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<Index />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/terms" element={<Terms />} />
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <Routes>
+                  {/* Public Routes */}
+                  <Route path="/" element={<Index />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/privacy" element={<Privacy />} />
+                  <Route path="/terms" element={<Terms />} />
 
-                {/* Protected Routes */}
-                <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-                <Route path="/send" element={<ProtectedRoute><Send /></ProtectedRoute>} />
-                <Route path="/conversations" element={<ProtectedRoute><Conversations /></ProtectedRoute>} />
-                <Route path="/buy-numbers" element={<ProtectedRoute><BuyNumbers /></ProtectedRoute>} />
-                <Route path="/sub-accounts" element={<ProtectedRoute><SubAccounts /></ProtectedRoute>} />
-                <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
-                <Route path="/scheduled" element={<ProtectedRoute><Scheduled /></ProtectedRoute>} />
-                <Route path="/transactions" element={<ProtectedRoute><Transactions /></ProtectedRoute>} />
-                <Route path="/support" element={<ProtectedRoute><Support /></ProtectedRoute>} />
-                <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
+                  {/* Protected Routes */}
+                  <Route
+                    path="/home"
+                    element={
+                      <ProtectedRoute>
+                        <Home />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/send"
+                    element={
+                      <ProtectedRoute>
+                        <Send />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/conversations"
+                    element={
+                      <ProtectedRoute>
+                        <Conversations />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/buy-numbers"
+                    element={
+                      <ProtectedRoute>
+                        <BuyNumbers />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/sub-accounts"
+                    element={
+                      <ProtectedRoute>
+                        <SubAccounts />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/wallet"
+                    element={
+                      <ProtectedRoute>
+                        <Wallet />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/scheduled"
+                    element={
+                      <ProtectedRoute>
+                        <Scheduled />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/transactions"
+                    element={
+                      <ProtectedRoute>
+                        <Transactions />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/support"
+                    element={
+                      <ProtectedRoute>
+                        <Support />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/profile"
+                    element={
+                      <ProtectedRoute>
+                        <Profile />
+                      </ProtectedRoute>
+                    }
+                  />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
             </UserNumbersProvider>
           </WalletProvider>
         </AuthProvider>
@@ -82,7 +152,7 @@ let root = (container as any)._reactRoot;
 if (!root) {
   try {
     // Clear any existing content to prevent conflicts
-    container.innerHTML = '';
+    container.innerHTML = "";
     root = createRoot(container);
     (container as any)._reactRoot = root;
   } catch (error) {

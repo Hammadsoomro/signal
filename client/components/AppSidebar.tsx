@@ -208,7 +208,9 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
                   <p className="text-white/90 text-xs font-medium uppercase tracking-wide">
                     Current Balance
                   </p>
-                  <p className="text-white text-xl font-bold">${balance.toFixed(2)}</p>
+                  <p className="text-white text-xl font-bold">
+                    ${balance.toFixed(2)}
+                  </p>
                 </div>
               </div>
               <Button

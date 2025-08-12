@@ -675,7 +675,7 @@ export default function Conversations() {
             <AdSense
               adSlot={AdSenseConfigs.sidebar.adSlot}
               adFormat="rectangle"
-              style={{ width: '100%', minHeight: '200px' }}
+              style={{ width: "100%", minHeight: "200px" }}
               className="w-full"
             />
           </div>

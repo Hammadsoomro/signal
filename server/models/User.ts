@@ -48,14 +48,14 @@ const UserSchema: Schema = new Schema(
     },
     phone: {
       type: String,
-      required: function() {
+      required: function () {
         return !this.isGoogleUser; // Phone not required for Google users
       },
       trim: true,
     },
     password: {
       type: String,
-      required: function() {
+      required: function () {
         return !this.isGoogleUser; // Password not required for Google users
       },
     },
