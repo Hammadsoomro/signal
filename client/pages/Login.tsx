@@ -13,6 +13,16 @@ import { Eye, EyeOff, MessageSquare, Shield, Loader2, AlertCircle } from 'lucide
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 
+// Google Sign-In configuration
+const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
+
+// Declare Google Sign-In types
+declare global {
+  interface Window {
+    google: any;
+  }
+}
+
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
