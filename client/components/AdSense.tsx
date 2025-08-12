@@ -54,22 +54,22 @@ export function AdSense({
 // Predefined ad configurations
 export const AdSenseConfigs = {
   sidebar: {
-    adSlot: "1234567890",
+    adSlot: "4321876543",
     adFormat: "rectangle" as const,
     style: { width: '250px', height: '250px' }
   },
   header: {
-    adSlot: "1234567891", 
+    adSlot: "1357908642",
     adFormat: "banner" as const,
     style: { width: '728px', height: '90px' }
   },
   footer: {
-    adSlot: "1234567892",
-    adFormat: "leaderboard" as const, 
+    adSlot: "2468013579",
+    adFormat: "leaderboard" as const,
     style: { width: '728px', height: '90px' }
   },
   content: {
-    adSlot: "1234567893",
+    adSlot: "9876543210",
     adFormat: "auto" as const,
     style: { minHeight: '280px' }
   }
