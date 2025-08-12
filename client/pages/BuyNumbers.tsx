@@ -141,7 +141,7 @@ export default function BuyNumbers() {
       country: "US",
       price: 2.5,
       features: ["SMS", "Voice", "MMS"],
-      carrier: "SignalWire",
+      carrier: "Premium SMS",
     },
     {
       id: "2",
@@ -151,7 +151,7 @@ export default function BuyNumbers() {
       country: "US",
       price: 3.0,
       features: ["SMS", "Voice"],
-      carrier: "SignalWire",
+      carrier: "Premium SMS",
     },
     {
       id: "3",
@@ -161,7 +161,7 @@ export default function BuyNumbers() {
       country: "US",
       price: 2.75,
       features: ["SMS", "Voice", "MMS"],
-      carrier: "SignalWire",
+      carrier: "Premium SMS",
     },
     {
       id: "4",
@@ -171,7 +171,7 @@ export default function BuyNumbers() {
       country: "US",
       price: 2.25,
       features: ["SMS", "Voice"],
-      carrier: "SignalWire",
+      carrier: "Premium SMS",
     },
     {
       id: "5",
@@ -181,7 +181,7 @@ export default function BuyNumbers() {
       country: "US",
       price: 2.5,
       features: ["SMS", "Voice", "MMS"],
-      carrier: "SignalWire",
+      carrier: "Premium SMS",
     },
     {
       id: "6",
@@ -191,7 +191,7 @@ export default function BuyNumbers() {
       country: "US",
       price: 2.75,
       features: ["SMS", "Voice", "MMS"],
-      carrier: "SignalWire",
+      carrier: "Premium SMS",
     },
     // Canada Numbers
     {
@@ -202,7 +202,7 @@ export default function BuyNumbers() {
       country: "CA",
       price: 3.5,
       features: ["SMS", "Voice"],
-      carrier: "SignalWire",
+      carrier: "Premium SMS",
     },
     {
       id: "8",
@@ -212,7 +212,7 @@ export default function BuyNumbers() {
       country: "CA",
       price: 3.25,
       features: ["SMS", "Voice", "MMS"],
-      carrier: "SignalWire",
+      carrier: "Premium SMS",
     },
     // UK Numbers
     {
@@ -223,7 +223,7 @@ export default function BuyNumbers() {
       country: "GB",
       price: 4.5,
       features: ["SMS", "Voice"],
-      carrier: "SignalWire",
+      carrier: "Premium SMS",
     },
     // Australia Numbers
     {
@@ -234,7 +234,7 @@ export default function BuyNumbers() {
       country: "AU",
       price: 5.0,
       features: ["SMS", "Voice"],
-      carrier: "SignalWire",
+      carrier: "Premium SMS",
     },
   ];
 
@@ -258,7 +258,7 @@ export default function BuyNumbers() {
           country: selectedCountry,
           price: 5.0, // Standard SignalWire price
           features: num.capabilities?.sms ? ["SMS", "Voice"] : ["Voice"],
-          carrier: "SignalWire",
+          carrier: "Premium SMS",
         })) || [];
 
       setAvailableNumbers(numbers);
