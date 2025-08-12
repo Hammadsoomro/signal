@@ -348,7 +348,7 @@ export default function Home() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">SignalWire Status</CardTitle>
+                <CardTitle className="text-lg">SMS Service Status</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-green-600">✓</div>
