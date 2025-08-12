@@ -20,6 +20,7 @@ import {
   Settings,
   LogOut,
   ChevronDown,
+  Receipt,
 } from "lucide-react";
 
 interface DashboardLayoutProps {
