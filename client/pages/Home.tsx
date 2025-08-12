@@ -301,7 +301,7 @@ export default function Home() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                      <span className="text-sm">SignalWire API</span>
+                      <span className="text-sm">SMS Gateway API</span>
                     </div>
                     <span className="text-xs text-green-600 font-medium">
                       Connected
@@ -310,7 +310,7 @@ export default function Home() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                      <span className="text-sm">MongoDB Database</span>
+                      <span className="text-sm">Database Service</span>
                     </div>
                     <span className="text-xs text-green-600 font-medium">
                       Connected
