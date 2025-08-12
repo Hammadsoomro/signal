@@ -59,18 +59,46 @@ export default function Index() {
 
             {/* Premium Navigation */}
             <nav className="hidden md:flex items-center gap-8">
-              <Link to="/conversations" className="text-slate-700 hover:text-blue-600 font-medium transition-colors">
+              <a
+                href="#features"
+                className="text-slate-700 hover:text-blue-600 font-medium transition-colors cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Features
-              </Link>
-              <Link to="/wallet" className="text-slate-700 hover:text-blue-600 font-medium transition-colors">
+              </a>
+              <a
+                href="#pricing"
+                className="text-slate-700 hover:text-blue-600 font-medium transition-colors cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Pricing
-              </Link>
-              <Link to="/sub-accounts" className="text-slate-700 hover:text-blue-600 font-medium transition-colors">
+              </a>
+              <a
+                href="#enterprise"
+                className="text-slate-700 hover:text-blue-600 font-medium transition-colors cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('enterprise')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Enterprise
-              </Link>
-              <Link to="/support" className="text-slate-700 hover:text-blue-600 font-medium transition-colors">
+              </a>
+              <a
+                href="#docs"
+                className="text-slate-700 hover:text-blue-600 font-medium transition-colors cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('docs')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Docs
-              </Link>
+              </a>
             </nav>
 
             {/* Premium Action Buttons */}
