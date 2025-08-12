@@ -242,13 +242,13 @@ export default function BuyNumbers() {
     setIsLoading(true);
 
     try {
-      // Use real SignalWire API to search for numbers
+      // Use SMS service API to search for numbers
       const response = await signalWireClient.getAvailablePhoneNumbers(
         selectedCountry,
         searchQuery,
       );
 
-      // Convert SignalWire response to our format
+      // Convert SMS service response to our format
       const numbers =
         response.available_phone_numbers?.map((num: any, index: number) => ({
           id: `sw_${index}`,
@@ -256,7 +256,7 @@ export default function BuyNumbers() {
           city: num.locality || "Unknown",
           state: num.region || "Unknown",
           country: selectedCountry,
-          price: 5.0, // Standard SignalWire price
+          price: 5.0, // Standard SMS service price
           features: num.capabilities?.sms ? ["SMS", "Voice"] : ["Voice"],
           carrier: "Premium SMS",
         })) || [];
@@ -265,7 +265,7 @@ export default function BuyNumbers() {
 
       toast({
         title: "Search Complete",
-        description: `Found ${numbers.length} real available numbers from SignalWire`,
+        description: `Found ${numbers.length} real available numbers from SMS service`,
       });
     } catch (error) {
       console.error("SignalWire search error:", error);
