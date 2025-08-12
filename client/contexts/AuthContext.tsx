@@ -194,6 +194,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       user,
       isLoading,
       login,
+      register,
       logout,
       isAuthenticated
     }}>
