@@ -169,6 +169,16 @@ export default function Home() {
             </Card>
           </div>
 
+          {/* Advertisement */}
+          <div className="mb-6">
+            <AdSense
+              adSlot={AdSenseConfigs.content.adSlot}
+              adFormat={AdSenseConfigs.content.adFormat}
+              style={AdSenseConfigs.content.style}
+              className="w-full"
+            />
+          </div>
+
           {/* Main Content Grid */}
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
             <Card className="col-span-4">
