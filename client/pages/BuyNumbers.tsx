@@ -347,14 +347,14 @@ export default function BuyNumbers() {
 
       toast({
         title: "Purchase Successful!",
-        description: `Successfully purchased ${number.number} for $${number.price.toFixed(2)} via SignalWire`,
+        description: `Successfully purchased ${number.number} for $${number.price.toFixed(2)} from SMS service`,
       });
 
       // Remove purchased number from available list
       setAvailableNumbers((prev) => prev.filter((n) => n.id !== number.id));
       setSelectedNumber(null);
     } catch (error) {
-      console.error("SignalWire purchase error:", error);
+      console.error("SMS service purchase error:", error);
       toast({
         title: "Purchase Failed",
         description:
