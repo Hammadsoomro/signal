@@ -30,6 +30,11 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children, title }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { balance } = useWallet();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <div className="flex h-screen bg-background">
