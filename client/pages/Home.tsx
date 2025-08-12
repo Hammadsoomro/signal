@@ -40,7 +40,7 @@ export default function Home() {
     try {
       setIsLoading(true);
 
-      // Load real data from SignalWire and database
+      // Load real data from SMS service and database
       const [messagesData, numbersData] = await Promise.all([
         signalWireClient.getMessages(10),
         signalWireClient.getOwnedPhoneNumbers(),
