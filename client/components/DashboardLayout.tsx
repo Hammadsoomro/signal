@@ -94,14 +94,12 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
-                    <Link
-                      to="/"
-                      className="flex items-center gap-2 text-red-600 cursor-pointer"
-                    >
-                      <LogOut className="h-4 w-4" />
-                      Logout
-                    </Link>
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 text-red-600 cursor-pointer"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Logout
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
