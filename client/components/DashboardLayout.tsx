@@ -136,7 +136,29 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-auto">{children}</main>
+        <main className="flex-1 overflow-auto">
+          {/* Header Ad */}
+          <div className="p-4 border-b">
+            <AdSense
+              adSlot={AdSenseConfigs.header.adSlot}
+              adFormat={AdSenseConfigs.header.adFormat}
+              style={AdSenseConfigs.header.style}
+              className="mx-auto"
+            />
+          </div>
+
+          {children}
+
+          {/* Footer Ad */}
+          <div className="p-4 border-t mt-8">
+            <AdSense
+              adSlot={AdSenseConfigs.footer.adSlot}
+              adFormat={AdSenseConfigs.footer.adFormat}
+              style={AdSenseConfigs.footer.style}
+              className="mx-auto"
+            />
+          </div>
+        </main>
       </div>
     </div>
   );
