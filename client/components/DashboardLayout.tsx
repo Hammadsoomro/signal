@@ -74,11 +74,11 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
                   >
                     <Avatar className="h-8 w-8">
                       <AvatarFallback className="bg-primary/10 text-primary">
-                        JC
+                        {user?.name.charAt(0).toUpperCase() || 'U'}
                       </AvatarFallback>
                     </Avatar>
                     <span className="hidden md:block text-sm font-medium">
-                      Jaxon Cooper
+                      {user?.name || 'User'}
                     </span>
                     <ChevronDown className="h-4 w-4" />
                   </Button>
