@@ -184,7 +184,7 @@ export default function Conversations() {
     setMessage("");
 
     try {
-      // Use real SignalWire API to send SMS
+      // Use SMS API to send message
       const response = await signalWireClient.sendSMS(
         selectedNumber,
         getCurrentConversation()?.contact || "",
@@ -206,7 +206,7 @@ export default function Conversations() {
         }),
       );
 
-      // Update delivery status based on SignalWire response
+      // Update delivery status based on SMS service response
       setTimeout(() => {
         setConversations((prev) =>
           prev.map((conv) => {
@@ -233,7 +233,7 @@ export default function Conversations() {
       }, 2000);
 
       toast({
-        title: "Message Sent via SignalWire",
+        title: "Message Sent Successfully",
         description: `SMS sent successfully to ${getCurrentConversation()?.contact} (ID: ${response.sid})`,
       });
     } catch (error) {
