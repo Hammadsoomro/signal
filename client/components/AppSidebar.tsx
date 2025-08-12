@@ -25,8 +25,10 @@ import {
   X,
   Activity,
   User,
+  Plus,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useWallet } from "@/contexts/WalletContext";
 
 interface SidebarProps {
   isOpen: boolean;
