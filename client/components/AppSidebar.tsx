@@ -54,12 +54,6 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
   const navigation: NavItem[] = [
     { id: "dashboard", label: "Dashboard", icon: BarChart3, href: "/home" },
     {
-      id: "analytics",
-      label: "Analytics",
-      icon: BarChart3,
-      href: "/analytics",
-    },
-    {
       id: "messaging",
       label: "Messaging",
       icon: MessageSquare,
@@ -76,12 +70,6 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
           label: "Scheduled",
           icon: Calendar,
           href: "/scheduled",
-        },
-        {
-          id: "responses",
-          label: "Responses",
-          icon: Inbox,
-          href: "/responses",
         },
       ],
     },
@@ -117,9 +105,6 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
       icon: Settings,
       children: [
         { id: "profile", label: "Profile", icon: User, href: "/profile" },
-        { id: "api-keys", label: "API Keys", icon: Key, href: "/api-keys" },
-        { id: "webhooks", label: "Webhooks", icon: Webhook, href: "/webhooks" },
-        { id: "alerts", label: "Alerts", icon: Bell, href: "/alerts" },
       ],
     },
     { id: "support", label: "Support", icon: HelpCircle, href: "/support" },
