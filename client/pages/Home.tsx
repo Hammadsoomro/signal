@@ -192,7 +192,7 @@ export default function Home() {
                 <div className="space-y-4">
                   {isLoading ? (
                     <div className="text-center py-8 text-muted-foreground">
-                      Loading real messages from SignalWire...
+                      Loading recent messages...
                     </div>
                   ) : recentMessages.length > 0 ? (
                     recentMessages.map((message: any, index: number) => (
