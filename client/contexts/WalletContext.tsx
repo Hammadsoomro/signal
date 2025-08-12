@@ -35,6 +35,16 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
+  // Sync balance with authenticated user
+  useEffect(() => {
+    if (user) {
+      setBalance(user.walletBalance);
+    } else {
+      setBalance(0);
+      setTransactions([]);
+    }
+  }, [user]);
+
   const deductBalance = (amount: number, description: string): boolean => {
     if (amount > balance) {
       toast({
