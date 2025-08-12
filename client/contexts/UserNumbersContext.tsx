@@ -30,23 +30,31 @@ const UserNumbersContext = createContext<UserNumbersContextType | undefined>(
 export const UserNumbersProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [purchasedNumbers, setPurchasedNumbers] = useState<PurchasedNumber[]>(() => {
-    // Initialize with user's actual purchased number
-    return [
-      {
-        id: "1",
-        number: "+1 (249) 444-0933",
-        label: "Primary Business Line",
-        city: "Ontario",
-        state: "Ontario",
-        country: "CA",
-        isActive: true,
-        purchaseDate: "2024-01-01",
-        monthlyPrice: 5.0,
-        assignedTo: null,
-      },
-    ];
-  });
+  const { user } = useAuth();
+  const [purchasedNumbers, setPurchasedNumbers] = useState<PurchasedNumber[]>([]);
+
+  // Reset numbers when user logs out
+  useEffect(() => {
+    if (user) {
+      // Initialize with user's actual purchased number
+      setPurchasedNumbers([
+        {
+          id: "1",
+          number: "+1 (249) 444-0933",
+          label: "Primary Business Line",
+          city: "Ontario",
+          state: "Ontario",
+          country: "CA",
+          isActive: true,
+          purchaseDate: "2024-01-01",
+          monthlyPrice: 5.0,
+          assignedTo: null,
+        },
+      ]);
+    } else {
+      setPurchasedNumbers([]);
+    }
+  }, [user]);
 
   const addPurchasedNumber = (number: PurchasedNumber) => {
     setPurchasedNumbers((prev) => [...prev, number]);
