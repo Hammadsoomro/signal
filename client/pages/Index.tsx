@@ -421,7 +421,7 @@ export default function Index() {
               className="bg-gradient-to-r from-slate-900 to-slate-700 hover:from-slate-800 hover:to-slate-600 text-white px-10 py-6 text-lg font-semibold shadow-xl"
               asChild
             >
-              <Link to="/features">
+              <Link to="/conversations">
                 Explore All Features
                 <ArrowRight className="ml-3 h-5 w-5" />
               </Link>
@@ -574,7 +574,7 @@ export default function Index() {
               className="text-white border-white/30 hover:bg-white/10 text-xl px-12 py-8 font-bold"
               asChild
             >
-              <Link to="/contact">
+              <Link to="/support">
                 <Briefcase className="mr-3 h-6 w-6" />
                 Contact Sales
               </Link>
