@@ -669,6 +669,16 @@ export default function Conversations() {
               )}
             </div>
           </ScrollArea>
+
+          {/* Advertisement */}
+          <div className="p-3 border-t">
+            <AdSense
+              adSlot={AdSenseConfigs.sidebar.adSlot}
+              adFormat="rectangle"
+              style={{ width: '100%', minHeight: '200px' }}
+              className="w-full"
+            />
+          </div>
         </div>
 
         {/* Chat Area */}
