@@ -428,6 +428,16 @@ export default function Login() {
             </form>
           )}
 
+          {/* Demo Credentials Helper */}
+          {isLogin && (
+            <Alert className="border-green-200 bg-green-50">
+              <Shield className="h-4 w-4 text-green-600" />
+              <AlertDescription className="text-green-800 text-sm">
+                <strong>Demo Access:</strong> Use any email with password minimum 6 characters to test the platform
+              </AlertDescription>
+            </Alert>
+          )}
+
           <div className="text-center text-sm">
             <span className="text-muted-foreground">
               {isLogin ? "Don't have an account?" : "Already have an account?"}
