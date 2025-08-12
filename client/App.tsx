@@ -49,18 +49,13 @@ const App = () => (
 
                 {/* Protected Routes */}
                 <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-                <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
                 <Route path="/send" element={<ProtectedRoute><Send /></ProtectedRoute>} />
                 <Route path="/conversations" element={<ProtectedRoute><Conversations /></ProtectedRoute>} />
                 <Route path="/buy-numbers" element={<ProtectedRoute><BuyNumbers /></ProtectedRoute>} />
                 <Route path="/sub-accounts" element={<ProtectedRoute><SubAccounts /></ProtectedRoute>} />
                 <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
                 <Route path="/scheduled" element={<ProtectedRoute><Scheduled /></ProtectedRoute>} />
-                <Route path="/responses" element={<ProtectedRoute><Responses /></ProtectedRoute>} />
                 <Route path="/transactions" element={<ProtectedRoute><Transactions /></ProtectedRoute>} />
-                <Route path="/alerts" element={<ProtectedRoute><Alerts /></ProtectedRoute>} />
-                <Route path="/webhooks" element={<ProtectedRoute><Webhooks /></ProtectedRoute>} />
-                <Route path="/api-keys" element={<ProtectedRoute><ApiKeys /></ProtectedRoute>} />
                 <Route path="/support" element={<ProtectedRoute><Support /></ProtectedRoute>} />
                 <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
