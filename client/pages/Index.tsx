@@ -458,6 +458,199 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section id="pricing" className="py-24 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-20">
+            <Badge className="mb-6 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2">
+              Enterprise Pricing
+            </Badge>
+            <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+              Scale Your Business
+            </h2>
+            <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
+              Transparent, enterprise-grade pricing that grows with your business.
+              No hidden fees, just predictable costs at global scale.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Starter Plan */}
+            <Card className="relative overflow-hidden border-2 border-slate-200 hover:border-blue-300 transition-all duration-300">
+              <CardHeader className="pb-8 pt-8">
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">Starter</h3>
+                  <p className="text-slate-600 mb-6">Perfect for small teams</p>
+                  <div className="text-5xl font-bold text-slate-900 mb-2">$29</div>
+                  <div className="text-slate-500">per month</div>
+                </div>
+              </CardHeader>
+              <CardContent className="px-8 pb-8">
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">5,000 messages/month</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">2 phone numbers</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">Basic analytics</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">Email support</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">99.5% uptime SLA</span>
+                  </div>
+                </div>
+                <Button className="w-full bg-slate-900 text-white hover:bg-slate-800" asChild>
+                  <Link to="/login">Get Started</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Business Plan - Popular */}
+            <Card className="relative overflow-hidden border-2 border-blue-500 hover:border-blue-600 transition-all duration-300 scale-105 shadow-xl">
+              <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-center py-3 font-semibold">
+                Most Popular
+              </div>
+              <CardHeader className="pb-8 pt-12">
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">Business</h3>
+                  <p className="text-slate-600 mb-6">For growing companies</p>
+                  <div className="text-5xl font-bold text-blue-600 mb-2">$99</div>
+                  <div className="text-slate-500">per month</div>
+                </div>
+              </CardHeader>
+              <CardContent className="px-8 pb-8">
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">50,000 messages/month</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">10 phone numbers</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">Advanced analytics</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">Priority support</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">99.9% uptime SLA</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">API access</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">Custom integrations</span>
+                  </div>
+                </div>
+                <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600" asChild>
+                  <Link to="/login">Start Free Trial</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Enterprise Plan */}
+            <Card className="relative overflow-hidden border-2 border-slate-200 hover:border-purple-300 transition-all duration-300">
+              <CardHeader className="pb-8 pt-8">
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">Enterprise</h3>
+                  <p className="text-slate-600 mb-6">For large organizations</p>
+                  <div className="text-5xl font-bold text-purple-600 mb-2">Custom</div>
+                  <div className="text-slate-500">contact sales</div>
+                </div>
+              </CardHeader>
+              <CardContent className="px-8 pb-8">
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">Unlimited messages</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">Unlimited numbers</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">AI-powered analytics</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">Dedicated support</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">99.99% uptime SLA</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">SOC 2 compliance</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span className="text-slate-700">White-label solutions</span>
+                  </div>
+                </div>
+                <Button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700" asChild>
+                  <Link to="/support">Contact Sales</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Pricing Features */}
+          <div className="mt-20 bg-gradient-to-r from-slate-50 to-blue-50 rounded-3xl p-12">
+            <div className="text-center mb-12">
+              <h3 className="text-3xl font-bold text-slate-900 mb-4">All Plans Include</h3>
+              <p className="text-xl text-slate-600">Enterprise-grade features across all pricing tiers</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
+                  <Globe className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="font-semibold text-slate-900">Global Coverage</div>
+                  <div className="text-slate-600">180+ countries supported</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="font-semibold text-slate-900">Bank-Grade Security</div>
+                  <div className="text-slate-600">End-to-end encryption</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
+                  <Zap className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="font-semibold text-slate-900">Lightning Fast</div>
+                  <div className="text-slate-600">Sub-second delivery</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Premium Testimonials */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6">
