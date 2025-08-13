@@ -84,25 +84,31 @@ export function AdSense({
 }
 
 // Predefined ad configurations
+// Note: Replace with actual AdSense ad slot IDs from your AdSense account
 export const AdSenseConfigs = {
   sidebar: {
-    adSlot: "4321876543",
+    adSlot: undefined, // Replace with actual AdSense ad slot ID
     adFormat: "rectangle" as const,
     style: { width: "250px", height: "250px" },
   },
   header: {
-    adSlot: "1357908642",
+    adSlot: undefined, // Replace with actual AdSense ad slot ID
     adFormat: "banner" as const,
     style: { width: "728px", height: "90px" },
   },
   footer: {
-    adSlot: "2468013579",
+    adSlot: undefined, // Replace with actual AdSense ad slot ID
     adFormat: "leaderboard" as const,
     style: { width: "728px", height: "90px" },
   },
   content: {
-    adSlot: "9876543210",
+    adSlot: undefined, // Replace with actual AdSense ad slot ID
     adFormat: "auto" as const,
     style: { minHeight: "280px" },
   },
+};
+
+// Helper function to check if AdSense is properly configured
+export const isAdSenseConfigured = () => {
+  return Object.values(AdSenseConfigs).some(config => config.adSlot);
 };
