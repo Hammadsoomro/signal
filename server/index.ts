@@ -44,5 +44,13 @@ export function createServer() {
   app.post("/api/auth/google", googleAuth);
   app.get("/api/auth/me", verifyToken, getCurrentUser);
 
+  // Phone Numbers routes
+  app.get("/api/phone-numbers", verifyToken, getUserPhoneNumbers);
+  app.post("/api/phone-numbers/purchase", verifyToken, purchasePhoneNumber);
+  app.post("/api/phone-numbers/assign", verifyToken, assignPhoneNumber);
+  app.get("/api/phone-numbers/available", verifyToken, getAvailableNumbers);
+  app.get("/api/phone-numbers/assigned/:subAccountId", verifyToken, getAssignedNumbers);
+  app.delete("/api/phone-numbers/:phoneNumberId", verifyToken, releasePhoneNumber);
+
   return app;
 }
