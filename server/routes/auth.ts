@@ -117,6 +117,17 @@ export const registerUser = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error("Registration error:", error);
+
+    // Handle specific MongoDB errors
+    if (error instanceof Error) {
+      if (error.message.includes('E11000')) {
+        return res.status(400).json({
+          success: false,
+          message: "Email or phone number is already registered"
+        });
+      }
+    }
+
     res.status(500).json({
       success: false,
       message: "Internal server error during registration",
