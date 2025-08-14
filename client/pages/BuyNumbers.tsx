@@ -296,7 +296,7 @@ export default function BuyNumbers() {
     }
   };
 
-  const purchaseNumber = async (number: AvailableNumber) => {
+  const handlePurchaseNumber = async (number: AvailableNumber) => {
     if (number.price > walletBalance) {
       toast({
         title: "Insufficient Balance",
