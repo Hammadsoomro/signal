@@ -16,11 +16,14 @@ export interface PurchasedNumber {
 
 interface UserNumbersContextType {
   purchasedNumbers: PurchasedNumber[];
+  isLoading: boolean;
   addPurchasedNumber: (number: PurchasedNumber) => void;
   removePurchasedNumber: (numberId: string) => void;
   updateNumberAssignment: (numberId: string, assignedTo: string | null) => void;
   getAvailableNumbers: () => PurchasedNumber[];
   getAssignedNumbers: (subAccountId: string) => PurchasedNumber[];
+  purchaseNumber: (numberData: any) => Promise<boolean>;
+  loadUserNumbers: () => Promise<void>;
 }
 
 const UserNumbersContext = createContext<UserNumbersContextType | undefined>(
@@ -32,28 +35,52 @@ export const UserNumbersProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const { user } = useAuth();
   const [purchasedNumbers, setPurchasedNumbers] = useState<PurchasedNumber[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Reset numbers when user logs out
-  useEffect(() => {
-    if (user) {
-      // Initialize with user's actual purchased number
-      setPurchasedNumbers([
-        {
-          id: "1",
-          number: "+1 (249) 444-0933",
-          label: "Primary Business Line",
-          city: "Ontario",
-          state: "Ontario",
-          country: "CA",
-          isActive: true,
-          purchaseDate: "2024-01-01",
-          monthlyPrice: 5.0,
-          assignedTo: null,
-        },
-      ]);
-    } else {
+  // Load user's phone numbers from database
+  const loadUserNumbers = async () => {
+    if (!user) {
       setPurchasedNumbers([]);
+      return;
     }
+
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem('connectlify_token');
+      const response = await fetch('/api/phone-numbers', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          const numbers = data.data.map((num: any) => ({
+            id: num._id,
+            number: num.number,
+            label: num.label,
+            city: num.city,
+            state: num.state,
+            country: num.country,
+            isActive: num.isActive,
+            purchaseDate: num.purchaseDate,
+            monthlyPrice: num.monthlyPrice,
+            assignedTo: num.assignedTo,
+          }));
+          setPurchasedNumbers(numbers);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load user numbers:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Load numbers when user changes
+  useEffect(() => {
+    loadUserNumbers();
   }, [user]);
 
   const addPurchasedNumber = (number: PurchasedNumber) => {
