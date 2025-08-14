@@ -83,6 +83,34 @@ export const UserNumbersProvider: React.FC<{ children: React.ReactNode }> = ({
     loadUserNumbers();
   }, [user]);
 
+  // Purchase a new phone number
+  const purchaseNumber = async (numberData: any): Promise<boolean> => {
+    try {
+      const token = localStorage.getItem('connectlify_token');
+      const response = await fetch('/api/phone-numbers/purchase', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(numberData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          // Reload numbers from database
+          await loadUserNumbers();
+          return true;
+        }
+      }
+      return false;
+    } catch (error) {
+      console.error('Failed to purchase number:', error);
+      return false;
+    }
+  };
+
   const addPurchasedNumber = (number: PurchasedNumber) => {
     setPurchasedNumbers((prev) => [...prev, number]);
   };
@@ -91,13 +119,33 @@ export const UserNumbersProvider: React.FC<{ children: React.ReactNode }> = ({
     setPurchasedNumbers((prev) => prev.filter((num) => num.id !== numberId));
   };
 
-  const updateNumberAssignment = (
+  const updateNumberAssignment = async (
     numberId: string,
     assignedTo: string | null,
   ) => {
-    setPurchasedNumbers((prev) =>
-      prev.map((num) => (num.id === numberId ? { ...num, assignedTo } : num)),
-    );
+    try {
+      const token = localStorage.getItem('connectlify_token');
+      const response = await fetch('/api/phone-numbers/assign', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phoneNumberId: numberId, subAccountId: assignedTo }),
+      });
+
+      if (response.ok) {
+        // Update local state
+        setPurchasedNumbers((prev) =>
+          prev.map((num) => (num.id === numberId ? { ...num, assignedTo } : num)),
+        );
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Failed to update number assignment:', error);
+      return false;
+    }
   };
 
   const getAvailableNumbers = () => {
