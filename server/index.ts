@@ -53,6 +53,28 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
+  // Debug endpoint
+  app.post("/api/debug/register-test", async (req, res) => {
+    try {
+      console.log("Debug registration test:", req.body);
+      const User = require('./models/User').default;
+      const userCount = await User.countDocuments();
+      res.json({
+        success: true,
+        message: "Database accessible",
+        userCount,
+        receivedData: req.body
+      });
+    } catch (error) {
+      console.error("Debug registration error:", error);
+      res.status(500).json({
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+        details: error
+      });
+    }
+  });
+
   // Authentication routes
   app.post("/api/auth/register", registerUser);
   app.post("/api/auth/login", loginUser);
