@@ -55,7 +55,7 @@ interface AvailableNumber {
 
 export default function BuyNumbers() {
   const { toast } = useToast();
-  const { addPurchasedNumber } = useUserNumbers();
+  const { addPurchasedNumber, purchaseNumber } = useUserNumbers();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("US");
   const [selectedState, setSelectedState] = useState("all");
