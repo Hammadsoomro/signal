@@ -110,34 +110,59 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         body: JSON.stringify({ email, password }),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        return {
+          success: false,
+          message: errorData.message || `Server error: ${response.status}`
+        };
+      }
+
       const data = await response.json();
 
-      if (data.success) {
+      if (data.success && data.data && data.data.user && data.data.token) {
         const userData = data.data.user;
         const token = data.data.token;
 
+        // Validate required user fields
+        if (!userData.id || !userData.firstName || !userData.email) {
+          console.error("Invalid user data received:", userData);
+          return {
+            success: false,
+            message: "Invalid user data received from server"
+          };
+        }
+
         const user: User = {
           id: userData.id,
-          firstName: userData.firstName,
-          lastName: userData.lastName,
-          name: `${userData.firstName} ${userData.lastName}`,
+          firstName: userData.firstName || '',
+          lastName: userData.lastName || '',
+          name: `${userData.firstName || ''} ${userData.lastName || ''}`.trim(),
           email: userData.email,
-          phone: userData.phone,
-          walletBalance: userData.walletBalance,
-          subscription: userData.subscription,
+          phone: userData.phone || '',
+          walletBalance: userData.walletBalance || 0,
+          subscription: userData.subscription || { plan: "free" },
           isAuthenticated: true,
         };
 
         setUser(user);
         localStorage.setItem("connectlify_token", token);
 
-        return { success: true, message: data.message };
+        return { success: true, message: data.message || "Login successful" };
       } else {
-        return { success: false, message: data.message };
+        const errorMessage = data.message || "Login failed - invalid response format";
+        console.error("Login failed:", data);
+        return { success: false, message: errorMessage };
       }
     } catch (error) {
       console.error("Login error:", error);
-      return { success: false, message: "Network error. Please try again." };
+
+      // More specific error handling
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        return { success: false, message: "Network connection error. Please check your internet connection." };
+      }
+
+      return { success: false, message: "Login failed. Please try again." };
     } finally {
       setIsLoading(false);
     }
