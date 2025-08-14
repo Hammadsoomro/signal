@@ -160,11 +160,14 @@ export const UserNumbersProvider: React.FC<{ children: React.ReactNode }> = ({
     <UserNumbersContext.Provider
       value={{
         purchasedNumbers,
+        isLoading,
         addPurchasedNumber,
         removePurchasedNumber,
         updateNumberAssignment,
         getAvailableNumbers,
         getAssignedNumbers,
+        purchaseNumber,
+        loadUserNumbers,
       }}
     >
       {children}
