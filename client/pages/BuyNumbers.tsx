@@ -636,7 +636,7 @@ export default function BuyNumbers() {
                             <div className="flex justify-end gap-2">
                               <Button variant="outline">Cancel</Button>
                               <Button
-                                onClick={() => purchaseNumber(number)}
+                                onClick={() => handlePurchaseNumber(number)}
                                 disabled={isPurchasing}
                               >
                                 {isPurchasing ? (
