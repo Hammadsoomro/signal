@@ -10,6 +10,14 @@ import {
   getCurrentUser,
   googleAuth,
 } from "./routes/auth";
+import {
+  getUserPhoneNumbers,
+  purchasePhoneNumber,
+  assignPhoneNumber,
+  getAvailableNumbers,
+  getAssignedNumbers,
+  releasePhoneNumber
+} from "./routes/phoneNumbers";
 
 export function createServer() {
   const app = express();
