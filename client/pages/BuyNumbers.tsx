@@ -310,12 +310,7 @@ export default function BuyNumbers() {
     setSelectedNumber(number);
 
     try {
-      // Use SMS service API to purchase the number
-      const purchaseResponse = await signalWireClient.purchasePhoneNumber(
-        number.number,
-      );
-
-      // Deduct wallet balance (assuming global wallet function exists)
+      // Deduct wallet balance first
       if (
         typeof window !== "undefined" &&
         (window as any).deductWalletBalance
@@ -325,34 +320,45 @@ export default function BuyNumbers() {
           `Phone number purchase: ${number.number}`,
         );
         if (!success) {
-          throw new Error("Failed to deduct wallet balance");
+          throw new Error("Insufficient wallet balance");
         }
       }
 
-      // Add to user's purchased numbers
-      const purchasedNumber: PurchasedNumber = {
-        id: Date.now().toString(),
+      // Purchase through database API
+      const numberData = {
         number: number.number,
         label: `${number.city} Line`,
         city: number.city,
         state: number.state,
         country: number.country,
-        isActive: true,
-        purchaseDate: new Date().toISOString(),
         monthlyPrice: number.price,
-        assignedTo: null,
+        capabilities: number.features || ["SMS", "Voice"]
       };
 
-      addPurchasedNumber(purchasedNumber);
+      const success = await purchaseNumber(numberData);
 
-      toast({
-        title: "Purchase Successful!",
-        description: `Successfully purchased ${number.number} for $${number.price.toFixed(2)} from SMS service`,
-      });
+      if (success) {
+        toast({
+          title: "Purchase Successful!",
+          description: `Successfully purchased ${number.number} for $${number.price.toFixed(2)}`,
+        });
 
-      // Remove purchased number from available list
-      setAvailableNumbers((prev) => prev.filter((n) => n.id !== number.id));
-      setSelectedNumber(null);
+        // Remove purchased number from available list
+        setAvailableNumbers((prev) => prev.filter((n) => n.id !== number.id));
+        setSelectedNumber(null);
+      } else {
+        // Refund wallet balance if purchase failed
+        if (
+          typeof window !== "undefined" &&
+          (window as any).addWalletBalance
+        ) {
+          (window as any).addWalletBalance(
+            number.price,
+            `Refund for failed purchase: ${number.number}`,
+          );
+        }
+        throw new Error("Failed to purchase phone number");
+      }
     } catch (error) {
       console.error("SMS service purchase error:", error);
       toast({
