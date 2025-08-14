@@ -62,25 +62,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
           if (response.ok) {
             const data = await response.json();
-            if (data.success) {
+            if (data.success && data.data && data.data.user) {
               const userData = data.data.user;
-              setUser({
-                id: userData.id,
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                name: `${userData.firstName} ${userData.lastName}`,
-                email: userData.email,
-                phone: userData.phone,
-                walletBalance: userData.walletBalance,
-                subscription: userData.subscription,
-                isAuthenticated: true,
-              });
+
+              // Validate required user fields
+              if (userData.id && userData.email) {
+                setUser({
+                  id: userData.id,
+                  firstName: userData.firstName || '',
+                  lastName: userData.lastName || '',
+                  name: `${userData.firstName || ''} ${userData.lastName || ''}`.trim(),
+                  email: userData.email,
+                  phone: userData.phone || '',
+                  walletBalance: userData.walletBalance || 0,
+                  subscription: userData.subscription || { plan: "free" },
+                  isAuthenticated: true,
+                });
+              } else {
+                console.error("Invalid user data in auth check:", userData);
+                localStorage.removeItem("connectlify_token");
+              }
             } else {
               // Invalid token, remove it
+              console.log("Token verification failed:", data);
               localStorage.removeItem("connectlify_token");
             }
           } else {
             // Invalid token, remove it
+            console.log("Token verification request failed:", response.status);
             localStorage.removeItem("connectlify_token");
           }
         }
