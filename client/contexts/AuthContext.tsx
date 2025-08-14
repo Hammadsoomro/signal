@@ -157,34 +157,59 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         body: JSON.stringify(userData),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        return {
+          success: false,
+          message: errorData.message || `Server error: ${response.status}`
+        };
+      }
+
       const data = await response.json();
 
-      if (data.success) {
+      if (data.success && data.data && data.data.user && data.data.token) {
         const userInfo = data.data.user;
         const token = data.data.token;
 
+        // Validate required user fields
+        if (!userInfo.id || !userInfo.firstName || !userInfo.email) {
+          console.error("Invalid user data received:", userInfo);
+          return {
+            success: false,
+            message: "Invalid user data received from server"
+          };
+        }
+
         const user: User = {
           id: userInfo.id,
-          firstName: userInfo.firstName,
-          lastName: userInfo.lastName,
-          name: `${userInfo.firstName} ${userInfo.lastName}`,
+          firstName: userInfo.firstName || '',
+          lastName: userInfo.lastName || '',
+          name: `${userInfo.firstName || ''} ${userInfo.lastName || ''}`.trim(),
           email: userInfo.email,
-          phone: userInfo.phone,
-          walletBalance: userInfo.walletBalance, // Will be 0 for new users
-          subscription: userInfo.subscription,
+          phone: userInfo.phone || '',
+          walletBalance: userInfo.walletBalance || 0,
+          subscription: userInfo.subscription || { plan: "free" },
           isAuthenticated: true,
         };
 
         setUser(user);
         localStorage.setItem("connectlify_token", token);
 
-        return { success: true, message: data.message };
+        return { success: true, message: data.message || "Registration successful" };
       } else {
-        return { success: false, message: data.message };
+        const errorMessage = data.message || "Registration failed - invalid response format";
+        console.error("Registration failed:", data);
+        return { success: false, message: errorMessage };
       }
     } catch (error) {
       console.error("Registration error:", error);
-      return { success: false, message: "Network error. Please try again." };
+
+      // More specific error handling
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        return { success: false, message: "Network connection error. Please check your internet connection." };
+      }
+
+      return { success: false, message: "Registration failed. Please try again." };
     } finally {
       setIsLoading(false);
     }
