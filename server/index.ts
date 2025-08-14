@@ -36,6 +36,21 @@ export function createServer() {
     res.json({ message: ping });
   });
 
+  // Database test endpoint
+  app.get("/api/db-test", async (_req, res) => {
+    try {
+      const mongoose = require('mongoose');
+      const isConnected = mongoose.connection.readyState === 1;
+      res.json({
+        connected: isConnected,
+        status: mongoose.connection.readyState,
+        message: isConnected ? "MongoDB Connected" : "MongoDB Disconnected"
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Database test failed", details: error });
+    }
+  });
+
   app.get("/api/demo", handleDemo);
 
   // Authentication routes
