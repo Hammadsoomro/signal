@@ -79,6 +79,7 @@ export const UserSettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       if (!token) {
         console.log('No auth token found, user not authenticated');
         setSettings(null);
+        setIsLoading(false);
         return;
       }
 
