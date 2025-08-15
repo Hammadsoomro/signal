@@ -62,6 +62,7 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
     );
   };
 
+  // Build navigation dynamically based on permissions
   const navigation: NavItem[] = [
     { id: "dashboard", label: "Dashboard", icon: BarChart3, href: "/home" },
     {
@@ -84,19 +85,22 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
         },
       ],
     },
-    {
+    // Only show Sub-Accounts for main users
+    ...(isMainUser ? [{
       id: "sub-accounts",
       label: "Sub-Accounts",
       icon: Users,
       href: "/sub-accounts",
-    },
-    {
+    }] : []),
+    // Only show Buy Numbers if user has permission
+    ...(canBuyNumbers ? [{
       id: "buy-numbers",
       label: "Buy Numbers",
       icon: Phone,
       href: "/buy-numbers",
-    },
-    {
+    }] : []),
+    // Only show billing options if user can manage wallet
+    ...(canManageWallet ? [{
       id: "billing",
       label: "Billing",
       icon: DollarSign,
@@ -109,7 +113,7 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
           href: "/transactions",
         },
       ],
-    },
+    }] : []),
     {
       id: "settings",
       label: "Settings",
