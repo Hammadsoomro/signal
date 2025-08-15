@@ -292,7 +292,7 @@ export default function Conversations() {
     0,
   );
 
-  const addNewContact = () => {
+  const addNewContact = async () => {
     if (!newContact.phone.trim()) {
       toast({
         title: "Error",
@@ -302,27 +302,17 @@ export default function Conversations() {
       return;
     }
 
-    const newConversation: Conversation = {
-      id: Date.now().toString(),
-      contact: newContact.phone.trim(),
-      name: newContact.name.trim() || newContact.phone.trim(),
-      lastMessage: "No messages yet",
-      lastMessageTime: new Date().toISOString(),
-      unreadCount: 0,
-      messages: [],
-      isPinned: false,
-      isStarred: false,
-      isArchived: false,
-    };
+    const conversation = await createOrGetConversation(
+      newContact.phone.trim(),
+      newContact.name.trim() || newContact.phone.trim()
+    );
 
-    setConversations((prev) => [newConversation, ...prev]);
-    setNewContact({ name: "", phone: "" });
-    setShowAddContact(false);
-
-    toast({
-      title: "Contact Added",
-      description: `${newConversation.name} has been added to your conversations.`,
-    });
+    if (conversation) {
+      setNewContact({ name: "", phone: "" });
+      setShowAddContact(false);
+      // Select the new conversation
+      setSelectedConversation(conversation._id);
+    }
   };
 
   return (
