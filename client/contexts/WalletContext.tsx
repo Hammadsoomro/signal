@@ -77,6 +77,15 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   };
 
   const deductBalance = async (amount: number, description: string): Promise<boolean> => {
+    if (!user) {
+      toast({
+        title: "Authentication Error",
+        description: "User not authenticated. Please log in again.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
     if (amount > balance) {
       toast({
         title: "Insufficient Balance",
