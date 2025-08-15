@@ -85,9 +85,7 @@ const mockScheduledMessages: ScheduledMessage[] = [
 ];
 
 export default function Scheduled() {
-  const [messages, setMessages] = useState<ScheduledMessage[]>(
-    mockScheduledMessages,
-  );
+  const [messages, setMessages] = useState<ScheduledMessage[]>([]);
   const [selectedMessage, setSelectedMessage] =
     useState<ScheduledMessage | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
