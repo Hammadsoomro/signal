@@ -82,6 +82,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
                   email: userData.email,
                   phone: userData.phone || '',
                   walletBalance: userData.walletBalance || 0,
+                  userType: userData.userType || "main",
+                  permissions: userData.permissions || {
+                    canSendSMS: true,
+                    canBuyNumbers: true,
+                    canManageWallet: true,
+                    canViewAnalytics: true,
+                  },
                   subscription: userData.subscription || { plan: "free" },
                   isAuthenticated: true,
                 });
