@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useWallet } from "@/contexts/WalletContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { AdSense, AdSenseConfigs } from "@/components/AdSense";
 
 interface SidebarProps {
@@ -48,6 +49,12 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
   const location = useLocation();
   const [expandedItems, setExpandedItems] = useState<string[]>(["messaging"]);
   const { balance } = useWallet();
+  const { user } = useAuth();
+
+  // Check if user has permissions
+  const canBuyNumbers = user?.permissions?.canBuyNumbers ?? true;
+  const canManageWallet = user?.permissions?.canManageWallet ?? true;
+  const isMainUser = user?.userType === "main";
 
   const toggleExpanded = (id: string) => {
     setExpandedItems((prev) =>
