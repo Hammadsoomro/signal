@@ -260,43 +260,27 @@ export const googleAuth = async (req: Request, res: Response) => {
 
     let payload;
 
-    // Handle demo mode or real Google tokens
-    if (
-      idToken.startsWith("demo-") ||
-      GOOGLE_CLIENT_ID === "your-google-client-id"
-    ) {
-      // Demo mode - decode base64 token
-      try {
-        const decoded = JSON.parse(atob(idToken));
-        payload = {
-          email: decoded.email || "user@gmail.com",
-          given_name: decoded.given_name || "Demo",
-          family_name: decoded.family_name || "User",
-          sub: decoded.sub || "demo-google-id-123",
-        };
-      } catch {
-        payload = {
-          email: "user@gmail.com",
-          given_name: "Demo",
-          family_name: "User",
-          sub: "demo-google-id-123",
-        };
-      }
-    } else {
-      // Real Google token verification
-      const ticket = await oauth2Client.verifyIdToken({
-        idToken,
-        audience: GOOGLE_CLIENT_ID,
+    // Verify real Google tokens only
+    if (!GOOGLE_CLIENT_ID) {
+      return res.status(400).json({
+        success: false,
+        message: "Google authentication not configured"
       });
+    }
 
-      payload = ticket.getPayload();
+    // Real Google token verification
+    const ticket = await oauth2Client.verifyIdToken({
+      idToken,
+      audience: GOOGLE_CLIENT_ID,
+    });
 
-      if (!payload || !payload.email) {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid Google token",
-        });
-      }
+    payload = ticket.getPayload();
+
+    if (!payload || !payload.email) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Google token",
+      });
     }
 
     const { email, given_name, family_name, sub: googleId } = payload;
