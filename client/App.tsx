@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { WalletProvider } from "./contexts/WalletContext";
 import { UserNumbersProvider } from "./contexts/UserNumbersContext";
+import { SubAccountsProvider } from "./contexts/SubAccountsContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -37,6 +38,7 @@ const App = () => (
         <AuthProvider>
           <WalletProvider>
             <UserNumbersProvider>
+              <SubAccountsProvider>
               <Toaster />
               <Sonner />
               <BrowserRouter>
@@ -132,6 +134,7 @@ const App = () => (
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </BrowserRouter>
+              </SubAccountsProvider>
             </UserNumbersProvider>
           </WalletProvider>
         </AuthProvider>
