@@ -83,7 +83,7 @@ export default function Conversations() {
   const [newContact, setNewContact] = useState({ name: "", phone: "" });
 
   const { purchasedNumbers, getAvailableNumbers } = useUserNumbers();
-  const availableNumbers = getAvailableNumbers();
+  const availableNumbers = getAvailableNumbers() || [];
 
   // Test SMS service connection
   const testSMSService = async () => {
