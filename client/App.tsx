@@ -10,6 +10,7 @@ import { WalletProvider } from "./contexts/WalletContext";
 import { UserNumbersProvider } from "./contexts/UserNumbersContext";
 import { SubAccountsProvider } from "./contexts/SubAccountsContext";
 import { ConversationsProvider } from "./contexts/ConversationsContext";
+import { UserSettingsProvider } from "./contexts/UserSettingsContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -41,6 +42,7 @@ const App = () => (
             <UserNumbersProvider>
               <SubAccountsProvider>
                 <ConversationsProvider>
+                  <UserSettingsProvider>
               <Toaster />
               <Sonner />
               <BrowserRouter>
@@ -136,6 +138,7 @@ const App = () => (
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </BrowserRouter>
+                  </UserSettingsProvider>
                 </ConversationsProvider>
               </SubAccountsProvider>
             </UserNumbersProvider>
