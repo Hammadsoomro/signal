@@ -139,44 +139,36 @@ export default function Conversations() {
 
     // Check wallet balance (SMS costs $0.01 per message)
     const smsPrice = 0.01;
-    const deductBalance = (window as any).deductWalletBalance;
+    const conversation = getCurrentConversation();
+    if (!conversation) return;
 
-    if (
-      deductBalance &&
-      !deductBalance(
-        smsPrice,
-        `SMS sent to ${getCurrentConversation()?.contact}`,
-      )
-    ) {
+    // Deduct balance first
+    const success = deductBalance(smsPrice, `SMS sent to ${conversation.contactNumber}`);
+    if (!success) {
       return; // Insufficient balance, error already shown
     }
 
     setIsSending(true);
-    const tempId = Date.now().toString();
-    const newMessage: Message = {
-      id: tempId,
-      text: message.trim(),
-      sent: true,
-      timestamp: new Date().toISOString(),
-      status: "sending",
-    };
 
-    // Add message to conversation immediately
-    setConversations((prev) =>
-      prev.map((conv) => {
-        if (conv.id === selectedConversation) {
-          return {
-            ...conv,
-            messages: [...conv.messages, newMessage],
-            lastMessage: newMessage.text,
-            lastMessageTime: newMessage.timestamp,
-          };
-        }
-        return conv;
-      }),
-    );
+    try {
+      // Send message via API
+      const success = await sendMessageAPI(
+        selectedConversation,
+        selectedNumber,
+        conversation.contactNumber,
+        message.trim()
+      );
 
-    setMessage("");
+      if (success) {
+        setMessage("");
+        // Reload messages for this conversation
+        await loadMessages(selectedConversation);
+      }
+    } catch (error) {
+      console.error("Failed to send message:", error);
+    } finally {
+      setIsSending(false);
+    }
 
     try {
       // Use SMS API to send message
