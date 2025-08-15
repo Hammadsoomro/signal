@@ -271,7 +271,7 @@ export default function BuyNumbers() {
     } catch (error) {
       console.error("SignalWire search error:", error);
 
-      // Fallback to sample numbers
+      // No numbers available from SMS service
       let filteredNumbers = mockNumbers.filter(
         (num) =>
           num.country === selectedCountry &&
@@ -289,7 +289,7 @@ export default function BuyNumbers() {
       toast({
         title: "Service Unavailable",
         description:
-          "SMS service API unavailable. Showing available sample numbers.",
+          "SMS service API unavailable. Please try again later.",
         variant: "destructive",
       });
     } finally {
