@@ -166,19 +166,7 @@ export default function BuyNumbers() {
       console.error("SignalWire search error:", error);
 
       // No numbers available from SMS service
-      let filteredNumbers = mockNumbers.filter(
-        (num) =>
-          num.country === selectedCountry &&
-          (selectedState && selectedState !== "all"
-            ? num.state === selectedState
-            : true) &&
-          (searchQuery
-            ? num.number.includes(searchQuery) ||
-              num.city.toLowerCase().includes(searchQuery.toLowerCase())
-            : true),
-      );
-
-      setAvailableNumbers(filteredNumbers);
+      setAvailableNumbers([]);
 
       toast({
         title: "Service Unavailable",
