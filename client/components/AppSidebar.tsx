@@ -207,37 +207,39 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
           </Button>
         </div>
 
-        {/* Wallet Balance */}
-        <div className="p-4 flex-shrink-0">
-          <Card className="bg-gradient-to-r from-emerald-500 to-cyan-500 border-emerald-400/50 shadow-lg">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 bg-white/20 rounded-lg backdrop-blur">
-                  <Wallet className="h-5 w-5 text-white" />
+        {/* Wallet Balance - Only show for users who can manage wallet */}
+        {canManageWallet && (
+          <div className="p-4 flex-shrink-0">
+            <Card className="bg-gradient-to-r from-emerald-500 to-cyan-500 border-emerald-400/50 shadow-lg">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur">
+                    <Wallet className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-white/90 text-xs font-medium uppercase tracking-wide">
+                      Current Balance
+                    </p>
+                    <p className="text-white text-xl font-bold">
+                      ${balance.toFixed(2)}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-white/90 text-xs font-medium uppercase tracking-wide">
-                    Current Balance
-                  </p>
-                  <p className="text-white text-xl font-bold">
-                    ${balance.toFixed(2)}
-                  </p>
-                </div>
-              </div>
-              <Button
-                asChild
-                size="sm"
-                className="w-full bg-white/20 hover:bg-white/30 text-white border-white/30"
-                variant="outline"
-              >
-                <Link to="/wallet" className="flex items-center gap-2">
-                  <Plus className="h-4 w-4" />
-                  Add Funds
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
+                <Button
+                  asChild
+                  size="sm"
+                  className="w-full bg-white/20 hover:bg-white/30 text-white border-white/30"
+                  variant="outline"
+                >
+                  <Link to="/wallet" className="flex items-center gap-2">
+                    <Plus className="h-4 w-4" />
+                    Add Funds
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
         {/* Navigation - Scrollable */}
         <div className="flex-1 overflow-hidden">
