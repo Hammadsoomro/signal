@@ -166,6 +166,13 @@ export function createServer() {
   app.post("/api/user/settings/reset", verifyToken, resetUserSettings);
   app.get("/api/user/settings/export", verifyToken, exportUserSettings);
 
+  // Stripe payment routes
+  app.post("/api/stripe/create-payment-intent", verifyToken, createPaymentIntent);
+  app.post("/api/stripe/confirm-payment", verifyToken, confirmPayment);
+  app.get("/api/stripe/payment-methods", verifyToken, getPaymentMethods);
+  app.post("/api/stripe/create-customer", verifyToken, createCustomer);
+  app.post("/api/stripe/webhook", handleWebhook);
+
   // Handle 404 for API routes
   app.all('/api/*', (req, res) => {
     res.status(404).json({
