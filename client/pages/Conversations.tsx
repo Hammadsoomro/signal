@@ -442,7 +442,7 @@ export default function Conversations() {
                 </div>
               ) : (
                 sortedConversations.map((conv) => (
-                  <div key={conv.id} className="relative group mb-2">
+                  <div key={conv._id} className="relative group mb-2">
                     {/* Action buttons above contact */}
                     <div className="flex items-center justify-end gap-1 mb-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <Button
@@ -451,7 +451,7 @@ export default function Conversations() {
                         className="h-6 w-6 p-0"
                         onClick={(e) => {
                           e.stopPropagation();
-                          toggleStar(conv.id);
+                          toggleStar(conv._id);
                         }}
                       >
                         <Star
@@ -469,7 +469,7 @@ export default function Conversations() {
                         className="h-6 w-6 p-0"
                         onClick={(e) => {
                           e.stopPropagation();
-                          togglePin(conv.id);
+                          togglePin(conv._id);
                         }}
                       >
                         <PinIcon
@@ -485,7 +485,7 @@ export default function Conversations() {
                         className="h-6 w-6 p-0 text-red-500 hover:text-red-700"
                         onClick={(e) => {
                           e.stopPropagation();
-                          deleteConversation(conv.id);
+                          handleDeleteConversation(conv._id);
                         }}
                       >
                         <Trash2 className="h-3 w-3" />
@@ -495,13 +495,13 @@ export default function Conversations() {
                     <Card
                       className={cn(
                         "p-3 cursor-pointer transition-colors",
-                        selectedConversation === conv.id
+                        selectedConversation === conv._id
                           ? "bg-primary/10 border-primary"
                           : "hover:bg-accent/50",
                         conv.isPinned && "border-yellow-200",
                         conv.isStarred && "border-yellow-100",
                       )}
-                      onClick={() => selectConversation(conv.id)}
+                      onClick={() => selectConversation(conv._id)}
                     >
                       <div className="flex items-center gap-3">
                         <Avatar>
@@ -601,8 +601,8 @@ export default function Conversations() {
                 <div className="space-y-4">
                   {getCurrentConversation()?.messages.map((msg) => (
                     <div
-                      key={msg.id}
-                      className={`flex ${msg.sent ? "justify-end" : "justify-start"}`}
+                      key={msg._id}
+                      className={`flex ${msg.direction === 'outbound' ? "justify-end" : "justify-start"}`}
                     >
                       <div
                         className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
