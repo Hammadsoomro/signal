@@ -16,6 +16,7 @@ export interface IUser extends Document {
   language: string;
   googleId?: string;
   isGoogleUser?: boolean;
+  stripeCustomerId?: string;
   settings: {
     emailNotifications: boolean;
     smsNotifications: boolean;
