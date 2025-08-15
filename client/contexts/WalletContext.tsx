@@ -49,7 +49,10 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
   // Load transactions from database
   const loadTransactions = async () => {
-    if (!user) return;
+    if (!user) {
+      setTransactions([]);
+      return;
+    }
 
     setIsLoading(true);
     try {
