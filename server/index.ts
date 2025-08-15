@@ -1,7 +1,6 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import { handleDemo } from "./routes/demo";
 import { connectDatabase } from "./config/database";
 import {
   registerUser,
@@ -51,7 +50,6 @@ export function createServer() {
     }
   });
 
-  app.get("/api/demo", handleDemo);
 
   // Debug endpoint
   app.post("/api/debug/register-test", async (req, res) => {
