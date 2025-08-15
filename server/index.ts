@@ -97,7 +97,7 @@ export function createServer() {
   app.post("/api/debug/register-test", async (req, res) => {
     try {
       console.log("Debug registration test:", req.body);
-      const User = require('./models/User').default;
+      const { default: User } = await import('./models/User.js');
       const userCount = await User.countDocuments();
       res.json({
         success: true,
