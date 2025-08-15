@@ -46,15 +46,23 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useUserNumbers } from "@/contexts/UserNumbersContext";
 import { useWallet } from "@/contexts/WalletContext";
+import { useSubAccounts } from "@/contexts/SubAccountsContext";
 
 interface SubAccount {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   walletBalance: number;
   assignedNumbers: string[];
+  permissions: {
+    canSendSMS: boolean;
+    canBuyNumbers: boolean;
+    canManageWallet: boolean;
+    canViewAnalytics: boolean;
+  };
+  status: "active" | "suspended" | "pending" | "deleted";
   createdAt: string;
-  status: "active" | "suspended";
+  updatedAt: string;
 }
 
 export default function SubAccounts() {
@@ -69,7 +77,7 @@ export default function SubAccounts() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const [subAccounts, setSubAccounts] = useState<SubAccount[]>([]);
+  const { subAccounts, isLoading: subAccountsLoading, createSubAccount, updateSubAccount, deleteSubAccount, transferFunds } = useSubAccounts();
 
   const { purchasedNumbers, updateNumberAssignment, getAvailableNumbers } =
     useUserNumbers();
