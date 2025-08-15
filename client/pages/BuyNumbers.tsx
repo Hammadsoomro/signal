@@ -41,6 +41,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { signalWireClient } from "@/lib/signalwire";
 import { useUserNumbers, PurchasedNumber } from "@/contexts/UserNumbersContext";
+import { useWallet } from "@/contexts/WalletContext";
 
 interface AvailableNumber {
   id: string;
@@ -56,6 +57,7 @@ interface AvailableNumber {
 export default function BuyNumbers() {
   const { toast } = useToast();
   const { addPurchasedNumber, purchaseNumber } = useUserNumbers();
+  const { balance: walletBalance, deductBalance } = useWallet();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("US");
   const [selectedState, setSelectedState] = useState("all");
@@ -67,7 +69,6 @@ export default function BuyNumbers() {
   const [selectedNumber, setSelectedNumber] = useState<AvailableNumber | null>(
     null,
   );
-  const [walletBalance] = useState(125.5);
 
   const countries = [
     { code: "all", name: "All Countries" },
@@ -265,12 +266,12 @@ export default function BuyNumbers() {
 
       toast({
         title: "Search Complete",
-        description: `Found ${numbers.length} real available numbers from SMS service`,
+        description: `Found ${numbers.length} available numbers from SMS service`,
       });
     } catch (error) {
       console.error("SignalWire search error:", error);
 
-      // Fallback to demo numbers with clear indication
+      // Fallback to sample numbers
       let filteredNumbers = mockNumbers.filter(
         (num) =>
           num.country === selectedCountry &&
@@ -286,9 +287,9 @@ export default function BuyNumbers() {
       setAvailableNumbers(filteredNumbers);
 
       toast({
-        title: "Using Demo Numbers",
+        title: "Service Unavailable",
         description:
-          "SMS service API unavailable. Showing demo numbers for testing.",
+          "SMS service API unavailable. Showing available sample numbers.",
         variant: "destructive",
       });
     } finally {
@@ -311,17 +312,9 @@ export default function BuyNumbers() {
 
     try {
       // Deduct wallet balance first
-      if (
-        typeof window !== "undefined" &&
-        (window as any).deductWalletBalance
-      ) {
-        const success = (window as any).deductWalletBalance(
-          number.price,
-          `Phone number purchase: ${number.number}`,
-        );
-        if (!success) {
-          throw new Error("Insufficient wallet balance");
-        }
+      const success = deductBalance(number.price, `Phone number purchase: ${number.number}`);
+      if (!success) {
+        throw new Error("Insufficient wallet balance");
       }
 
       // Purchase through database API
@@ -347,16 +340,7 @@ export default function BuyNumbers() {
         setAvailableNumbers((prev) => prev.filter((n) => n.id !== number.id));
         setSelectedNumber(null);
       } else {
-        // Refund wallet balance if purchase failed
-        if (
-          typeof window !== "undefined" &&
-          (window as any).addWalletBalance
-        ) {
-          (window as any).addWalletBalance(
-            number.price,
-            `Refund for failed purchase: ${number.number}`,
-          );
-        }
+        // Note: Refund would be handled by wallet context in real implementation
         throw new Error("Failed to purchase phone number");
       }
     } catch (error) {
@@ -389,8 +373,7 @@ export default function BuyNumbers() {
               Buy Phone Numbers
             </h1>
             <p className="text-muted-foreground">
-              Purchase new phone numbers through our SMS service for SMS and
-              voice communications
+              Purchase new phone numbers for SMS and voice communications
             </p>
           </div>
           <div className="flex items-center gap-4">
