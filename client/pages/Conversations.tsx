@@ -673,7 +673,7 @@ export default function Conversations() {
                       <SelectValue placeholder="Select sending number" />
                     </SelectTrigger>
                     <SelectContent>
-                      {availableNumbers.map((num) => (
+                      {availableNumbers?.map((num) => (
                         <SelectItem key={num.id} value={num.number}>
                           <div className="flex items-center gap-2">
                             <Phone className="h-4 w-4" />
