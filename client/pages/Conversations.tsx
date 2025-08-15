@@ -273,10 +273,16 @@ export default function Conversations() {
   };
 
   const formatTime = (timestamp: string) => {
-    return new Date(timestamp).toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    try {
+      if (!timestamp) return "";
+      return new Date(timestamp).toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } catch (error) {
+      console.error("Error formatting time:", error);
+      return "";
+    }
   };
 
   const formatMessageTime = (timestamp: string) => {
