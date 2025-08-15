@@ -57,6 +57,13 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
     try {
       const token = localStorage.getItem('connectlify_token');
+      if (!token) {
+        console.log('No auth token found, user not authenticated');
+        setTransactions([]);
+        setIsLoading(false);
+        return;
+      }
+
       const response = await fetch('/api/wallet/transactions', {
         headers: {
           'Authorization': `Bearer ${token}`,
