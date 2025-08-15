@@ -626,7 +626,7 @@ export default function Conversations() {
               {/* Messages */}
               <ScrollArea className="flex-1 p-4">
                 <div className="space-y-4">
-                  {currentMessages.map((msg) => (
+                  {currentMessages?.map((msg) => (
                     <div
                       key={msg._id}
                       className={`flex ${msg.direction === 'outbound' ? "justify-end" : "justify-start"}`}
