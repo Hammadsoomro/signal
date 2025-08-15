@@ -52,8 +52,22 @@ interface Transaction {
 // No mock data - all transactions come from database
 
 export default function Transactions() {
+  const { transactions: walletTransactions } = useWallet();
   const [transactions, setTransactions] =
-    useState<Transaction[]>(mockTransactions);
+    useState<Transaction[]>([]);
+
+  // Convert wallet transactions to transaction format
+  React.useEffect(() => {
+    const mappedTransactions = walletTransactions.map(t => ({
+      ...t,
+      type: t.type === 'credit' ? 'credit_added' as const : 'sms_sent' as const,
+      timestamp: new Date(t.date).toLocaleString(),
+      balance_after: 0, // This would be calculated in a real implementation
+      from: '',
+      to: ''
+    }));
+    setTransactions(mappedTransactions);
+  }, [walletTransactions]);
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
