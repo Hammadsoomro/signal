@@ -69,6 +69,7 @@ export const UserSettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   const loadSettings = async () => {
     if (!user) {
       setSettings(null);
+      setIsLoading(false);
       return;
     }
 
