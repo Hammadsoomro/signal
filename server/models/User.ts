@@ -67,6 +67,10 @@ const UserSchema: Schema = new Schema(
       type: Boolean,
       default: false,
     },
+    stripeCustomerId: {
+      type: String,
+      required: false,
+    },
     company: {
       type: String,
       trim: true,
