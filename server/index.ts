@@ -17,6 +17,12 @@ import {
   getAssignedNumbers,
   releasePhoneNumber
 } from "./routes/phoneNumbers";
+import {
+  getWalletBalance,
+  getTransactionHistory,
+  debitWallet,
+  creditWallet
+} from "./routes/wallet";
 
 export function createServer() {
   const app = express();
@@ -86,6 +92,12 @@ export function createServer() {
   app.get("/api/phone-numbers/available", verifyToken, getAvailableNumbers);
   app.get("/api/phone-numbers/assigned/:subAccountId", verifyToken, getAssignedNumbers);
   app.delete("/api/phone-numbers/:phoneNumberId", verifyToken, releasePhoneNumber);
+
+  // Wallet routes
+  app.get("/api/wallet/balance", verifyToken, getWalletBalance);
+  app.get("/api/wallet/transactions", verifyToken, getTransactionHistory);
+  app.post("/api/wallet/debit", verifyToken, debitWallet);
+  app.post("/api/wallet/credit", verifyToken, creditWallet);
 
   return app;
 }
