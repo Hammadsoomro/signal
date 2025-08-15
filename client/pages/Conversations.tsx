@@ -505,13 +505,13 @@ export default function Conversations() {
                     >
                       <div className="flex items-center gap-3">
                         <Avatar>
-                          <AvatarFallback>{conv.name.charAt(0)}</AvatarFallback>
+                          <AvatarFallback>{(conv.contactName || conv.contactNumber).charAt(0)}</AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-1">
                               <h3 className="font-medium truncate">
-                                {conv.name}
+                                {conv.contactName || conv.contactNumber}
                               </h3>
                               {conv.isPinned && (
                                 <PinIcon className="h-3 w-3 text-yellow-500" />
@@ -535,7 +535,7 @@ export default function Conversations() {
                             )}
                           </div>
                           <p className="text-xs text-muted-foreground mt-1">
-                            {conv.contact}
+                            {conv.contactNumber}
                           </p>
                         </div>
                       </div>
