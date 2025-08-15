@@ -105,12 +105,12 @@ export default function Send() {
     const cost = calculateCost();
     const recipientCount = getRecipientCount();
 
-    if (
-      !deductBalance(
-        cost,
-        `SMS sent to ${recipientCount} recipient${recipientCount > 1 ? "s" : ""}`,
-      )
-    ) {
+    const balanceDeducted = await deductBalance(
+      cost,
+      `SMS sent to ${recipientCount} recipient${recipientCount > 1 ? "s" : ""}`,
+    );
+
+    if (!balanceDeducted) {
       return; // Insufficient balance, error already shown
     }
 
