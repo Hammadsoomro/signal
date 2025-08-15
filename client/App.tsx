@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { WalletProvider } from "./contexts/WalletContext";
 import { UserNumbersProvider } from "./contexts/UserNumbersContext";
 import { SubAccountsProvider } from "./contexts/SubAccountsContext";
+import { ConversationsProvider } from "./contexts/ConversationsContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -39,6 +40,7 @@ const App = () => (
           <WalletProvider>
             <UserNumbersProvider>
               <SubAccountsProvider>
+                <ConversationsProvider>
               <Toaster />
               <Sonner />
               <BrowserRouter>
@@ -134,6 +136,7 @@ const App = () => (
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </BrowserRouter>
+                </ConversationsProvider>
               </SubAccountsProvider>
             </UserNumbersProvider>
           </WalletProvider>
