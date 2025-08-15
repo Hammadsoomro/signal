@@ -137,7 +137,7 @@ const faqData: FAQ[] = [
 ];
 
 export default function Support() {
-  const [tickets, setTickets] = useState<SupportTicket[]>(mockTickets);
+  const [tickets, setTickets] = useState<SupportTicket[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showNewTicket, setShowNewTicket] = useState(false);
