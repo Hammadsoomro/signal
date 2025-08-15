@@ -169,95 +169,26 @@ export default function Conversations() {
     } finally {
       setIsSending(false);
     }
+  };
 
+  // Load messages for selected conversation
+  const loadMessages = async (conversationId: string) => {
     try {
-      // Use SMS API to send message
-      const response = await signalWireClient.sendSMS(
-        selectedNumber,
-        getCurrentConversation()?.contact || "",
-        message.trim(),
-      );
-
-      // Update message status to sent
-      setConversations((prev) =>
-        prev.map((conv) => {
-          if (conv.id === selectedConversation) {
-            return {
-              ...conv,
-              messages: conv.messages.map((msg) =>
-                msg.id === tempId ? { ...msg, status: "sent" } : msg,
-              ),
-            };
-          }
-          return conv;
-        }),
-      );
-
-      // Update delivery status based on SMS service response
-      setTimeout(() => {
-        setConversations((prev) =>
-          prev.map((conv) => {
-            if (conv.id === selectedConversation) {
-              return {
-                ...conv,
-                messages: conv.messages.map((msg) =>
-                  msg.id === tempId
-                    ? {
-                        ...msg,
-                        status:
-                          response.status === "queued" ||
-                          response.status === "sent"
-                            ? "delivered"
-                            : "failed",
-                      }
-                    : msg,
-                ),
-              };
-            }
-            return conv;
-          }),
-        );
-      }, 2000);
-
-      toast({
-        title: "Message Sent Successfully",
-        description: `SMS sent successfully to ${getCurrentConversation()?.contact} (ID: ${response.sid})`,
-      });
+      const messages = await loadConversationMessages(conversationId);
+      setCurrentMessages(messages);
     } catch (error) {
-      // Update message status to failed
-      setConversations((prev) =>
-        prev.map((conv) => {
-          if (conv.id === selectedConversation) {
-            return {
-              ...conv,
-              messages: conv.messages.map((msg) =>
-                msg.id === tempId ? { ...msg, status: "failed" } : msg,
-              ),
-            };
-          }
-          return conv;
-        }),
-      );
-
-      console.error("SMS send error details:", error);
-
-      // Show detailed error message
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "Failed to send SMS. Please try again.";
-
-      toast({
-        title: "Message Failed",
-        description: errorMessage.includes("HTTP error! status: 422")
-          ? "Invalid phone number format or number not verified in SMS service account. Please check your sending number."
-          : errorMessage,
-        variant: "destructive",
-      });
-    } finally {
-      setIsSending(false);
+      console.error("Failed to load messages:", error);
     }
   };
+
+  // Load messages when conversation is selected
+  useEffect(() => {
+    if (selectedConversation) {
+      loadMessages(selectedConversation);
+    } else {
+      setCurrentMessages([]);
+    }
+  }, [selectedConversation]);
 
   const selectConversation = (conversationId: string) => {
     setSelectedConversation(conversationId);
