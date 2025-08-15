@@ -178,7 +178,7 @@ export default function SubAccounts() {
     }
   };
 
-  const handleEditSubAccount = (e: React.FormEvent) => {
+  const handleEditSubAccount = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!selectedSubAccount) return;
@@ -192,21 +192,21 @@ export default function SubAccounts() {
       return;
     }
 
-    setSubAccounts((prev) =>
-      prev.map((account) =>
-        account.id === selectedSubAccount.id
-          ? { ...account, name: editForm.name, email: editForm.email }
-          : account,
-      ),
-    );
-
-    setIsEditDialogOpen(false);
-    setSelectedSubAccount(null);
-
-    toast({
-      title: "Success",
-      description: "Sub-account updated successfully",
+    const success = await updateSubAccount(selectedSubAccount._id, {
+      name: editForm.name,
+      email: editForm.email,
     });
+
+    if (success) {
+      setIsEditDialogOpen(false);
+      setSelectedSubAccount(null);
+      setEditForm({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+    }
   };
 
   const handleTransferFunds = (e: React.FormEvent) => {
