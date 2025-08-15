@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { SubAccount } from "../models/SubAccount";
+import SubAccount from "../models/SubAccount";
 import User from "../models/User";
 import { AuthRequest } from "./auth";
 
