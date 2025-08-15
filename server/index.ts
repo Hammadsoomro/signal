@@ -23,6 +23,13 @@ import {
   debitWallet,
   creditWallet
 } from "./routes/wallet";
+import {
+  getUserSubAccounts,
+  createSubAccount,
+  updateSubAccount,
+  deleteSubAccount,
+  transferFunds
+} from "./routes/subAccounts";
 
 export function createServer() {
   const app = express();
@@ -98,6 +105,13 @@ export function createServer() {
   app.get("/api/wallet/transactions", verifyToken, getTransactionHistory);
   app.post("/api/wallet/debit", verifyToken, debitWallet);
   app.post("/api/wallet/credit", verifyToken, creditWallet);
+
+  // Sub-Account routes
+  app.get("/api/sub-accounts", verifyToken, getUserSubAccounts);
+  app.post("/api/sub-accounts", verifyToken, createSubAccount);
+  app.put("/api/sub-accounts/:subAccountId", verifyToken, updateSubAccount);
+  app.delete("/api/sub-accounts/:subAccountId", verifyToken, deleteSubAccount);
+  app.post("/api/sub-accounts/transfer", verifyToken, transferFunds);
 
   return app;
 }
