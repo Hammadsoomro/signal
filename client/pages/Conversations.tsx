@@ -245,7 +245,8 @@ export default function Conversations() {
   };
 
   const getCurrentConversation = () => {
-    return conversations.find((conv) => conv._id === selectedConversation);
+    if (!selectedConversation || !conversations) return null;
+    return conversations.find((conv) => conv._id === selectedConversation) || null;
   };
 
   const getMessageStatus = (status: string) => {
