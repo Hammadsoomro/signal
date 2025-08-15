@@ -1056,7 +1056,7 @@ export default function Index() {
                 asChild
               >
                 <Link to="/login">
-                  Schedule Demo
+                  Get Started
                   <ArrowRight className="ml-3 h-6 w-6" />
                 </Link>
               </Button>
