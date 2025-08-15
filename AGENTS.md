@@ -73,13 +73,12 @@ className={cn(
 - **API endpoints**: Prefixed with `/api/`
 
 #### Example API Routes
-- `GET /api/ping` - Simple ping api
-- `GET /api/demo` - Demo endpoint  
+- `GET /api/ping` - Simple ping api  
 
 ### Shared Types
 Import consistent types in both client and server:
 ```typescript
-import { DemoResponse } from '@shared/api';
+// Import shared types and interfaces as needed
 ```
 
 Path aliases:
