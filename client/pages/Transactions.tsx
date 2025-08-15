@@ -29,6 +29,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useWallet } from "@/contexts/WalletContext";
 
 interface Transaction {
   id: string;
