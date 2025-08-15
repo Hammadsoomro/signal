@@ -68,6 +68,7 @@ export const ConversationsProvider: React.FC<{ children: React.ReactNode }> = ({
   const loadConversations = async () => {
     if (!user) {
       setConversations([]);
+      setIsLoading(false);
       return;
     }
 
