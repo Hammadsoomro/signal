@@ -111,7 +111,7 @@ export default function SubAccounts() {
     action: "assign" as "assign" | "unassign",
   });
 
-  const handleCreateSubAccount = (e: React.FormEvent) => {
+  const handleCreateSubAccount = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Validation
@@ -133,7 +133,7 @@ export default function SubAccounts() {
       return;
     }
 
-    const transferAmount = parseFloat(createForm.transferAmount);
+    const transferAmount = parseFloat(createForm.transferAmount) || 0;
     if (transferAmount > userWalletBalance) {
       toast({
         title: "Error",
@@ -143,55 +143,39 @@ export default function SubAccounts() {
       return;
     }
 
-    // Create new sub-account
-    const newSubAccount: SubAccount = {
-      id: Date.now().toString(),
+    // Create sub-account via database
+    const success = await createSubAccount({
       name: createForm.name,
       email: createForm.email,
-      walletBalance: transferAmount || 0,
-      assignedNumbers: createForm.assignedNumber
-        ? [createForm.assignedNumber]
-        : [],
-      createdAt: new Date().toISOString().split("T")[0],
-      status: "active",
-    };
-
-    setSubAccounts((prev) => [...prev, newSubAccount]);
-
-    // Deduct transferred amount from user's wallet
-    if (transferAmount > 0) {
-      const success = deductBalance(transferAmount, `Initial transfer to sub-account: ${newSubAccount.name}`);
-      if (!success) {
-        // Remove the sub-account if wallet deduction failed
-        setSubAccounts(prev => prev.filter(acc => acc.id !== newSubAccount.id));
-        return;
-      }
-    }
-
-    // Update phone number assignment if selected
-    if (createForm.assignedNumber) {
-      const selectedNumber = purchasedNumbers.find(
-        (num) => num.number === createForm.assignedNumber,
-      );
-      if (selectedNumber) {
-        updateNumberAssignment(selectedNumber.id, newSubAccount.id);
-      }
-    }
-
-    setCreateForm({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      transferAmount: "",
-      assignedNumber: "",
+      walletBalance: transferAmount,
+      assignedNumber: createForm.assignedNumber || undefined,
     });
-    setIsCreateDialogOpen(false);
 
-    toast({
-      title: "Success",
-      description: "Sub-account created successfully",
-    });
+    if (success) {
+      // Update phone number assignment if selected
+      if (createForm.assignedNumber) {
+        const selectedNumber = purchasedNumbers.find(
+          (num) => num.number === createForm.assignedNumber,
+        );
+        if (selectedNumber) {
+          // Find the newly created sub-account ID from the updated list
+          const newSubAccount = subAccounts[subAccounts.length - 1];
+          if (newSubAccount) {
+            updateNumberAssignment(selectedNumber.id, newSubAccount._id);
+          }
+        }
+      }
+
+      setCreateForm({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        transferAmount: "",
+        assignedNumber: "",
+      });
+      setIsCreateDialogOpen(false);
+    }
   };
 
   const handleEditSubAccount = (e: React.FormEvent) => {
