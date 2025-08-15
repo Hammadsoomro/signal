@@ -209,7 +209,7 @@ export default function SubAccounts() {
     }
   };
 
-  const handleTransferFunds = (e: React.FormEvent) => {
+  const handleTransferFunds = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const amount = parseFloat(transferForm.amount);
@@ -222,32 +222,13 @@ export default function SubAccounts() {
       return;
     }
 
-    // Get sub-account name for better description
-    const targetSubAccount = subAccounts.find(acc => acc.id === transferForm.subAccountId);
-    const accountName = targetSubAccount?.name || 'Unknown Account';
+    // Transfer funds via database
+    const success = await transferFunds(transferForm.subAccountId, amount);
 
-    // First deduct from user's wallet
-    const success = deductBalance(amount, `Transfer to sub-account: ${accountName}`);
-    if (!success) {
-      return; // Stop if wallet deduction failed
+    if (success) {
+      setTransferForm({ amount: "", subAccountId: "" });
+      setIsTransferDialogOpen(false);
     }
-
-    // Then transfer funds to sub-account
-    setSubAccounts((prev) =>
-      prev.map((account) =>
-        account.id === transferForm.subAccountId
-          ? { ...account, walletBalance: account.walletBalance + amount }
-          : account,
-      ),
-    );
-
-    setTransferForm({ amount: "", subAccountId: "" });
-    setIsTransferDialogOpen(false);
-
-    toast({
-      title: "Success",
-      description: `$${amount.toFixed(2)} transferred successfully`,
-    });
   };
 
   const handleNumberAssignment = (e: React.FormEvent) => {
