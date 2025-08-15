@@ -1,114 +1,29 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-export interface IPhoneNumber extends Document {
-  number: string;
-  label: string;
-  country: string;
-  state?: string;
-  city?: string;
-  carrier: string;
-  price: number;
-  features: string[];
-  purchaseDate: Date;
-  isActive: boolean;
-  userId: string;
-  assignedTo?: string; // Sub-account ID or null if assigned to main user
-  externalId?: string; // SignalWire number ID
-}
-
 export interface ISubAccount extends Document {
-  userId: string; // Parent user ID
+  userId: mongoose.Types.ObjectId; // Parent user ID
   name: string;
   email: string;
   walletBalance: number;
-  assignedNumbers: string[]; // Array of phone number IDs
+  assignedNumbers: mongoose.Types.ObjectId[]; // Array of phone number IDs
   permissions: {
     canSendSMS: boolean;
     canBuyNumbers: boolean;
     canManageWallet: boolean;
     canViewAnalytics: boolean;
   };
-  status: "active" | "suspended" | "pending";
+  status: "active" | "suspended" | "pending" | "deleted";
   createdAt: Date;
   updatedAt: Date;
 }
 
-const PhoneNumberSchema: Schema = new Schema(
-  {
-    number: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-    },
-    label: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    country: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    state: {
-      type: String,
-      trim: true,
-    },
-    city: {
-      type: String,
-      trim: true,
-    },
-    carrier: {
-      type: String,
-      required: true,
-      default: "SignalWire",
-    },
-    price: {
-      type: Number,
-      required: true,
-      min: 0,
-    },
-    features: [
-      {
-        type: String,
-        enum: ["SMS", "Voice", "MMS"],
-      },
-    ],
-    purchaseDate: {
-      type: Date,
-      default: Date.now,
-    },
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    assignedTo: {
-      type: Schema.Types.ObjectId,
-      ref: "SubAccount",
-      default: null,
-    },
-    externalId: {
-      type: String,
-      sparse: true,
-    },
-  },
-  {
-    timestamps: true,
-  },
-);
-
 const SubAccountSchema: Schema = new Schema(
   {
     userId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+      index: true,
     },
     name: {
       type: String,
@@ -120,6 +35,7 @@ const SubAccountSchema: Schema = new Schema(
       required: true,
       trim: true,
       lowercase: true,
+      index: true,
     },
     walletBalance: {
       type: Number,
@@ -128,7 +44,7 @@ const SubAccountSchema: Schema = new Schema(
     },
     assignedNumbers: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "PhoneNumber",
       },
     ],
@@ -139,11 +55,11 @@ const SubAccountSchema: Schema = new Schema(
       },
       canBuyNumbers: {
         type: Boolean,
-        default: false,
+        default: false, // Sub-accounts cannot buy numbers by default
       },
       canManageWallet: {
         type: Boolean,
-        default: false,
+        default: false, // Sub-accounts cannot manage wallet by default
       },
       canViewAnalytics: {
         type: Boolean,
@@ -152,28 +68,25 @@ const SubAccountSchema: Schema = new Schema(
     },
     status: {
       type: String,
-      enum: ["active", "suspended", "pending"],
+      enum: ["active", "suspended", "pending", "deleted"],
       default: "active",
     },
   },
   {
     timestamps: true,
-  },
+  }
 );
 
-// Add indexes for better query performance
-PhoneNumberSchema.index({ userId: 1, isActive: 1 });
-PhoneNumberSchema.index({ number: 1 });
-PhoneNumberSchema.index({ assignedTo: 1 });
-
+// Add compound indexes for better query performance
 SubAccountSchema.index({ userId: 1, status: 1 });
-SubAccountSchema.index({ email: 1 });
+SubAccountSchema.index({ email: 1 }, { unique: true });
 
-// Ensure max 3 sub-accounts per user
+// Ensure max 3 active sub-accounts per user
 SubAccountSchema.pre("save", async function (next) {
-  if (this.isNew) {
+  if (this.isNew && this.status !== "deleted") {
     const count = await (this.constructor as any).countDocuments({
       userId: this.userId,
+      status: { $ne: "deleted" }
     });
     if (count >= 3) {
       const error = new Error("Maximum 3 sub-accounts allowed per user");
@@ -183,11 +96,4 @@ SubAccountSchema.pre("save", async function (next) {
   next();
 });
 
-export const PhoneNumber = mongoose.model<IPhoneNumber>(
-  "PhoneNumber",
-  PhoneNumberSchema,
-);
-export const SubAccount = mongoose.model<ISubAccount>(
-  "SubAccount",
-  SubAccountSchema,
-);
+export default mongoose.model<ISubAccount>("SubAccount", SubAccountSchema);
