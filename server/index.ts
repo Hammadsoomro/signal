@@ -100,6 +100,7 @@ export function createServer() {
   app.get("/api/phone-numbers/available", verifyToken, getAvailableNumbers);
   app.get("/api/phone-numbers/assigned/:subAccountId", verifyToken, getAssignedNumbers);
   app.delete("/api/phone-numbers/:phoneNumberId", verifyToken, releasePhoneNumber);
+  app.post("/api/phone-numbers/add-manual", verifyToken, addPhoneNumberToUser);
 
   // Wallet routes
   app.get("/api/wallet/balance", verifyToken, getWalletBalance);
