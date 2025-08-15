@@ -193,11 +193,17 @@ export default function Conversations() {
 
   // Load messages for selected conversation
   const loadMessages = async (conversationId: string) => {
+    if (!conversationId) {
+      setCurrentMessages([]);
+      return;
+    }
+
     try {
       const messages = await loadConversationMessages(conversationId);
-      setCurrentMessages(messages);
+      setCurrentMessages(messages || []);
     } catch (error) {
       console.error("Failed to load messages:", error);
+      setCurrentMessages([]);
     }
   };
 
