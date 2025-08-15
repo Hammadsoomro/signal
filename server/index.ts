@@ -68,7 +68,7 @@ export function createServer() {
   // Database test endpoint
   app.get("/api/db-test", async (_req, res) => {
     try {
-      const mongoose = require('mongoose');
+      const { default: mongoose } = await import('mongoose');
       const isConnected = mongoose.connection.readyState === 1;
       res.json({
         connected: isConnected,
