@@ -309,7 +309,7 @@ export default function Conversations() {
     }
   };
 
-  const activeConversations = conversations.filter((conv) => !conv.isArchived);
+  const activeConversations = (conversations || []).filter((conv) => !conv?.isArchived);
   const sortedConversations = activeConversations.sort((a, b) => {
     // Pinned conversations first
     if (a.isPinned && !b.isPinned) return -1;
