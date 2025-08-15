@@ -73,12 +73,24 @@ export function createServer() {
       res.json({
         connected: isConnected,
         status: mongoose.connection.readyState,
+        statusText: getConnectionStatus(mongoose.connection.readyState),
         message: isConnected ? "MongoDB Connected" : "MongoDB Disconnected"
       });
     } catch (error) {
-      res.status(500).json({ error: "Database test failed", details: error });
+      console.error("Database test error:", error);
+      res.status(500).json({ error: "Database test failed", details: error?.message || error });
     }
   });
+
+  function getConnectionStatus(status: number) {
+    switch(status) {
+      case 0: return "disconnected";
+      case 1: return "connected";
+      case 2: return "connecting";
+      case 3: return "disconnecting";
+      default: return "unknown";
+    }
+  }
 
 
   // Debug endpoint
