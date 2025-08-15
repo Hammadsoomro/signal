@@ -143,6 +143,16 @@ export default function Conversations() {
     if (!conversation) return;
 
     // Deduct balance first
+    if (!deductBalance) {
+      console.error("Wallet context not available");
+      toast({
+        title: "Error",
+        description: "Wallet service not available. Please refresh the page.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       const success = await deductBalance(smsPrice, `SMS sent to ${conversation.contactNumber}`);
       if (!success) {
