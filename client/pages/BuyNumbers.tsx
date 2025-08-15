@@ -312,8 +312,8 @@ export default function BuyNumbers() {
 
     try {
       // Deduct wallet balance first
-      const success = deductBalance(number.price, `Phone number purchase: ${number.number}`);
-      if (!success) {
+      const walletSuccess = deductBalance(number.price, `Phone number purchase: ${number.number}`);
+      if (!walletSuccess) {
         throw new Error("Insufficient wallet balance");
       }
 
