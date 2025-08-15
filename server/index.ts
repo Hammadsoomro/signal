@@ -48,6 +48,13 @@ import {
   resetUserSettings,
   exportUserSettings
 } from "./routes/userSettings";
+import {
+  createPaymentIntent,
+  confirmPayment,
+  getPaymentMethods,
+  createCustomer,
+  handleWebhook
+} from "./routes/stripe";
 
 export function createServer() {
   const app = express();
