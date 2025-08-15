@@ -192,72 +192,40 @@ export default function Conversations() {
 
   const selectConversation = (conversationId: string) => {
     setSelectedConversation(conversationId);
-
-    // Mark messages as read
-    setConversations((prev) =>
-      prev.map((conv) =>
-        conv.id === conversationId ? { ...conv, unreadCount: 0 } : conv,
-      ),
-    );
+    // Messages will be loaded by useEffect
   };
 
-  const deleteConversation = (conversationId: string) => {
-    setConversations((prev) =>
-      prev.filter((conv) => conv.id !== conversationId),
-    );
-    if (selectedConversation === conversationId) {
+  const handleDeleteConversation = async (conversationId: string) => {
+    const success = await deleteConversationAPI(conversationId);
+    if (success && selectedConversation === conversationId) {
       setSelectedConversation(null);
+      setCurrentMessages([]);
     }
-    toast({
-      title: "Conversation Deleted",
-      description: "The conversation has been permanently deleted.",
-    });
   };
 
-  const togglePin = (conversationId: string) => {
-    setConversations((prev) =>
-      prev.map((conv) =>
-        conv.id === conversationId
-          ? { ...conv, isPinned: !conv.isPinned }
-          : conv,
-      ),
-    );
+  const togglePin = async (conversationId: string) => {
+    const conv = conversations.find((c) => c._id === conversationId);
+    if (!conv) return;
 
-    const conv = conversations.find((c) => c.id === conversationId);
-    toast({
-      title: conv?.isPinned ? "Conversation Unpinned" : "Conversation Pinned",
-      description: `${conv?.name} has been ${conv?.isPinned ? "unpinned" : "pinned to top"}`,
-    });
+    await updateConversationAPI(conversationId, { isPinned: !conv.isPinned });
   };
 
-  const toggleStar = (conversationId: string) => {
-    setConversations((prev) =>
-      prev.map((conv) =>
-        conv.id === conversationId
-          ? { ...conv, isStarred: !conv.isStarred }
-          : conv,
-      ),
-    );
+  const toggleStar = async (conversationId: string) => {
+    const conv = conversations.find((c) => c._id === conversationId);
+    if (!conv) return;
 
-    const conv = conversations.find((c) => c.id === conversationId);
-    toast({
-      title: conv?.isStarred ? "Removed from Starred" : "Added to Starred",
-      description: `${conv?.name} has been ${conv?.isStarred ? "removed from starred" : "starred"}`,
-    });
+    await updateConversationAPI(conversationId, { isStarred: !conv.isStarred });
   };
 
-  const archiveConversation = (conversationId: string) => {
-    setConversations((prev) =>
-      prev.map((conv) =>
-        conv.id === conversationId
-          ? { ...conv, isArchived: !conv.isArchived }
-          : conv,
-      ),
-    );
+  const archiveConversation = async (conversationId: string) => {
+    const conv = conversations.find((c) => c._id === conversationId);
+    if (!conv) return;
+
+    await updateConversationAPI(conversationId, { isArchived: !conv.isArchived });
   };
 
   const getCurrentConversation = () => {
-    return conversations.find((conv) => conv.id === selectedConversation);
+    return conversations.find((conv) => conv._id === selectedConversation);
   };
 
   const getMessageStatus = (status: string) => {
