@@ -55,19 +55,33 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       return false;
     }
 
-    const newTransaction: Transaction = {
-      id: Date.now().toString(),
-      type: "debit",
-      amount: amount,
-      description: description,
-      date: new Date().toISOString(),
-      status: "completed",
-    };
+    try {
+      // Optimistically update UI
+      const newTransaction: Transaction = {
+        id: Date.now().toString(),
+        type: "debit",
+        amount: amount,
+        description: description,
+        date: new Date().toISOString(),
+        status: "completed",
+      };
 
-    setTransactions((prev) => [newTransaction, ...prev]);
-    setBalance((prev) => prev - amount);
+      setTransactions((prev) => [newTransaction, ...prev]);
+      setBalance((prev) => prev - amount);
 
-    return true;
+      // In a real implementation, this would sync with the database
+      // For now, we'll just update the local state
+      // TODO: Add API call to save transaction to database
+
+      return true;
+    } catch (error) {
+      toast({
+        title: "Transaction Failed",
+        description: "Failed to process transaction. Please try again.",
+        variant: "destructive",
+      });
+      return false;
+    }
   };
 
   const addBalance = (
@@ -75,18 +89,29 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     description: string,
     reference?: string,
   ) => {
-    const newTransaction: Transaction = {
-      id: Date.now().toString(),
-      type: "credit",
-      amount: amount,
-      description: description,
-      date: new Date().toISOString(),
-      status: "completed",
-      reference: reference,
-    };
+    try {
+      const newTransaction: Transaction = {
+        id: Date.now().toString(),
+        type: "credit",
+        amount: amount,
+        description: description,
+        date: new Date().toISOString(),
+        status: "completed",
+        reference: reference,
+      };
 
-    setTransactions((prev) => [newTransaction, ...prev]);
-    setBalance((prev) => prev + amount);
+      setTransactions((prev) => [newTransaction, ...prev]);
+      setBalance((prev) => prev + amount);
+
+      // In a real implementation, this would sync with the database
+      // TODO: Add API call to save transaction to database
+    } catch (error) {
+      toast({
+        title: "Transaction Failed",
+        description: "Failed to add funds. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   // Expose functions globally for backward compatibility
