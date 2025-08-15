@@ -587,15 +587,15 @@ export default function Conversations() {
                   <div className="flex items-center gap-3">
                     <Avatar>
                       <AvatarFallback>
-                        {getCurrentConversation()?.name.charAt(0)}
+                        {getCurrentConversation()?.contactName?.charAt(0) || getCurrentConversation()?.contactNumber?.charAt(0) || '?'}
                       </AvatarFallback>
                     </Avatar>
                     <div>
                       <h3 className="font-medium">
-                        {getCurrentConversation()?.name}
+                        {getCurrentConversation()?.contactName || getCurrentConversation()?.contactNumber}
                       </h3>
                       <p className="text-sm text-muted-foreground">
-                        {getCurrentConversation()?.contact}
+                        {getCurrentConversation()?.contactNumber}
                       </p>
                     </div>
                   </div>
