@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import mongoose from "mongoose";
 import { connectDatabase } from "./config/database";
 import {
   registerUser,
@@ -68,7 +69,6 @@ export function createServer() {
   // Database test endpoint
   app.get("/api/db-test", async (_req, res) => {
     try {
-      const { default: mongoose } = await import('mongoose');
       const isConnected = mongoose.connection.readyState === 1;
       res.json({
         connected: isConnected,
