@@ -31,6 +31,15 @@ import {
   deleteSubAccount,
   transferFunds
 } from "./routes/subAccounts";
+import {
+  getUserConversations,
+  getConversationMessages,
+  createOrGetConversation,
+  sendSMSMessage,
+  updateConversation,
+  deleteConversation,
+  receiveSMSMessage
+} from "./routes/conversations";
 
 export function createServer() {
   const app = express();
@@ -114,6 +123,15 @@ export function createServer() {
   app.put("/api/sub-accounts/:subAccountId", verifyToken, updateSubAccount);
   app.delete("/api/sub-accounts/:subAccountId", verifyToken, deleteSubAccount);
   app.post("/api/sub-accounts/transfer", verifyToken, transferFunds);
+
+  // Conversation routes
+  app.get("/api/conversations", verifyToken, getUserConversations);
+  app.get("/api/conversations/:conversationId/messages", verifyToken, getConversationMessages);
+  app.post("/api/conversations", verifyToken, createOrGetConversation);
+  app.post("/api/conversations/send-sms", verifyToken, sendSMSMessage);
+  app.put("/api/conversations/:conversationId", verifyToken, updateConversation);
+  app.delete("/api/conversations/:conversationId", verifyToken, deleteConversation);
+  app.post("/api/sms/webhook", receiveSMSMessage); // Webhook for incoming SMS
 
   return app;
 }
