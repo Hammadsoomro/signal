@@ -288,19 +288,16 @@ export default function SubAccounts() {
     setIsNumberDialogOpen(false);
   };
 
-  const handleDeleteSubAccount = (id: string) => {
-    // Unassign all numbers from this sub-account
-    purchasedNumbers.forEach((num) => {
-      if (num.assignedTo === id) {
-        updateNumberAssignment(num.id, null);
-      }
-    });
-
-    setSubAccounts((prev) => prev.filter((account) => account.id !== id));
-    toast({
-      title: "Success",
-      description: "Sub-account deleted successfully",
-    });
+  const handleDeleteSubAccount = async (id: string) => {
+    const success = await deleteSubAccount(id);
+    if (success) {
+      // Unassign all numbers from this sub-account
+      purchasedNumbers.forEach((num) => {
+        if (num.assignedTo === id) {
+          updateNumberAssignment(num.id, null);
+        }
+      });
+    }
   };
 
   const openEditDialog = (subAccount: SubAccount) => {
@@ -317,7 +314,7 @@ export default function SubAccounts() {
   const getAssignedSubAccountName = (numberId: string) => {
     const number = purchasedNumbers.find((num) => num.id === numberId);
     if (!number || !number.assignedTo) return "Unassigned";
-    const subAccount = subAccounts.find((acc) => acc.id === number.assignedTo);
+    const subAccount = subAccounts.find((acc) => acc._id === number.assignedTo);
     return subAccount ? subAccount.name : "Unassigned";
   };
 
