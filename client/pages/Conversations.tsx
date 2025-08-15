@@ -599,30 +599,30 @@ export default function Conversations() {
               {/* Messages */}
               <ScrollArea className="flex-1 p-4">
                 <div className="space-y-4">
-                  {getCurrentConversation()?.messages.map((msg) => (
+                  {currentMessages.map((msg) => (
                     <div
                       key={msg._id}
                       className={`flex ${msg.direction === 'outbound' ? "justify-end" : "justify-start"}`}
                     >
                       <div
                         className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                          msg.sent
+                          msg.direction === 'outbound'
                             ? "bg-primary text-primary-foreground"
                             : "bg-muted"
                         }`}
                       >
-                        <p className="text-sm">{msg.text}</p>
+                        <p className="text-sm">{msg.content}</p>
                         <div
                           className={`flex items-center justify-between gap-2 mt-1 ${
-                            msg.sent
+                            msg.direction === 'outbound'
                               ? "text-primary-foreground/70"
                               : "text-muted-foreground"
                           }`}
                         >
                           <span className="text-xs">
-                            {formatTime(msg.timestamp)}
+                            {formatTime(msg.createdAt)}
                           </span>
-                          {msg.sent && getMessageStatus(msg.status)}
+                          {msg.direction === 'outbound' && getMessageStatus(msg.status)}
                         </div>
                       </div>
                     </div>
