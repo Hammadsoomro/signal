@@ -78,6 +78,7 @@ export const ConversationsProvider: React.FC<{ children: React.ReactNode }> = ({
       if (!token) {
         console.log('No auth token found, user not authenticated');
         setConversations([]);
+        setIsLoading(false);
         return;
       }
 
