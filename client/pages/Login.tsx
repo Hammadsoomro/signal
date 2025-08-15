@@ -33,8 +33,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 
 // Google Sign-In configuration - In production, use real Google OAuth credentials
-const GOOGLE_CLIENT_ID =
-  import.meta.env.VITE_GOOGLE_CLIENT_ID || "demo-google-client-id";
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 // Declare Google Sign-In types
 declare global {
@@ -259,45 +258,16 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      // For demo purposes, we'll simulate Google authentication
-      // In production, this would use the real Google Sign-In flow
-      if (window.google && GOOGLE_CLIENT_ID !== "demo-google-client-id") {
+      // Real Google authentication
+      if (window.google && GOOGLE_CLIENT_ID) {
         window.google.accounts.id.prompt();
       } else {
-        // Demo Google authentication
-        const demoGoogleUser = {
-          credential: "demo-jwt-token-for-google-user",
-        };
-
-        // Simulate Google user data
-        const mockIdToken = btoa(
-          JSON.stringify({
-            email: "user@gmail.com",
-            given_name: "Demo",
-            family_name: "User",
-            sub: "demo-google-id-123",
-          }),
-        );
-
-        const result = await googleAuth(mockIdToken);
-
-        if (result.success) {
-          toast({
-            title: "Success",
-            description: result.isNewUser
-              ? "Account created and signed in with Google successfully! Your balance is $0.00 - please deposit funds to begin."
-              : result.message,
-          });
-
-          const from = (location.state as any)?.from || "/home";
-          navigate(from, { replace: true });
-        } else {
-          toast({
-            title: "Authentication Failed",
-            description: result.message,
-            variant: "destructive",
-          });
-        }
+        toast({
+          title: "Configuration Error",
+          description: "Google Sign-In is not properly configured. Please contact support.",
+          variant: "destructive",
+        });
+        return;
       }
     } catch (error) {
       toast({
