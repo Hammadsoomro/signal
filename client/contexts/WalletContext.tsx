@@ -21,8 +21,9 @@ interface Transaction {
 interface WalletContextType {
   balance: number;
   transactions: Transaction[];
-  deductBalance: (amount: number, description: string) => boolean;
-  addBalance: (amount: number, description: string, reference?: string) => void;
+  deductBalance: (amount: number, description: string) => Promise<boolean>;
+  addBalance: (amount: number, description: string, reference?: string) => Promise<void>;
+  loadTransactions: () => Promise<void>;
   isLoading: boolean;
 }
 
@@ -35,17 +36,44 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  // Sync balance with authenticated user
+  // Load wallet data when user changes
   useEffect(() => {
     if (user) {
       setBalance(user.walletBalance);
+      loadTransactions();
     } else {
       setBalance(0);
       setTransactions([]);
     }
   }, [user]);
 
-  const deductBalance = (amount: number, description: string): boolean => {
+  // Load transactions from database
+  const loadTransactions = async () => {
+    if (!user) return;
+
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem('connectlify_token');
+      const response = await fetch('/api/wallet/transactions', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success && data.data.transactions) {
+          setTransactions(data.data.transactions);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load transactions:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const deductBalance = async (amount: number, description: string): Promise<boolean> => {
     if (amount > balance) {
       toast({
         title: "Insufficient Balance",
@@ -56,24 +84,32 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      // Optimistically update UI
-      const newTransaction: Transaction = {
-        id: Date.now().toString(),
-        type: "debit",
-        amount: amount,
-        description: description,
-        date: new Date().toISOString(),
-        status: "completed",
-      };
+      const token = localStorage.getItem('connectlify_token');
+      const response = await fetch('/api/wallet/debit', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount, description }),
+      });
 
-      setTransactions((prev) => [newTransaction, ...prev]);
-      setBalance((prev) => prev - amount);
+      const data = await response.json();
 
-      // In a real implementation, this would sync with the database
-      // For now, we'll just update the local state
-      // TODO: Add API call to save transaction to database
-
-      return true;
+      if (response.ok && data.success) {
+        // Update local balance
+        setBalance(data.data.newBalance);
+        // Reload transactions
+        await loadTransactions();
+        return true;
+      } else {
+        toast({
+          title: "Transaction Failed",
+          description: data.message || "Failed to process transaction.",
+          variant: "destructive",
+        });
+        return false;
+      }
     } catch (error) {
       toast({
         title: "Transaction Failed",
@@ -84,27 +120,41 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const addBalance = (
+  const addBalance = async (
     amount: number,
     description: string,
     reference?: string,
   ) => {
     try {
-      const newTransaction: Transaction = {
-        id: Date.now().toString(),
-        type: "credit",
-        amount: amount,
-        description: description,
-        date: new Date().toISOString(),
-        status: "completed",
-        reference: reference,
-      };
+      const token = localStorage.getItem('connectlify_token');
+      const response = await fetch('/api/wallet/credit', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount, description, reference }),
+      });
 
-      setTransactions((prev) => [newTransaction, ...prev]);
-      setBalance((prev) => prev + amount);
+      const data = await response.json();
 
-      // In a real implementation, this would sync with the database
-      // TODO: Add API call to save transaction to database
+      if (response.ok && data.success) {
+        // Update local balance
+        setBalance(data.data.newBalance);
+        // Reload transactions
+        await loadTransactions();
+
+        toast({
+          title: "Funds Added",
+          description: `$${amount.toFixed(2)} has been added to your wallet.`,
+        });
+      } else {
+        toast({
+          title: "Transaction Failed",
+          description: data.message || "Failed to add funds.",
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       toast({
         title: "Transaction Failed",
@@ -134,6 +184,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         transactions,
         deductBalance,
         addBalance,
+        loadTransactions,
         isLoading,
       }}
     >
