@@ -51,27 +51,11 @@ import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { signalWireClient } from "@/lib/signalwire";
 import { useUserNumbers } from "@/contexts/UserNumbersContext";
+import { useConversations } from "@/contexts/ConversationsContext";
+import { useWallet } from "@/contexts/WalletContext";
 
-interface Message {
-  id: string;
-  text: string;
-  sent: boolean;
-  timestamp: string;
-  status: "sending" | "sent" | "delivered" | "failed";
-}
-
-interface Conversation {
-  id: string;
-  contact: string;
-  name: string;
-  lastMessage: string;
-  lastMessageTime: string;
-  unreadCount: number;
-  messages: Message[];
-  isPinned: boolean;
-  isStarred: boolean;
-  isArchived: boolean;
-}
+// Using types from ConversationsContext
+import type { Message, Conversation } from "@/contexts/ConversationsContext";
 
 export default function Conversations() {
   const { toast } = useToast();
@@ -83,7 +67,18 @@ export default function Conversations() {
   const [message, setMessage] = useState("");
   const [isConnected, setIsConnected] = useState(false);
   const [isSending, setIsSending] = useState(false);
-  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const {
+    conversations,
+    isLoading: conversationsLoading,
+    loadConversationMessages,
+    createOrGetConversation,
+    sendMessage: sendMessageAPI,
+    updateConversation: updateConversationAPI,
+    deleteConversation: deleteConversationAPI,
+    getConversationById
+  } = useConversations();
+  const { deductBalance } = useWallet();
+  const [currentMessages, setCurrentMessages] = useState<Message[]>([]);
   const [showAddContact, setShowAddContact] = useState(false);
   const [newContact, setNewContact] = useState({ name: "", phone: "" });
 
