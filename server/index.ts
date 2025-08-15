@@ -40,6 +40,13 @@ import {
   deleteConversation,
   receiveSMSMessage
 } from "./routes/conversations";
+import {
+  getUserSettings,
+  updateUserSettings,
+  updateSettingSection,
+  resetUserSettings,
+  exportUserSettings
+} from "./routes/userSettings";
 
 export function createServer() {
   const app = express();
@@ -132,6 +139,13 @@ export function createServer() {
   app.put("/api/conversations/:conversationId", verifyToken, updateConversation);
   app.delete("/api/conversations/:conversationId", verifyToken, deleteConversation);
   app.post("/api/sms/webhook", receiveSMSMessage); // Webhook for incoming SMS
+
+  // User Settings routes
+  app.get("/api/user/settings", verifyToken, getUserSettings);
+  app.put("/api/user/settings", verifyToken, updateUserSettings);
+  app.put("/api/user/settings/:section", verifyToken, updateSettingSection);
+  app.post("/api/user/settings/reset", verifyToken, resetUserSettings);
+  app.get("/api/user/settings/export", verifyToken, exportUserSettings);
 
   return app;
 }
