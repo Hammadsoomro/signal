@@ -159,5 +159,14 @@ export function createServer() {
   app.post("/api/user/settings/reset", verifyToken, resetUserSettings);
   app.get("/api/user/settings/export", verifyToken, exportUserSettings);
 
+  // Handle 404 for API routes
+  app.all('/api/*', (req, res) => {
+    res.status(404).json({
+      success: false,
+      message: `API endpoint not found: ${req.method} ${req.path}`,
+      error: 'Not Found'
+    });
+  });
+
   return app;
 }
