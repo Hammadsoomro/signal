@@ -15,7 +15,8 @@ import {
   assignPhoneNumber,
   getAvailableNumbers,
   getAssignedNumbers,
-  releasePhoneNumber
+  releasePhoneNumber,
+  addPhoneNumberToUser
 } from "./routes/phoneNumbers";
 import {
   getWalletBalance,
