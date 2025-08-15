@@ -47,6 +47,12 @@ export const UserNumbersProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsLoading(true);
     try {
       const token = localStorage.getItem('connectlify_token');
+      if (!token) {
+        console.log('No auth token found, user not authenticated');
+        setPurchasedNumbers([]);
+        return;
+      }
+
       const response = await fetch('/api/phone-numbers', {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -55,7 +61,7 @@ export const UserNumbersProvider: React.FC<{ children: React.ReactNode }> = ({
 
       if (response.ok) {
         const data = await response.json();
-        if (data.success) {
+        if (data.success && Array.isArray(data.data)) {
           const numbers = data.data.map((num: any) => ({
             id: num._id,
             number: num.number,
@@ -69,10 +75,18 @@ export const UserNumbersProvider: React.FC<{ children: React.ReactNode }> = ({
             assignedTo: num.assignedTo,
           }));
           setPurchasedNumbers(numbers);
+          console.log(`Loaded ${numbers.length} user-specific phone numbers`);
+        } else {
+          console.log('No phone numbers found for user');
+          setPurchasedNumbers([]);
         }
+      } else {
+        console.error('Failed to fetch phone numbers:', response.status);
+        setPurchasedNumbers([]);
       }
     } catch (error) {
       console.error('Failed to load user numbers:', error);
+      setPurchasedNumbers([]);
     } finally {
       setIsLoading(false);
     }
@@ -149,6 +163,7 @@ export const UserNumbersProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const getAvailableNumbers = () => {
+    // Only return numbers that belong to the authenticated user and are available
     return purchasedNumbers.filter((num) => num.isActive && !num.assignedTo);
   };
 
