@@ -143,9 +143,19 @@ export default function Conversations() {
     if (!conversation) return;
 
     // Deduct balance first
-    const success = await deductBalance(smsPrice, `SMS sent to ${conversation.contactNumber}`);
-    if (!success) {
-      return; // Insufficient balance, error already shown
+    try {
+      const success = await deductBalance(smsPrice, `SMS sent to ${conversation.contactNumber}`);
+      if (!success) {
+        return; // Insufficient balance, error already shown
+      }
+    } catch (error) {
+      console.error("Error deducting balance:", error);
+      toast({
+        title: "Error",
+        description: "Failed to process payment. Please try again.",
+        variant: "destructive",
+      });
+      return;
     }
 
     setIsSending(true);
