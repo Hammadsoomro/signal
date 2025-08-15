@@ -568,7 +568,7 @@ export default function SubAccounts() {
                     </SelectTrigger>
                     <SelectContent>
                       {subAccounts.map((account) => (
-                        <SelectItem key={account.id} value={account.id}>
+                        <SelectItem key={account._id} value={account._id}>
                           {account.name} ({account.email})
                         </SelectItem>
                       ))}
@@ -694,7 +694,7 @@ export default function SubAccounts() {
                     </SelectTrigger>
                     <SelectContent>
                       {subAccounts.map((account) => (
-                        <SelectItem key={account.id} value={account.id}>
+                        <SelectItem key={account._id} value={account._id}>
                           {account.name} ({account.email})
                         </SelectItem>
                       ))}
@@ -816,7 +816,7 @@ export default function SubAccounts() {
           ) : (
             <div className="grid gap-4">
               {subAccounts.map((account) => (
-                <Card key={account.id}>
+                <Card key={account._id}>
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <div>
@@ -846,7 +846,7 @@ export default function SubAccounts() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => handleDeleteSubAccount(account.id)}
+                          onClick={() => handleDeleteSubAccount(account._id)}
                         >
                           <Trash2 className="h-4 w-4 mr-1" />
                           Delete
