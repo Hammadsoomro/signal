@@ -250,3 +250,65 @@ export const releasePhoneNumber = async (req: AuthRequest, res: Response) => {
     });
   }
 };
+
+// Manually add phone number to user account (admin function)
+export const addPhoneNumberToUser = async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.user?._id;
+    const { number, label, city, state, country, monthlyPrice } = req.body;
+
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "User not authenticated"
+      });
+    }
+
+    // Validation
+    if (!number || !label || !city || !state || !country) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required"
+      });
+    }
+
+    // Check if number already exists
+    const existingNumber = await PhoneNumber.findOne({ number });
+    if (existingNumber) {
+      return res.status(400).json({
+        success: false,
+        message: "Phone number already exists in system"
+      });
+    }
+
+    // Create new phone number record
+    const newPhoneNumber = new PhoneNumber({
+      userId,
+      number,
+      label,
+      city,
+      state,
+      country,
+      monthlyPrice: monthlyPrice || 5.0,
+      capabilities: ["SMS", "Voice"],
+      isActive: true,
+      purchaseDate: new Date(),
+      assignedTo: null
+    });
+
+    await newPhoneNumber.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Phone number added successfully",
+      data: newPhoneNumber
+    });
+
+  } catch (error) {
+    console.error("Add phone number error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to add phone number"
+    });
+  }
+};
