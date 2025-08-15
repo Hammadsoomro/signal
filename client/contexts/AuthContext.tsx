@@ -8,6 +8,13 @@ interface User {
   email: string;
   phone: string;
   walletBalance: number;
+  userType: "main" | "sub_account"; // Track if this is a main user or sub-account
+  permissions?: {
+    canSendSMS: boolean;
+    canBuyNumbers: boolean;
+    canManageWallet: boolean;
+    canViewAnalytics: boolean;
+  };
   subscription: {
     plan: string;
   };
