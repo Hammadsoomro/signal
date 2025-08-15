@@ -9,10 +9,10 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { DashboardLayout } from '@/components/DashboardLayout';
-import { 
-  Wallet as WalletIcon, 
-  CreditCard, 
-  Plus, 
+import {
+  Wallet as WalletIcon,
+  CreditCard,
+  Plus,
   ArrowUpRight,
   ArrowDownLeft,
   Calendar,
@@ -25,6 +25,7 @@ import {
   Shield
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useWallet } from '@/contexts/WalletContext';
 
 interface Transaction {
   id: string;
@@ -46,56 +47,18 @@ interface PaymentMethod {
 
 export default function Wallet() {
   const { toast } = useToast();
-  const [balance, setBalance] = useState(125.50);
+  const { balance, transactions: walletTransactions, addBalance } = useWallet();
   const [isAddFundsOpen, setIsAddFundsOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [addAmount, setAddAmount] = useState('');
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
 
-  const [transactions, setTransactions] = useState<Transaction[]>([
-    {
-      id: '1',
-      type: 'credit',
-      amount: 100.00,
-      description: 'Wallet top-up via Safepay',
-      date: '2024-01-20T10:30:00Z',
-      status: 'completed',
-      reference: 'SP_12345678'
-    },
-    {
-      id: '2',
-      type: 'debit',
-      amount: 2.50,
-      description: 'SMS sent to +1 (555) 123-4567',
-      date: '2024-01-20T09:15:00Z',
-      status: 'completed'
-    },
-    {
-      id: '3',
-      type: 'debit',
-      amount: 2.75,
-      description: 'Number purchase: +1 (555) 234-5678',
-      date: '2024-01-19T16:45:00Z',
-      status: 'completed'
-    },
-    {
-      id: '4',
-      type: 'credit',
-      amount: 50.00,
-      description: 'Wallet top-up via Safepay',
-      date: '2024-01-18T14:20:00Z',
-      status: 'completed',
-      reference: 'SP_12345677'
-    },
-    {
-      id: '5',
-      type: 'debit',
-      amount: 15.00,
-      description: 'Transfer to sub-account: John Smith',
-      date: '2024-01-17T11:30:00Z',
-      status: 'completed'
-    }
-  ]);
+  const [transactions, setTransactions] = useState<Transaction[]>(walletTransactions);
+
+  // Sync transactions with wallet context
+  useEffect(() => {
+    setTransactions(walletTransactions);
+  }, [walletTransactions]);
 
   const paymentMethods: PaymentMethod[] = [
     {
@@ -167,8 +130,7 @@ export default function Wallet() {
         reference: `SP_${Math.random().toString(36).substr(2, 8).toUpperCase()}`
       };
 
-      setTransactions(prev => [newTransaction, ...prev]);
-      setBalance(prev => prev + amount);
+      addBalance(amount, `Wallet top-up via Safepay`, `SP_${Math.random().toString(36).substr(2, 8).toUpperCase()}`);
       setAddAmount('');
       setSelectedPaymentMethod('');
       setIsAddFundsOpen(false);
@@ -189,37 +151,7 @@ export default function Wallet() {
     }
   };
 
-  const deductBalance = (amount: number, description: string) => {
-    if (amount > balance) {
-      toast({
-        title: "Insufficient Balance",
-        description: `You need $${amount.toFixed(2)} but only have $${balance.toFixed(2)}. Please add funds to your wallet.`,
-        variant: "destructive",
-      });
-      return false;
-    }
-
-    const newTransaction: Transaction = {
-      id: Date.now().toString(),
-      type: 'debit',
-      amount: amount,
-      description: description,
-      date: new Date().toISOString(),
-      status: 'completed'
-    };
-
-    setTransactions(prev => [newTransaction, ...prev]);
-    setBalance(prev => prev - amount);
-    return true;
-  };
-
-  // Expose deductBalance function globally for SMS sending
-  useEffect(() => {
-    (window as any).deductWalletBalance = deductBalance;
-    return () => {
-      delete (window as any).deductWalletBalance;
-    };
-  }, [balance]);
+  // Remove local deductBalance - it's now handled by WalletContext
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
