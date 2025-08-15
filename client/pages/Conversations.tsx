@@ -143,7 +143,7 @@ export default function Conversations() {
     if (!conversation) return;
 
     // Deduct balance first
-    const success = deductBalance(smsPrice, `SMS sent to ${conversation.contactNumber}`);
+    const success = await deductBalance(smsPrice, `SMS sent to ${conversation.contactNumber}`);
     if (!success) {
       return; // Insufficient balance, error already shown
     }
