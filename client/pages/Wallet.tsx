@@ -199,7 +199,7 @@ export default function Wallet() {
 
         {/* Balance Overview */}
         <div className="grid gap-4 md:grid-cols-4">
-          <Card className="md:col-span-2">
+          <Card key="balance-card" className="md:col-span-2">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <WalletIcon className="h-5 w-5" />
@@ -226,7 +226,7 @@ export default function Wallet() {
                         Top up your wallet using Safepay secure payment gateway
                       </DialogDescription>
                     </DialogHeader>
-                    
+
                     <div className="space-y-4">
                       <div className="space-y-2">
                         <Label htmlFor="amount">Amount</Label>
@@ -320,7 +320,7 @@ export default function Wallet() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card key="spent-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5" />
@@ -333,7 +333,7 @@ export default function Wallet() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card key="added-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <ArrowUpRight className="h-5 w-5" />
