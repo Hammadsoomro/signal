@@ -136,9 +136,9 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
           <button
             onClick={() => toggleExpanded(item.id)}
             className={cn(
-              "w-full flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors text-left",
-              "hover:bg-blue-800/50 text-white",
-              level > 0 && "ml-4 pl-6",
+              "w-full flex items-center gap-3 px-4 py-3 text-sm rounded-xl transition-all duration-200 text-left font-medium",
+              "hover:bg-slate-700/50 text-slate-200 hover:text-white hover:scale-[1.02]",
+              level > 0 && "ml-6 pl-8",
             )}
           >
             <item.icon className="h-4 w-4 flex-shrink-0" />
