@@ -30,6 +30,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface UserProfile {
   id: string;
@@ -63,30 +64,31 @@ interface SecuritySettings {
 
 export default function Profile() {
   const { toast } = useToast();
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("profile");
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [profile, setProfile] = useState<UserProfile>({
-    id: "1",
-    firstName: "Jaxon",
-    lastName: "Cooper",
-    email: "jaxon.cooper@example.com",
-    phone: "+1 (555) 123-4567",
-    company: "Cooper Technologies",
-    address: "123 Main Street",
-    city: "San Francisco",
-    state: "CA",
-    zipCode: "94105",
-    country: "United States",
+    id: user?.id || "1",
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
+    email: user?.email || "",
+    phone: user?.phone || "",
+    company: "",
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "",
     timezone: "America/Los_Angeles",
     language: "English",
     avatar: "",
-    bio: "SMS marketing specialist focusing on customer engagement and automation.",
-    website: "https://coopertech.com",
+    bio: "",
+    website: "",
     joinedDate: "2024-01-01",
-    plan: "Professional",
+    plan: user?.subscription?.plan || "Basic",
   });
 
   const [security, setSecurity] = useState<SecuritySettings>({
