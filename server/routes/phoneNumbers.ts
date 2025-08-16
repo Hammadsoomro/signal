@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import PhoneNumber, { IPhoneNumber } from "../models/PhoneNumber";
+import SubAccount from "../models/SubAccount";
 import { AuthRequest } from "./auth";
 
 // Get user's purchased phone numbers
