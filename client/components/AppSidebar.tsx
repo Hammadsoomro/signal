@@ -283,9 +283,9 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-slate-700 flex-shrink-0">
-          <div className="flex items-center gap-2 text-slate-400 text-xs">
-            <Activity className="h-4 w-4" />
+        <div className="p-6 border-t border-slate-700/50 flex-shrink-0 bg-slate-900/50">
+          <div className="flex items-center justify-center gap-2 text-slate-400 text-xs font-medium">
+            <Activity className="h-4 w-4 text-indigo-400" />
             <span>Made with ❤️ for SMS</span>
           </div>
         </div>
