@@ -137,30 +137,30 @@ export default function BuyNumbers() {
     setIsLoading(true);
 
     try {
-      // Use SMS service API to search for numbers
+      // Use SignalWire API to search for numbers
       const response = await signalWireClient.getAvailablePhoneNumbers(
         selectedCountry,
         searchQuery,
       );
 
-      // Convert SMS service response to our format
+      // Convert SignalWire response to our format
       const numbers =
         response.available_phone_numbers?.map((num: any, index: number) => ({
           id: `sw_${index}`,
           number: num.phone_number,
-          city: num.locality || "Unknown",
-          state: num.region || "Unknown",
+          city: num.locality || "Not Available",
+          state: num.region || "Not Available",
           country: selectedCountry,
-          price: 5.0, // Standard SMS service price
-          features: num.capabilities?.sms ? ["SMS", "Voice"] : ["Voice"],
-          carrier: "Premium SMS",
+          price: 5.0, // Standard SignalWire price
+          features: ["SMS"], // Primary feature is SMS
+          carrier: "SignalWire",
         })) || [];
 
       setAvailableNumbers(numbers);
 
       toast({
         title: "Search Complete",
-        description: `Found ${numbers.length} available numbers from SMS service`,
+        description: `Found ${numbers.length} available numbers from SignalWire`,
       });
     } catch (error) {
       console.error("SignalWire search error:", error);
@@ -171,7 +171,7 @@ export default function BuyNumbers() {
       toast({
         title: "Service Unavailable",
         description:
-          "SMS service API unavailable. Please try again later.",
+          "SignalWire API unavailable. Please try again later.",
         variant: "destructive",
       });
     } finally {
@@ -207,7 +207,7 @@ export default function BuyNumbers() {
         state: number.state,
         country: number.country,
         monthlyPrice: number.price,
-        capabilities: number.features || ["SMS", "Voice"]
+        capabilities: number.features || ["SMS"]
       };
 
       const success = await purchaseNumber(numberData);
@@ -226,7 +226,7 @@ export default function BuyNumbers() {
         throw new Error("Failed to purchase phone number");
       }
     } catch (error) {
-      console.error("SMS service purchase error:", error);
+      console.error("SignalWire purchase error:", error);
       toast({
         title: "Purchase Failed",
         description:
@@ -255,7 +255,7 @@ export default function BuyNumbers() {
               Buy Phone Numbers
             </h1>
             <p className="text-muted-foreground">
-              Purchase new phone numbers for SMS and voice communications
+              Purchase new phone numbers for SMS communications
             </p>
           </div>
           <div className="flex items-center gap-4">
