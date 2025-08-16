@@ -214,18 +214,18 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
 
         {/* Wallet Balance - Only show for users who can manage wallet */}
         {canManageWallet && (
-          <div className="p-4 flex-shrink-0">
-            <Card className="bg-gradient-to-r from-emerald-500 to-cyan-500 border-emerald-400/50 shadow-lg">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur">
-                    <Wallet className="h-5 w-5 text-white" />
+          <div className="p-6 flex-shrink-0">
+            <Card className="bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 border-0 shadow-xl">
+              <CardContent className="p-5">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-3 bg-white/25 rounded-xl backdrop-blur-sm">
+                    <Wallet className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <p className="text-white/90 text-xs font-medium uppercase tracking-wide">
-                      Current Balance
+                    <p className="text-white/90 text-xs font-semibold uppercase tracking-wider">
+                      Wallet Balance
                     </p>
-                    <p className="text-white text-xl font-bold">
+                    <p className="text-white text-2xl font-bold tracking-tight">
                       ${balance.toFixed(2)}
                     </p>
                   </div>
@@ -233,10 +233,10 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
                 <Button
                   asChild
                   size="sm"
-                  className="w-full bg-white/20 hover:bg-white/30 text-white border-white/30"
+                  className="w-full bg-white/20 hover:bg-white/30 text-white border-white/20 font-medium transition-all duration-200 hover:scale-105"
                   variant="outline"
                 >
-                  <Link to="/wallet" className="flex items-center gap-2">
+                  <Link to="/wallet" className="flex items-center justify-center gap-2">
                     <Plus className="h-4 w-4" />
                     Add Funds
                   </Link>
