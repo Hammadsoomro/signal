@@ -75,8 +75,15 @@ export const SubAccountsProvider: React.FC<{ children: React.ReactNode }> = ({
       if (response.ok) {
         const data = await response.json();
         if (data.success && Array.isArray(data.data)) {
-          setSubAccounts(data.data);
-          console.log(`Loaded ${data.data.length} sub-accounts from database`);
+          // Transform the data to handle populated assignedNumbers
+          const transformedSubAccounts = data.data.map((subAccount: any) => ({
+            ...subAccount,
+            assignedNumbers: subAccount.assignedNumbers?.map((num: any) =>
+              typeof num === 'object' ? num.number : num
+            ) || []
+          }));
+          setSubAccounts(transformedSubAccounts);
+          console.log(`Loaded ${transformedSubAccounts.length} sub-accounts from database`);
         } else {
           console.log('No sub-accounts found for user');
           setSubAccounts([]);
