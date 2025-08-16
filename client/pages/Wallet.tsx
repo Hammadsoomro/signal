@@ -389,10 +389,10 @@ export default function Wallet() {
                               <Calendar className="h-3 w-3" />
                               <span>{formatDate(transaction.date)}</span>
                               {transaction.reference && (
-                                <>
+                                <React.Fragment key={`ref-${transaction.id}`}>
                                   <span>•</span>
                                   <span>Ref: {transaction.reference}</span>
-                                </>
+                                </React.Fragment>
                               )}
                             </div>
                           </div>
