@@ -123,8 +123,26 @@ export const assignPhoneNumber = async (req: AuthRequest, res: Response) => {
     }
 
     // Update assignment
+    const oldAssignedTo = phoneNumber.assignedTo;
     phoneNumber.assignedTo = subAccountId || null;
     await phoneNumber.save();
+
+    // Update SubAccount's assignedNumbers array
+    if (oldAssignedTo) {
+      // Remove from old sub-account
+      await SubAccount.updateOne(
+        { _id: oldAssignedTo },
+        { $pull: { assignedNumbers: phoneNumberId } }
+      );
+    }
+
+    if (subAccountId) {
+      // Add to new sub-account
+      await SubAccount.updateOne(
+        { _id: subAccountId },
+        { $addToSet: { assignedNumbers: phoneNumberId } }
+      );
+    }
 
     res.status(200).json({
       success: true,
