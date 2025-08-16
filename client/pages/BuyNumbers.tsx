@@ -148,10 +148,10 @@ export default function BuyNumbers() {
         response.available_phone_numbers?.map((num: any, index: number) => ({
           id: `sw_${index}`,
           number: num.phone_number,
-          city: num.locality || "Not Available",
-          state: num.region || "Not Available",
+          city: num.locality,
+          state: num.region,
           country: selectedCountry,
-          price: 5.0, // Standard SignalWire price
+          price: 2.5, // Monthly price
           features: ["SMS"], // Primary feature is SMS
           carrier: "SignalWire",
         })) || [];
@@ -402,7 +402,7 @@ export default function BuyNumbers() {
                           <div className="flex items-center gap-1">
                             <MapPin className="h-4 w-4" />
                             <span>
-                              {number.city}, {number.state}, {number.country}
+                              {number.country}{number.state ? `, ${number.state}` : ''}
                             </span>
                           </div>
                         </div>
@@ -462,7 +462,7 @@ export default function BuyNumbers() {
                                 <div>
                                   <p className="font-medium">{number.number}</p>
                                   <p className="text-sm text-muted-foreground">
-                                    {number.city}, {number.state}
+                                    {number.country}{number.state ? `, ${number.state}` : ''}
                                   </p>
                                 </div>
                                 <div className="text-right">
