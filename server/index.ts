@@ -174,6 +174,9 @@ export function createServer() {
   app.post("/api/stripe/create-customer", verifyToken, createCustomer);
   app.post("/api/stripe/webhook", handleWebhook);
 
+  // Sync routes
+  app.post("/api/sync/phone-assignments", verifyToken, syncPhoneNumberAssignments);
+
   // Handle 404 for API routes
   app.all('/api/*', (req, res) => {
     res.status(404).json({
