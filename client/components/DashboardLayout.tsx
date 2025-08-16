@@ -39,14 +39,14 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
   };
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-gray-50">
       <AppSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden md:ml-0">
         {/* Top Bar */}
-        <header className="border-b border-border bg-background/95 backdrop-blur flex-shrink-0">
-          <div className="flex items-center justify-between px-4 h-16">
+        <header className="border-b border-gray-200 bg-white/95 backdrop-blur flex-shrink-0 shadow-sm">
+          <div className="flex items-center justify-between px-6 h-16">
             <div className="flex items-center gap-4">
               <Button
                 variant="ghost"
