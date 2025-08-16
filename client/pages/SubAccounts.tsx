@@ -77,7 +77,7 @@ export default function SubAccounts() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { subAccounts, isLoading: subAccountsLoading, createSubAccount, updateSubAccount, deleteSubAccount, transferFunds } = useSubAccounts();
+  const { subAccounts, isLoading: subAccountsLoading, loadSubAccounts, createSubAccount, updateSubAccount, deleteSubAccount, transferFunds } = useSubAccounts();
 
   const { purchasedNumbers, updateNumberAssignment, getAvailableNumbers } =
     useUserNumbers();
