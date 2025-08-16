@@ -15,10 +15,10 @@ export const getUserSubAccounts = async (req: AuthRequest, res: Response) => {
       });
     }
 
-    const subAccounts = await SubAccount.find({ 
+    const subAccounts = await SubAccount.find({
       userId,
       status: { $ne: "deleted" }
-    }).sort({ createdAt: -1 });
+    }).populate('assignedNumbers', 'number').sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,
