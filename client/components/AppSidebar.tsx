@@ -187,8 +187,8 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed left-0 top-0 z-50 h-screen w-72 bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900 text-white transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 flex flex-col border-r border-blue-800/50",
-          isOpen ? "translate-x-0" : "-translate-x-full",
+          "fixed left-0 top-0 z-50 h-screen w-80 bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 text-white transform transition-all duration-300 ease-in-out md:relative md:translate-x-0 flex flex-col border-r border-slate-700/50 shadow-2xl",
+          isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
         )}
       >
         {/* Header */}
