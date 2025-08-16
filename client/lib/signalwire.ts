@@ -105,12 +105,26 @@ export class SignalWireClient {
   }
 
   // Get available phone numbers
-  async getAvailablePhoneNumbers(country = "US", areaCode?: string) {
+  async getAvailablePhoneNumbers(country = "US", searchQuery?: string) {
     try {
       const params = new URLSearchParams({
         Country: country,
-        ...(areaCode && { AreaCode: areaCode }),
       });
+
+      // If search query is provided, try to extract area code or use it as area code
+      if (searchQuery) {
+        // Extract digits from search query (area code)
+        const areaCode = searchQuery.replace(/\D/g, '').substring(0, 3);
+        if (areaCode.length === 3) {
+          params.append('AreaCode', areaCode);
+        } else if (searchQuery.length >= 3) {
+          // If not a valid area code, try using first 3 digits
+          const possibleAreaCode = searchQuery.substring(0, 3);
+          if (/^\d{3}$/.test(possibleAreaCode)) {
+            params.append('AreaCode', possibleAreaCode);
+          }
+        }
+      }
 
       const response = await fetch(
         `${this.baseUrl}/Accounts/${SIGNALWIRE_CONFIG.projectId}/AvailablePhoneNumbers/${country}/Local.json?${params}`,
@@ -122,10 +136,16 @@ export class SignalWireClient {
       );
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
       }
 
-      return await response.json();
+      const data = await response.json();
+
+      // Log the response to help with debugging
+      console.log("SignalWire API Response:", data);
+
+      return data;
     } catch (error) {
       console.error("SignalWire get numbers error:", error);
       throw error;
