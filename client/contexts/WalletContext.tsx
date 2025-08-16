@@ -47,6 +47,22 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     }
   }, [user]);
 
+  // Listen for wallet balance changes from other contexts
+  useEffect(() => {
+    const handleWalletBalanceChange = (event: any) => {
+      if (event.detail?.newBalance !== undefined) {
+        setBalance(event.detail.newBalance);
+        loadTransactions(); // Reload transactions to show the new transfer
+      }
+    };
+
+    window.addEventListener('walletBalanceChanged', handleWalletBalanceChange);
+
+    return () => {
+      window.removeEventListener('walletBalanceChanged', handleWalletBalanceChange);
+    };
+  }, []);
+
   // Load transactions from database
   const loadTransactions = async () => {
     if (!user) {
