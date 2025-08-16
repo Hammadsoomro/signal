@@ -373,8 +373,8 @@ export default function Wallet() {
                       <div className="flex items-center justify-between p-4 hover:bg-muted/50 rounded-lg transition-colors">
                         <div className="flex items-center gap-4">
                           <div className={`p-2 rounded-full ${
-                            transaction.type === 'credit' 
-                              ? 'bg-green-100 text-green-600' 
+                            transaction.type === 'credit'
+                              ? 'bg-green-100 text-green-600'
                               : 'bg-red-100 text-red-600'
                           }`}>
                             {transaction.type === 'credit' ? (
@@ -397,7 +397,7 @@ export default function Wallet() {
                             </div>
                           </div>
                         </div>
-                        
+
                         <div className="flex items-center gap-3">
                           <div className="text-right">
                             <p className={`font-semibold ${
@@ -414,7 +414,7 @@ export default function Wallet() {
                           </div>
                         </div>
                       </div>
-                      {index < transactions.length - 1 && <Separator />}
+                      {index < transactions.length - 1 && <Separator key={`separator-${transaction.id}`} />}
                     </div>
                   ))}
                 </div>
