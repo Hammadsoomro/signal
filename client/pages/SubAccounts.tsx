@@ -231,7 +231,7 @@ export default function SubAccounts() {
     }
   };
 
-  const handleNumberAssignment = (e: React.FormEvent) => {
+  const handleNumberAssignment = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const selectedNumber = purchasedNumbers.find(
@@ -239,48 +239,35 @@ export default function SubAccounts() {
     );
     if (!selectedNumber) return;
 
-    if (numberForm.action === "assign") {
-      // Assign number to sub-account
-      updateNumberAssignment(numberForm.numberId, numberForm.subAccountId);
-
-      setSubAccounts((prev) =>
-        prev.map((account) =>
-          account.id === numberForm.subAccountId
-            ? {
-                ...account,
-                assignedNumbers: [
-                  ...account.assignedNumbers,
-                  selectedNumber.number,
-                ],
-              }
-            : account,
-        ),
-      );
-
+    try {
+      if (numberForm.action === "assign") {
+        // Assign number to sub-account
+        const success = await updateNumberAssignment(numberForm.numberId, numberForm.subAccountId);
+        if (success) {
+          // Reload both contexts to get fresh data
+          await loadSubAccounts();
+          toast({
+            title: "Success",
+            description: "Number assigned successfully",
+          });
+        }
+      } else {
+        // Unassign number from sub-account
+        const success = await updateNumberAssignment(numberForm.numberId, null);
+        if (success) {
+          // Reload both contexts to get fresh data
+          await loadSubAccounts();
+          toast({
+            title: "Success",
+            description: "Number unassigned successfully",
+          });
+        }
+      }
+    } catch (error) {
       toast({
-        title: "Success",
-        description: "Number assigned successfully",
-      });
-    } else {
-      // Unassign number from sub-account
-      updateNumberAssignment(numberForm.numberId, null);
-
-      setSubAccounts((prev) =>
-        prev.map((account) =>
-          account.id === numberForm.subAccountId
-            ? {
-                ...account,
-                assignedNumbers: account.assignedNumbers.filter(
-                  (num) => num !== selectedNumber.number,
-                ),
-              }
-            : account,
-        ),
-      );
-
-      toast({
-        title: "Success",
-        description: "Number unassigned successfully",
+        title: "Error",
+        description: "Failed to update number assignment",
+        variant: "destructive",
       });
     }
 
