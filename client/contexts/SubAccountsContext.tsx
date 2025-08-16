@@ -249,6 +249,12 @@ export const SubAccountsProvider: React.FC<{ children: React.ReactNode }> = ({
       if (response.ok && result.success) {
         // Reload sub-accounts from database
         await loadSubAccounts();
+
+        // Trigger wallet context refresh by dispatching a custom event
+        window.dispatchEvent(new CustomEvent('walletBalanceChanged', {
+          detail: { newBalance: result.data.userBalance }
+        }));
+
         toast({
           title: "Success",
           description: "Funds transferred successfully",
