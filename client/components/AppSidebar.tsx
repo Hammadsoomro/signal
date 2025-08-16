@@ -248,15 +248,15 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
 
         {/* Navigation - Scrollable */}
         <div className="flex-1 overflow-hidden">
-          <ScrollArea className="h-full px-4">
-            <div className="space-y-2 pb-4">
-              <div className="text-xs font-medium text-blue-300 uppercase tracking-wide px-3 py-2">
+          <ScrollArea className="h-full px-6">
+            <div className="space-y-2 pb-6">
+              <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-3 py-3 border-b border-slate-700/30">
                 Navigation
               </div>
               {navigation.map((item) => renderNavItem(item))}
             </div>
 
-            <Separator className="my-4 bg-blue-700/50 mx-3" />
+            <Separator className="my-6 bg-slate-700/50 mx-3" />
 
             {/* Advertisement */}
             <div className="px-3 pb-4">
