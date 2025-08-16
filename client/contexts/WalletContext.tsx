@@ -22,7 +22,11 @@ interface WalletContextType {
   balance: number;
   transactions: Transaction[];
   deductBalance: (amount: number, description: string) => Promise<boolean>;
-  addBalance: (amount: number, description: string, reference?: string) => Promise<void>;
+  addBalance: (
+    amount: number,
+    description: string,
+    reference?: string,
+  ) => Promise<void>;
   loadTransactions: () => Promise<void>;
   isLoading: boolean;
 }
@@ -56,10 +60,13 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       }
     };
 
-    window.addEventListener('walletBalanceChanged', handleWalletBalanceChange);
+    window.addEventListener("walletBalanceChanged", handleWalletBalanceChange);
 
     return () => {
-      window.removeEventListener('walletBalanceChanged', handleWalletBalanceChange);
+      window.removeEventListener(
+        "walletBalanceChanged",
+        handleWalletBalanceChange,
+      );
     };
   }, []);
 
@@ -72,18 +79,18 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
     setIsLoading(true);
     try {
-      const token = localStorage.getItem('connectlify_token');
+      const token = localStorage.getItem("connectlify_token");
       if (!token) {
-        console.log('No auth token found, user not authenticated');
+        console.log("No auth token found, user not authenticated");
         setTransactions([]);
         setIsLoading(false);
         return;
       }
 
-      const response = await fetch('/api/wallet/transactions', {
+      const response = await fetch("/api/wallet/transactions", {
         headers: {
-          'Authorization': `Bearer ${token}`,
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response.ok) {
@@ -93,13 +100,16 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         }
       }
     } catch (error) {
-      console.error('Failed to load transactions:', error);
+      console.error("Failed to load transactions:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const deductBalance = async (amount: number, description: string): Promise<boolean> => {
+  const deductBalance = async (
+    amount: number,
+    description: string,
+  ): Promise<boolean> => {
     if (!user) {
       toast({
         title: "Authentication Error",
@@ -119,12 +129,12 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      const token = localStorage.getItem('connectlify_token');
-      const response = await fetch('/api/wallet/debit', {
-        method: 'POST',
+      const token = localStorage.getItem("connectlify_token");
+      const response = await fetch("/api/wallet/debit", {
+        method: "POST",
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ amount, description }),
       });
@@ -161,12 +171,12 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     reference?: string,
   ) => {
     try {
-      const token = localStorage.getItem('connectlify_token');
-      const response = await fetch('/api/wallet/credit', {
-        method: 'POST',
+      const token = localStorage.getItem("connectlify_token");
+      const response = await fetch("/api/wallet/credit", {
+        method: "POST",
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ amount, description, reference }),
       });

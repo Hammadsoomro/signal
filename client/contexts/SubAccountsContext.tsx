@@ -29,11 +29,14 @@ interface SubAccountsContextType {
     walletBalance?: number;
     assignedNumber?: string;
   }) => Promise<boolean>;
-  updateSubAccount: (subAccountId: string, data: {
-    name?: string;
-    email?: string;
-    status?: string;
-  }) => Promise<boolean>;
+  updateSubAccount: (
+    subAccountId: string,
+    data: {
+      name?: string;
+      email?: string;
+      status?: string;
+    },
+  ) => Promise<boolean>;
   deleteSubAccount: (subAccountId: string) => Promise<boolean>;
   transferFunds: (subAccountId: string, amount: number) => Promise<boolean>;
 }
@@ -59,17 +62,17 @@ export const SubAccountsProvider: React.FC<{ children: React.ReactNode }> = ({
 
     setIsLoading(true);
     try {
-      const token = localStorage.getItem('connectlify_token');
+      const token = localStorage.getItem("connectlify_token");
       if (!token) {
-        console.log('No auth token found, user not authenticated');
+        console.log("No auth token found, user not authenticated");
         setSubAccounts([]);
         return;
       }
 
-      const response = await fetch('/api/sub-accounts', {
+      const response = await fetch("/api/sub-accounts", {
         headers: {
-          'Authorization': `Bearer ${token}`,
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response.ok) {
@@ -78,22 +81,25 @@ export const SubAccountsProvider: React.FC<{ children: React.ReactNode }> = ({
           // Transform the data to handle populated assignedNumbers
           const transformedSubAccounts = data.data.map((subAccount: any) => ({
             ...subAccount,
-            assignedNumbers: subAccount.assignedNumbers?.map((num: any) =>
-              typeof num === 'object' ? num.number : num
-            ) || []
+            assignedNumbers:
+              subAccount.assignedNumbers?.map((num: any) =>
+                typeof num === "object" ? num.number : num,
+              ) || [],
           }));
           setSubAccounts(transformedSubAccounts);
-          console.log(`Loaded ${transformedSubAccounts.length} sub-accounts from database`);
+          console.log(
+            `Loaded ${transformedSubAccounts.length} sub-accounts from database`,
+          );
         } else {
-          console.log('No sub-accounts found for user');
+          console.log("No sub-accounts found for user");
           setSubAccounts([]);
         }
       } else {
-        console.error('Failed to fetch sub-accounts:', response.status);
+        console.error("Failed to fetch sub-accounts:", response.status);
         setSubAccounts([]);
       }
     } catch (error) {
-      console.error('Failed to load sub-accounts:', error);
+      console.error("Failed to load sub-accounts:", error);
       setSubAccounts([]);
     } finally {
       setIsLoading(false);
@@ -113,12 +119,12 @@ export const SubAccountsProvider: React.FC<{ children: React.ReactNode }> = ({
     assignedNumber?: string;
   }): Promise<boolean> => {
     try {
-      const token = localStorage.getItem('connectlify_token');
-      const response = await fetch('/api/sub-accounts', {
-        method: 'POST',
+      const token = localStorage.getItem("connectlify_token");
+      const response = await fetch("/api/sub-accounts", {
+        method: "POST",
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
@@ -142,7 +148,7 @@ export const SubAccountsProvider: React.FC<{ children: React.ReactNode }> = ({
         return false;
       }
     } catch (error) {
-      console.error('Failed to create sub-account:', error);
+      console.error("Failed to create sub-account:", error);
       toast({
         title: "Error",
         description: "Failed to create sub-account",
@@ -153,18 +159,21 @@ export const SubAccountsProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   // Update sub-account
-  const updateSubAccount = async (subAccountId: string, data: {
-    name?: string;
-    email?: string;
-    status?: string;
-  }): Promise<boolean> => {
+  const updateSubAccount = async (
+    subAccountId: string,
+    data: {
+      name?: string;
+      email?: string;
+      status?: string;
+    },
+  ): Promise<boolean> => {
     try {
-      const token = localStorage.getItem('connectlify_token');
+      const token = localStorage.getItem("connectlify_token");
       const response = await fetch(`/api/sub-accounts/${subAccountId}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
@@ -188,7 +197,7 @@ export const SubAccountsProvider: React.FC<{ children: React.ReactNode }> = ({
         return false;
       }
     } catch (error) {
-      console.error('Failed to update sub-account:', error);
+      console.error("Failed to update sub-account:", error);
       toast({
         title: "Error",
         description: "Failed to update sub-account",
@@ -201,11 +210,11 @@ export const SubAccountsProvider: React.FC<{ children: React.ReactNode }> = ({
   // Delete sub-account
   const deleteSubAccount = async (subAccountId: string): Promise<boolean> => {
     try {
-      const token = localStorage.getItem('connectlify_token');
+      const token = localStorage.getItem("connectlify_token");
       const response = await fetch(`/api/sub-accounts/${subAccountId}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -228,7 +237,7 @@ export const SubAccountsProvider: React.FC<{ children: React.ReactNode }> = ({
         return false;
       }
     } catch (error) {
-      console.error('Failed to delete sub-account:', error);
+      console.error("Failed to delete sub-account:", error);
       toast({
         title: "Error",
         description: "Failed to delete sub-account",
@@ -239,14 +248,17 @@ export const SubAccountsProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   // Transfer funds to sub-account
-  const transferFunds = async (subAccountId: string, amount: number): Promise<boolean> => {
+  const transferFunds = async (
+    subAccountId: string,
+    amount: number,
+  ): Promise<boolean> => {
     try {
-      const token = localStorage.getItem('connectlify_token');
-      const response = await fetch('/api/sub-accounts/transfer', {
-        method: 'POST',
+      const token = localStorage.getItem("connectlify_token");
+      const response = await fetch("/api/sub-accounts/transfer", {
+        method: "POST",
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ subAccountId, amount }),
       });
@@ -258,9 +270,11 @@ export const SubAccountsProvider: React.FC<{ children: React.ReactNode }> = ({
         await loadSubAccounts();
 
         // Trigger wallet context refresh by dispatching a custom event
-        window.dispatchEvent(new CustomEvent('walletBalanceChanged', {
-          detail: { newBalance: result.data.userBalance }
-        }));
+        window.dispatchEvent(
+          new CustomEvent("walletBalanceChanged", {
+            detail: { newBalance: result.data.userBalance },
+          }),
+        );
 
         toast({
           title: "Success",
@@ -276,7 +290,7 @@ export const SubAccountsProvider: React.FC<{ children: React.ReactNode }> = ({
         return false;
       }
     } catch (error) {
-      console.error('Failed to transfer funds:', error);
+      console.error("Failed to transfer funds:", error);
       toast({
         title: "Error",
         description: "Failed to transfer funds",

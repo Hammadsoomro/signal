@@ -11,25 +11,26 @@ export const getUserSubAccounts = async (req: AuthRequest, res: Response) => {
     if (!userId) {
       return res.status(401).json({
         success: false,
-        message: "User not authenticated"
+        message: "User not authenticated",
       });
     }
 
     const subAccounts = await SubAccount.find({
       userId,
-      status: { $ne: "deleted" }
-    }).populate('assignedNumbers', 'number').sort({ createdAt: -1 });
+      status: { $ne: "deleted" },
+    })
+      .populate("assignedNumbers", "number")
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,
-      data: subAccounts
+      data: subAccounts,
     });
-
   } catch (error) {
     console.error("Get sub-accounts error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to retrieve sub-accounts"
+      message: "Failed to retrieve sub-accounts",
     });
   }
 };
@@ -43,7 +44,7 @@ export const createSubAccount = async (req: AuthRequest, res: Response) => {
     if (!userId) {
       return res.status(401).json({
         success: false,
-        message: "User not authenticated"
+        message: "User not authenticated",
       });
     }
 
@@ -51,30 +52,30 @@ export const createSubAccount = async (req: AuthRequest, res: Response) => {
     if (!name || !email) {
       return res.status(400).json({
         success: false,
-        message: "Name and email are required"
+        message: "Name and email are required",
       });
     }
 
     // Check if email already exists
-    const existingSubAccount = await SubAccount.findOne({ 
-      email: email.toLowerCase() 
+    const existingSubAccount = await SubAccount.findOne({
+      email: email.toLowerCase(),
     });
     if (existingSubAccount) {
       return res.status(400).json({
         success: false,
-        message: "Email is already in use"
+        message: "Email is already in use",
       });
     }
 
     // Check sub-account limit (max 3 per user)
-    const subAccountCount = await SubAccount.countDocuments({ 
+    const subAccountCount = await SubAccount.countDocuments({
       userId,
-      status: { $ne: "deleted" }
+      status: { $ne: "deleted" },
     });
     if (subAccountCount >= 3) {
       return res.status(400).json({
         success: false,
-        message: "Maximum 3 sub-accounts allowed per user"
+        message: "Maximum 3 sub-accounts allowed per user",
       });
     }
 
@@ -83,14 +84,14 @@ export const createSubAccount = async (req: AuthRequest, res: Response) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: "User not found"
+        message: "User not found",
       });
     }
 
     if (walletBalance > 0 && user.walletBalance < walletBalance) {
       return res.status(400).json({
         success: false,
-        message: "Insufficient wallet balance for transfer"
+        message: "Insufficient wallet balance for transfer",
       });
     }
 
@@ -105,9 +106,9 @@ export const createSubAccount = async (req: AuthRequest, res: Response) => {
         canSendSMS: true,
         canBuyNumbers: false, // Sub-accounts cannot buy numbers
         canManageWallet: false, // Sub-accounts cannot manage wallet
-        canViewAnalytics: true
+        canViewAnalytics: true,
       },
-      status: "active"
+      status: "active",
     });
 
     await newSubAccount.save();
@@ -121,14 +122,13 @@ export const createSubAccount = async (req: AuthRequest, res: Response) => {
     res.status(201).json({
       success: true,
       message: "Sub-account created successfully",
-      data: newSubAccount
+      data: newSubAccount,
     });
-
   } catch (error) {
     console.error("Create sub-account error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to create sub-account"
+      message: "Failed to create sub-account",
     });
   }
 };
@@ -143,19 +143,19 @@ export const updateSubAccount = async (req: AuthRequest, res: Response) => {
     if (!userId) {
       return res.status(401).json({
         success: false,
-        message: "User not authenticated"
+        message: "User not authenticated",
       });
     }
 
-    const subAccount = await SubAccount.findOne({ 
-      _id: subAccountId, 
-      userId 
+    const subAccount = await SubAccount.findOne({
+      _id: subAccountId,
+      userId,
     });
 
     if (!subAccount) {
       return res.status(404).json({
         success: false,
-        message: "Sub-account not found"
+        message: "Sub-account not found",
       });
     }
 
@@ -169,14 +169,13 @@ export const updateSubAccount = async (req: AuthRequest, res: Response) => {
     res.status(200).json({
       success: true,
       message: "Sub-account updated successfully",
-      data: subAccount
+      data: subAccount,
     });
-
   } catch (error) {
     console.error("Update sub-account error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to update sub-account"
+      message: "Failed to update sub-account",
     });
   }
 };
@@ -190,19 +189,19 @@ export const deleteSubAccount = async (req: AuthRequest, res: Response) => {
     if (!userId) {
       return res.status(401).json({
         success: false,
-        message: "User not authenticated"
+        message: "User not authenticated",
       });
     }
 
-    const subAccount = await SubAccount.findOne({ 
-      _id: subAccountId, 
-      userId 
+    const subAccount = await SubAccount.findOne({
+      _id: subAccountId,
+      userId,
     });
 
     if (!subAccount) {
       return res.status(404).json({
         success: false,
-        message: "Sub-account not found"
+        message: "Sub-account not found",
       });
     }
 
@@ -212,14 +211,13 @@ export const deleteSubAccount = async (req: AuthRequest, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: "Sub-account deleted successfully"
+      message: "Sub-account deleted successfully",
     });
-
   } catch (error) {
     console.error("Delete sub-account error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to delete sub-account"
+      message: "Failed to delete sub-account",
     });
   }
 };
@@ -233,14 +231,14 @@ export const transferFunds = async (req: AuthRequest, res: Response) => {
     if (!userId) {
       return res.status(401).json({
         success: false,
-        message: "User not authenticated"
+        message: "User not authenticated",
       });
     }
 
     if (!amount || amount <= 0) {
       return res.status(400).json({
         success: false,
-        message: "Invalid transfer amount"
+        message: "Invalid transfer amount",
       });
     }
 
@@ -248,20 +246,20 @@ export const transferFunds = async (req: AuthRequest, res: Response) => {
     if (!user || user.walletBalance < amount) {
       return res.status(400).json({
         success: false,
-        message: "Insufficient wallet balance"
+        message: "Insufficient wallet balance",
       });
     }
 
-    const subAccount = await SubAccount.findOne({ 
-      _id: subAccountId, 
+    const subAccount = await SubAccount.findOne({
+      _id: subAccountId,
       userId,
-      status: "active"
+      status: "active",
     });
 
     if (!subAccount) {
       return res.status(404).json({
         success: false,
-        message: "Sub-account not found"
+        message: "Sub-account not found",
       });
     }
 
@@ -277,15 +275,14 @@ export const transferFunds = async (req: AuthRequest, res: Response) => {
       message: "Funds transferred successfully",
       data: {
         userBalance: user.walletBalance,
-        subAccountBalance: subAccount.walletBalance
-      }
+        subAccountBalance: subAccount.walletBalance,
+      },
     });
-
   } catch (error) {
     console.error("Transfer funds error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to transfer funds"
+      message: "Failed to transfer funds",
     });
   }
 };

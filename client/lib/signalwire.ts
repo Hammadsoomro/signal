@@ -114,14 +114,14 @@ export class SignalWireClient {
       // If search query is provided, try to extract area code or use it as area code
       if (searchQuery) {
         // Extract digits from search query (area code)
-        const areaCode = searchQuery.replace(/\D/g, '').substring(0, 3);
+        const areaCode = searchQuery.replace(/\D/g, "").substring(0, 3);
         if (areaCode.length === 3) {
-          params.append('AreaCode', areaCode);
+          params.append("AreaCode", areaCode);
         } else if (searchQuery.length >= 3) {
           // If not a valid area code, try using first 3 digits
           const possibleAreaCode = searchQuery.substring(0, 3);
           if (/^\d{3}$/.test(possibleAreaCode)) {
-            params.append('AreaCode', possibleAreaCode);
+            params.append("AreaCode", possibleAreaCode);
           }
         }
       }
@@ -137,7 +137,9 @@ export class SignalWireClient {
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        throw new Error(
+          `HTTP error! status: ${response.status} - ${errorText}`,
+        );
       }
 
       const data = await response.json();

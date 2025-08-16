@@ -170,8 +170,7 @@ export default function BuyNumbers() {
 
       toast({
         title: "Service Unavailable",
-        description:
-          "SignalWire API unavailable. Please try again later.",
+        description: "SignalWire API unavailable. Please try again later.",
         variant: "destructive",
       });
     } finally {
@@ -194,7 +193,10 @@ export default function BuyNumbers() {
 
     try {
       // Deduct wallet balance first
-      const walletSuccess = await deductBalance(number.price, `Phone number purchase: ${number.number}`);
+      const walletSuccess = await deductBalance(
+        number.price,
+        `Phone number purchase: ${number.number}`,
+      );
       if (!walletSuccess) {
         throw new Error("Insufficient wallet balance");
       }
@@ -207,7 +209,7 @@ export default function BuyNumbers() {
         state: number.state,
         country: number.country,
         monthlyPrice: number.price,
-        capabilities: number.features || ["SMS"]
+        capabilities: number.features || ["SMS"],
       };
 
       const success = await purchaseNumber(numberData);
@@ -402,7 +404,8 @@ export default function BuyNumbers() {
                           <div className="flex items-center gap-1">
                             <MapPin className="h-4 w-4" />
                             <span>
-                              {number.country}{number.state ? `, ${number.state}` : ''}
+                              {number.country}
+                              {number.state ? `, ${number.state}` : ""}
                             </span>
                           </div>
                         </div>
@@ -462,7 +465,8 @@ export default function BuyNumbers() {
                                 <div>
                                   <p className="font-medium">{number.number}</p>
                                   <p className="text-sm text-muted-foreground">
-                                    {number.country}{number.state ? `, ${number.state}` : ''}
+                                    {number.country}
+                                    {number.state ? `, ${number.state}` : ""}
                                   </p>
                                 </div>
                                 <div className="text-right">

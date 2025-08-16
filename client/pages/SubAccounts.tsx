@@ -77,7 +77,15 @@ export default function SubAccounts() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { subAccounts, isLoading: subAccountsLoading, loadSubAccounts, createSubAccount, updateSubAccount, deleteSubAccount, transferFunds } = useSubAccounts();
+  const {
+    subAccounts,
+    isLoading: subAccountsLoading,
+    loadSubAccounts,
+    createSubAccount,
+    updateSubAccount,
+    deleteSubAccount,
+    transferFunds,
+  } = useSubAccounts();
 
   const { purchasedNumbers, updateNumberAssignment, getAvailableNumbers } =
     useUserNumbers();
@@ -242,7 +250,10 @@ export default function SubAccounts() {
     try {
       if (numberForm.action === "assign") {
         // Assign number to sub-account
-        const success = await updateNumberAssignment(numberForm.numberId, numberForm.subAccountId);
+        const success = await updateNumberAssignment(
+          numberForm.numberId,
+          numberForm.subAccountId,
+        );
         if (success) {
           // Reload both contexts to get fresh data
           await loadSubAccounts();

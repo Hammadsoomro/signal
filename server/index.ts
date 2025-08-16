@@ -17,20 +17,20 @@ import {
   getAvailableNumbers,
   getAssignedNumbers,
   releasePhoneNumber,
-  addPhoneNumberToUser
+  addPhoneNumberToUser,
 } from "./routes/phoneNumbers";
 import {
   getWalletBalance,
   getTransactionHistory,
   debitWallet,
-  creditWallet
+  creditWallet,
 } from "./routes/wallet";
 import {
   getUserSubAccounts,
   createSubAccount,
   updateSubAccount,
   deleteSubAccount,
-  transferFunds
+  transferFunds,
 } from "./routes/subAccounts";
 import {
   getUserConversations,
@@ -39,21 +39,21 @@ import {
   sendSMSMessage,
   updateConversation,
   deleteConversation,
-  receiveSMSMessage
+  receiveSMSMessage,
 } from "./routes/conversations";
 import {
   getUserSettings,
   updateUserSettings,
   updateSettingSection,
   resetUserSettings,
-  exportUserSettings
+  exportUserSettings,
 } from "./routes/userSettings";
 import {
   createPaymentIntent,
   confirmPayment,
   getPaymentMethods,
   createCustomer,
-  handleWebhook
+  handleWebhook,
 } from "./routes/stripe";
 import { syncPhoneNumberAssignments } from "./routes/syncAssignments";
 
@@ -82,43 +82,52 @@ export function createServer() {
         connected: isConnected,
         status: mongoose.connection.readyState,
         statusText: getConnectionStatus(mongoose.connection.readyState),
-        message: isConnected ? "MongoDB Connected" : "MongoDB Disconnected"
+        message: isConnected ? "MongoDB Connected" : "MongoDB Disconnected",
       });
     } catch (error) {
       console.error("Database test error:", error);
-      res.status(500).json({ error: "Database test failed", details: error?.message || error });
+      res
+        .status(500)
+        .json({
+          error: "Database test failed",
+          details: error?.message || error,
+        });
     }
   });
 
   function getConnectionStatus(status: number) {
-    switch(status) {
-      case 0: return "disconnected";
-      case 1: return "connected";
-      case 2: return "connecting";
-      case 3: return "disconnecting";
-      default: return "unknown";
+    switch (status) {
+      case 0:
+        return "disconnected";
+      case 1:
+        return "connected";
+      case 2:
+        return "connecting";
+      case 3:
+        return "disconnecting";
+      default:
+        return "unknown";
     }
   }
-
 
   // Debug endpoint
   app.post("/api/debug/register-test", async (req, res) => {
     try {
       console.log("Debug registration test:", req.body);
-      const { default: User } = await import('./models/User.js');
+      const { default: User } = await import("./models/User.js");
       const userCount = await User.countDocuments();
       res.json({
         success: true,
         message: "Database accessible",
         userCount,
-        receivedData: req.body
+        receivedData: req.body,
       });
     } catch (error) {
       console.error("Debug registration error:", error);
       res.status(500).json({
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
-        details: error
+        details: error,
       });
     }
   });
@@ -134,8 +143,16 @@ export function createServer() {
   app.post("/api/phone-numbers/purchase", verifyToken, purchasePhoneNumber);
   app.post("/api/phone-numbers/assign", verifyToken, assignPhoneNumber);
   app.get("/api/phone-numbers/available", verifyToken, getAvailableNumbers);
-  app.get("/api/phone-numbers/assigned/:subAccountId", verifyToken, getAssignedNumbers);
-  app.delete("/api/phone-numbers/:phoneNumberId", verifyToken, releasePhoneNumber);
+  app.get(
+    "/api/phone-numbers/assigned/:subAccountId",
+    verifyToken,
+    getAssignedNumbers,
+  );
+  app.delete(
+    "/api/phone-numbers/:phoneNumberId",
+    verifyToken,
+    releasePhoneNumber,
+  );
   app.post("/api/phone-numbers/add-manual", verifyToken, addPhoneNumberToUser);
 
   // Wallet routes
@@ -153,11 +170,23 @@ export function createServer() {
 
   // Conversation routes
   app.get("/api/conversations", verifyToken, getUserConversations);
-  app.get("/api/conversations/:conversationId/messages", verifyToken, getConversationMessages);
+  app.get(
+    "/api/conversations/:conversationId/messages",
+    verifyToken,
+    getConversationMessages,
+  );
   app.post("/api/conversations", verifyToken, createOrGetConversation);
   app.post("/api/conversations/send-sms", verifyToken, sendSMSMessage);
-  app.put("/api/conversations/:conversationId", verifyToken, updateConversation);
-  app.delete("/api/conversations/:conversationId", verifyToken, deleteConversation);
+  app.put(
+    "/api/conversations/:conversationId",
+    verifyToken,
+    updateConversation,
+  );
+  app.delete(
+    "/api/conversations/:conversationId",
+    verifyToken,
+    deleteConversation,
+  );
   app.post("/api/sms/webhook", receiveSMSMessage); // Webhook for incoming SMS
 
   // User Settings routes
@@ -168,21 +197,29 @@ export function createServer() {
   app.get("/api/user/settings/export", verifyToken, exportUserSettings);
 
   // Stripe payment routes
-  app.post("/api/stripe/create-payment-intent", verifyToken, createPaymentIntent);
+  app.post(
+    "/api/stripe/create-payment-intent",
+    verifyToken,
+    createPaymentIntent,
+  );
   app.post("/api/stripe/confirm-payment", verifyToken, confirmPayment);
   app.get("/api/stripe/payment-methods", verifyToken, getPaymentMethods);
   app.post("/api/stripe/create-customer", verifyToken, createCustomer);
   app.post("/api/stripe/webhook", handleWebhook);
 
   // Sync routes
-  app.post("/api/sync/phone-assignments", verifyToken, syncPhoneNumberAssignments);
+  app.post(
+    "/api/sync/phone-assignments",
+    verifyToken,
+    syncPhoneNumberAssignments,
+  );
 
   // Handle 404 for API routes
-  app.all('/api/*', (req, res) => {
+  app.all("/api/*", (req, res) => {
     res.status(404).json({
       success: false,
       message: `API endpoint not found: ${req.method} ${req.path}`,
-      error: 'Not Found'
+      error: "Not Found",
     });
   });
 

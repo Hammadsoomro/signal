@@ -86,34 +86,46 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
       ],
     },
     // Only show Sub-Accounts for main users
-    ...(isMainUser ? [{
-      id: "sub-accounts",
-      label: "Sub-Accounts",
-      icon: Users,
-      href: "/sub-accounts",
-    }] : []),
+    ...(isMainUser
+      ? [
+          {
+            id: "sub-accounts",
+            label: "Sub-Accounts",
+            icon: Users,
+            href: "/sub-accounts",
+          },
+        ]
+      : []),
     // Only show Buy Numbers if user has permission
-    ...(canBuyNumbers ? [{
-      id: "buy-numbers",
-      label: "Buy Numbers",
-      icon: Phone,
-      href: "/buy-numbers",
-    }] : []),
+    ...(canBuyNumbers
+      ? [
+          {
+            id: "buy-numbers",
+            label: "Buy Numbers",
+            icon: Phone,
+            href: "/buy-numbers",
+          },
+        ]
+      : []),
     // Only show billing options if user can manage wallet
-    ...(canManageWallet ? [{
-      id: "billing",
-      label: "Billing",
-      icon: DollarSign,
-      children: [
-        { id: "wallet", label: "Wallet", icon: Wallet, href: "/wallet" },
-        {
-          id: "transactions",
-          label: "Transactions",
-          icon: Receipt,
-          href: "/transactions",
-        },
-      ],
-    }] : []),
+    ...(canManageWallet
+      ? [
+          {
+            id: "billing",
+            label: "Billing",
+            icon: DollarSign,
+            children: [
+              { id: "wallet", label: "Wallet", icon: Wallet, href: "/wallet" },
+              {
+                id: "transactions",
+                label: "Transactions",
+                icon: Receipt,
+                href: "/transactions",
+              },
+            ],
+          },
+        ]
+      : []),
     {
       id: "settings",
       label: "Settings",
@@ -198,8 +210,12 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
               <MessageSquare className="h-6 w-6 text-white" />
             </div>
             <div>
-              <span className="text-xl font-bold tracking-tight">Connectlify</span>
-              <div className="text-xs text-indigo-200 font-medium">SMS Platform</div>
+              <span className="text-xl font-bold tracking-tight">
+                Connectlify
+              </span>
+              <div className="text-xs text-indigo-200 font-medium">
+                SMS Platform
+              </div>
             </div>
           </Link>
           <Button
@@ -236,7 +252,10 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
                   className="w-full bg-white/20 hover:bg-white/30 text-white border-white/20 font-medium transition-all duration-200 hover:scale-105"
                   variant="outline"
                 >
-                  <Link to="/wallet" className="flex items-center justify-center gap-2">
+                  <Link
+                    to="/wallet"
+                    className="flex items-center justify-center gap-2"
+                  >
                     <Plus className="h-4 w-4" />
                     Add Funds
                   </Link>

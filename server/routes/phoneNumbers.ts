@@ -11,25 +11,24 @@ export const getUserPhoneNumbers = async (req: AuthRequest, res: Response) => {
     if (!userId) {
       return res.status(401).json({
         success: false,
-        message: "User not authenticated"
+        message: "User not authenticated",
       });
     }
 
-    const phoneNumbers = await PhoneNumber.find({ 
+    const phoneNumbers = await PhoneNumber.find({
       userId,
-      isActive: true 
+      isActive: true,
     }).sort({ purchaseDate: -1 });
 
     res.status(200).json({
       success: true,
-      data: phoneNumbers
+      data: phoneNumbers,
     });
-
   } catch (error) {
     console.error("Get phone numbers error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to retrieve phone numbers"
+      message: "Failed to retrieve phone numbers",
     });
   }
 };
@@ -38,12 +37,13 @@ export const getUserPhoneNumbers = async (req: AuthRequest, res: Response) => {
 export const purchasePhoneNumber = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.user?._id;
-    const { number, label, city, state, country, monthlyPrice, capabilities } = req.body;
+    const { number, label, city, state, country, monthlyPrice, capabilities } =
+      req.body;
 
     if (!userId) {
       return res.status(401).json({
         success: false,
-        message: "User not authenticated"
+        message: "User not authenticated",
       });
     }
 
@@ -51,7 +51,7 @@ export const purchasePhoneNumber = async (req: AuthRequest, res: Response) => {
     if (!number || !label || !city || !state || !country || !monthlyPrice) {
       return res.status(400).json({
         success: false,
-        message: "All fields are required"
+        message: "All fields are required",
       });
     }
 
@@ -60,7 +60,7 @@ export const purchasePhoneNumber = async (req: AuthRequest, res: Response) => {
     if (existingNumber) {
       return res.status(400).json({
         success: false,
-        message: "Phone number already purchased"
+        message: "Phone number already purchased",
       });
     }
 
@@ -76,7 +76,7 @@ export const purchasePhoneNumber = async (req: AuthRequest, res: Response) => {
       capabilities: capabilities || ["SMS", "Voice"],
       isActive: true,
       purchaseDate: new Date(),
-      assignedTo: null
+      assignedTo: null,
     });
 
     await newPhoneNumber.save();
@@ -84,14 +84,13 @@ export const purchasePhoneNumber = async (req: AuthRequest, res: Response) => {
     res.status(201).json({
       success: true,
       message: "Phone number purchased successfully",
-      data: newPhoneNumber
+      data: newPhoneNumber,
     });
-
   } catch (error) {
     console.error("Purchase phone number error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to purchase phone number"
+      message: "Failed to purchase phone number",
     });
   }
 };
@@ -105,21 +104,21 @@ export const assignPhoneNumber = async (req: AuthRequest, res: Response) => {
     if (!userId) {
       return res.status(401).json({
         success: false,
-        message: "User not authenticated"
+        message: "User not authenticated",
       });
     }
 
     // Find phone number owned by user
-    const phoneNumber = await PhoneNumber.findOne({ 
-      _id: phoneNumberId, 
+    const phoneNumber = await PhoneNumber.findOne({
+      _id: phoneNumberId,
       userId,
-      isActive: true 
+      isActive: true,
     });
 
     if (!phoneNumber) {
       return res.status(404).json({
         success: false,
-        message: "Phone number not found or not owned by user"
+        message: "Phone number not found or not owned by user",
       });
     }
 
@@ -133,7 +132,7 @@ export const assignPhoneNumber = async (req: AuthRequest, res: Response) => {
       // Remove from old sub-account
       await SubAccount.updateOne(
         { _id: oldAssignedTo },
-        { $pull: { assignedNumbers: phoneNumberId } }
+        { $pull: { assignedNumbers: phoneNumberId } },
       );
     }
 
@@ -141,21 +140,22 @@ export const assignPhoneNumber = async (req: AuthRequest, res: Response) => {
       // Add to new sub-account
       await SubAccount.updateOne(
         { _id: subAccountId },
-        { $addToSet: { assignedNumbers: phoneNumberId } }
+        { $addToSet: { assignedNumbers: phoneNumberId } },
       );
     }
 
     res.status(200).json({
       success: true,
-      message: subAccountId ? "Phone number assigned to sub-account" : "Phone number unassigned",
-      data: phoneNumber
+      message: subAccountId
+        ? "Phone number assigned to sub-account"
+        : "Phone number unassigned",
+      data: phoneNumber,
     });
-
   } catch (error) {
     console.error("Assign phone number error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to assign phone number"
+      message: "Failed to assign phone number",
     });
   }
 };
@@ -168,26 +168,25 @@ export const getAvailableNumbers = async (req: AuthRequest, res: Response) => {
     if (!userId) {
       return res.status(401).json({
         success: false,
-        message: "User not authenticated"
+        message: "User not authenticated",
       });
     }
 
-    const availableNumbers = await PhoneNumber.find({ 
+    const availableNumbers = await PhoneNumber.find({
       userId,
       isActive: true,
-      assignedTo: null
+      assignedTo: null,
     }).sort({ purchaseDate: -1 });
 
     res.status(200).json({
       success: true,
-      data: availableNumbers
+      data: availableNumbers,
     });
-
   } catch (error) {
     console.error("Get available numbers error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to retrieve available numbers"
+      message: "Failed to retrieve available numbers",
     });
   }
 };
@@ -201,26 +200,25 @@ export const getAssignedNumbers = async (req: AuthRequest, res: Response) => {
     if (!userId) {
       return res.status(401).json({
         success: false,
-        message: "User not authenticated"
+        message: "User not authenticated",
       });
     }
 
-    const assignedNumbers = await PhoneNumber.find({ 
+    const assignedNumbers = await PhoneNumber.find({
       userId,
       isActive: true,
-      assignedTo: subAccountId
+      assignedTo: subAccountId,
     }).sort({ purchaseDate: -1 });
 
     res.status(200).json({
       success: true,
-      data: assignedNumbers
+      data: assignedNumbers,
     });
-
   } catch (error) {
     console.error("Get assigned numbers error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to retrieve assigned numbers"
+      message: "Failed to retrieve assigned numbers",
     });
   }
 };
@@ -234,20 +232,20 @@ export const releasePhoneNumber = async (req: AuthRequest, res: Response) => {
     if (!userId) {
       return res.status(401).json({
         success: false,
-        message: "User not authenticated"
+        message: "User not authenticated",
       });
     }
 
     // Find phone number owned by user
-    const phoneNumber = await PhoneNumber.findOne({ 
-      _id: phoneNumberId, 
-      userId 
+    const phoneNumber = await PhoneNumber.findOne({
+      _id: phoneNumberId,
+      userId,
     });
 
     if (!phoneNumber) {
       return res.status(404).json({
         success: false,
-        message: "Phone number not found or not owned by user"
+        message: "Phone number not found or not owned by user",
       });
     }
 
@@ -258,14 +256,13 @@ export const releasePhoneNumber = async (req: AuthRequest, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: "Phone number released successfully"
+      message: "Phone number released successfully",
     });
-
   } catch (error) {
     console.error("Release phone number error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to release phone number"
+      message: "Failed to release phone number",
     });
   }
 };
@@ -279,7 +276,7 @@ export const addPhoneNumberToUser = async (req: AuthRequest, res: Response) => {
     if (!userId) {
       return res.status(401).json({
         success: false,
-        message: "User not authenticated"
+        message: "User not authenticated",
       });
     }
 
@@ -287,7 +284,7 @@ export const addPhoneNumberToUser = async (req: AuthRequest, res: Response) => {
     if (!number || !label || !city || !state || !country) {
       return res.status(400).json({
         success: false,
-        message: "All fields are required"
+        message: "All fields are required",
       });
     }
 
@@ -296,7 +293,7 @@ export const addPhoneNumberToUser = async (req: AuthRequest, res: Response) => {
     if (existingNumber) {
       return res.status(400).json({
         success: false,
-        message: "Phone number already exists in system"
+        message: "Phone number already exists in system",
       });
     }
 
@@ -312,7 +309,7 @@ export const addPhoneNumberToUser = async (req: AuthRequest, res: Response) => {
       capabilities: ["SMS", "Voice"],
       isActive: true,
       purchaseDate: new Date(),
-      assignedTo: null
+      assignedTo: null,
     });
 
     await newPhoneNumber.save();
@@ -320,14 +317,13 @@ export const addPhoneNumberToUser = async (req: AuthRequest, res: Response) => {
     res.status(201).json({
       success: true,
       message: "Phone number added successfully",
-      data: newPhoneNumber
+      data: newPhoneNumber,
     });
-
   } catch (error) {
     console.error("Add phone number error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to add phone number"
+      message: "Failed to add phone number",
     });
   }
 };
