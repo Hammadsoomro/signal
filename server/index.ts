@@ -55,6 +55,7 @@ import {
   createCustomer,
   handleWebhook
 } from "./routes/stripe";
+import { syncPhoneNumberAssignments } from "./routes/syncAssignments";
 
 export function createServer() {
   const app = express();
