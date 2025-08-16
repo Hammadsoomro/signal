@@ -192,18 +192,23 @@ export function AppSidebar({ isOpen, onClose }: SidebarProps) {
         )}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 bg-blue-800/30 backdrop-blur flex-shrink-0 border-b border-blue-700/50">
-          <Link to="/" className="flex items-center gap-2">
-            <MessageSquare className="h-6 w-6 text-blue-400" />
-            <span className="text-lg font-bold">Connectlify</span>
+        <div className="flex items-center justify-between p-6 bg-gradient-to-r from-indigo-600 to-purple-600 backdrop-blur flex-shrink-0 border-b border-slate-700/50">
+          <Link to="/" className="flex items-center gap-3">
+            <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
+              <MessageSquare className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <span className="text-xl font-bold tracking-tight">Connectlify</span>
+              <div className="text-xs text-indigo-200 font-medium">SMS Platform</div>
+            </div>
           </Link>
           <Button
             variant="ghost"
             size="sm"
-            className="md:hidden text-white hover:bg-slate-700"
+            className="md:hidden text-white hover:bg-white/20 rounded-lg"
             onClick={onClose}
           >
-            <X className="h-4 w-4" />
+            <X className="h-5 w-5" />
           </Button>
         </div>
 
